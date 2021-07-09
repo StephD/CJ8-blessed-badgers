@@ -1,3 +1,10 @@
+## Run first
+
+Install dependencies
+1. pip install -r dev-requirements.txt
+2. pre-commit run --all-file
+
+
 # Python Discord Code Jam Repository Template
 
 ## A Primer

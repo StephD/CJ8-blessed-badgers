@@ -1,6 +1,7 @@
 # This file contains all the development requirements for our linting toolchain.
 # Don't forget to pin your dependencies!
 # This list will have to be migrated if you wish to use another dependency manager.
+# To use : pip install -r dev-requirements.txt
 
 # Base tools
 flake8~=3.7
@@ -12,3 +13,9 @@ flake8-annotations~=2.0
 flake8-bandit~=2.1
 flake8-docstrings~=1.5
 flake8-isort~=4.0
+
+# Additionnal tools
+black~=21.6b0
+pylint~=2.9.3
+# blessed~=1.18.1
+# windows-curses~=2.2.0
