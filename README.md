@@ -1,3 +1,5 @@
+[![DeepSource](https://deepsource.io/gh/StephD/CJ8-blessed-badgers.svg/?label=active+issues&show_trend=true&token=s8xqRUdIFJeB-Cd-zTynrJIw)](https://deepsource.io/gh/StephD/CJ8-blessed-badgers/?ref=repository-badge)
+
 ## Run first
 
 Install dependencies
