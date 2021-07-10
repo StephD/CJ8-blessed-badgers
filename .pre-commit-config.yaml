@@ -52,8 +52,8 @@ repos:
     hooks:
       - id: pylint
         name: pylint
-        entry: pylint
-        language: system
+        # entry: pylint
+        # language: system
         types: [python]
         # always_run: true
         # args: [--disable=C0103]
