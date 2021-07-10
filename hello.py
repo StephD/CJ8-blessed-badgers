@@ -1,1 +1,1 @@
-print("Hello Blessed Badgers Ss!!")
+print("Hello Blessed Badgers !!")
