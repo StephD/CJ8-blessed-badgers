@@ -1,4 +1,5 @@
 [![DeepSource](https://deepsource.io/gh/StephD/CJ8-blessed-badgers.svg/?label=active+issues&show_trend=true&token=s8xqRUdIFJeB-Cd-zTynrJIw)](https://deepsource.io/gh/StephD/CJ8-blessed-badgers/?ref=repository-badge)
+[![CodeFactor](https://www.codefactor.io/repository/github/stephd/cj8-blessed-badgers/badge?s=a5743e65f580e29c6f82336dbcf4703b2b835113)](https://www.codefactor.io/repository/github/stephd/cj8-blessed-badgers)
 
 # Python Discord Code Jam
 
