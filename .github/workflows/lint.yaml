@@ -31,6 +31,9 @@ jobs:
         with:
           python-version: ${{ env.PYTHON_VERSION }}
 
+      - name: Run pre-commit hooks.
+        uses: pre-commit/action@v2.0.3
+
       # This step caches our Python dependencies. To make sure we
       # only restore a cache when the dependencies, the python version and
       # the runner operating system we create a cache key
