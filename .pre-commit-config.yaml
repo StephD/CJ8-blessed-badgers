@@ -55,7 +55,7 @@ repos:
         entry: pylint
         language: system
         types: [python]
-        always_run: true
+        # always_run: true
         # args: [--disable=C0103]
 
   # - repo: local

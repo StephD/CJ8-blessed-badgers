@@ -39,13 +39,13 @@ jobs:
       # the runner operating system we create a cache key
       # that is a composite of those states.
       # Only when the context is exactly the same, we will restore the cache.
-      - name: Restore pip cache
-        uses: actions/cache@v2
-        with:
-          path: ${{ env.PIP_CACHE_DIR }}
-          key: "python-pip-${{ runner.os }}-\
-          ${{ steps.python.outputs.python-version }}-\
-          ${{ hashFiles('./Pipfile', './Pipfile.lock') }}"
+      # - name: Restore pip cache
+      #   uses: actions/cache@v2
+      #   with:
+      #     path: ${{ env.PIP_CACHE_DIR }}
+      #     key: "python-pip-${{ runner.os }}-\
+      #     ${{ steps.python.outputs.python-version }}-\
+      #     ${{ hashFiles('./Pipfile', './Pipfile.lock') }}"
 
       # Uncomment the step that matches your setup.
 
