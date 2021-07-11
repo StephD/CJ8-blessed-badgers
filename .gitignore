@@ -29,5 +29,3 @@ build/
 .vscode/
 # MacOS
 .DS_Store
-
-lint.py

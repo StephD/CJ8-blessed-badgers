@@ -7,6 +7,9 @@ import sys
 def main() -> None:
     """Main function"""
     print("Hello Blessed Badgers !!")
+    # Start the menu
+    # Get the result of the menu to start or the tutorial or game
+
     sys.exit(0)
 
 
