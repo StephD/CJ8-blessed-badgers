@@ -1,9 +1,49 @@
 [![DeepSource](https://deepsource.io/gh/StephD/CJ8-blessed-badgers.svg/?label=active+issues&show_trend=true&token=s8xqRUdIFJeB-Cd-zTynrJIw)](https://deepsource.io/gh/StephD/CJ8-blessed-badgers/?ref=repository-badge)
 [![CodeFactor](https://www.codefactor.io/repository/github/stephd/cj8-blessed-badgers/badge?s=a5743e65f580e29c6f82336dbcf4703b2b835113)](https://www.codefactor.io/repository/github/stephd/cj8-blessed-badgers)
 
-# Python Discord Code Jam
+# Python Discord - Code Jam 8 Summmer 2021
+# Team Blessed Badgers
 
-## Style line to follow
+# Story line
+Good morning. Do you know where you are? See around you, everything here is square.
+Look this door, look this floor, look above your hear and in the corners. What does it mean? Yes you're right, you are inside a box..
+
+I am sorry to let you know that you are stuck here.
+
+Mmhh...
+
+That's no entirely true, you might be able to get away. But can you ?!
+
+# How to play with me?
+
+1. `pip install -r dev-requirements.txt`
+2. `python run start`
+
+
+# Team stuff, remove everything below later
+
+## First run of code :
+
+1. pip install -r dev-requirements.txt
+2. pre-commit run --all-file
+
+Explaning my mind :
+
+## Todo :
+https://www.notion.so/8f9c7260f0d6423684cfaab1f5df09d9?v=acf25f78046f4eff8baa63b54a3e5d0d
+
+Fews sections:
+- <b>F</b>ile management
+- <b>U</b>ser interactions
+- <b>L</b>evel design
+- <b>S</b>tory telling + puzzle
+- <b>G</b>ame interaction
+- <b>D</b>atabase design
+
+
+# Event information README
+
+## Style line to follow /!\
 
 [Event style guide](https://pythondiscord.com/events/code-jams/code-style-guide/) to get more information about what we consider a maintainable code style.
 
@@ -25,6 +65,14 @@ Here is a sample output:
 
 Each line corresponds to an error. The first part is the file path, then the line number, and the column index.
 Then comes the error code, a unique identifier of the error, and then a human-readable message.
+
+If, for any reason, you do not wish to comply with this specific error on a specific line, you can add `# noqa: CODE` at the end of the line.
+For example:
+```python
+def helloWorld():  # noqa: N802
+    ...
+```
+will pass linting. Although we do not recommend ignoring errors unless you have a good reason to do so.
 
 It is run by calling `flake8` in the project root.
 
@@ -61,16 +109,12 @@ It is *installed* by running `pre-commit install` and can be run manually by cal
 - `python-check-blanket-noqa`: Forbids you from using noqas on large pieces of code.
 - `isort`: Runs ISort.
 - `flake8`: Runs flake8.
+- `pylint`: Runs pylint
+- `black`: Runs black formater
 
 The last two hooks won't ship with their own environment but will rather run shell commands. You will have to modify them if you change your dependency manager.
 
-## How do I use it?
-
-## Run first
-
-Install dependencies
-1. pip install -r dev-requirements.txt
-2. pre-commit run --all-file
+## If you want to run a virtual environment
 
 ### Using the Default Pip Setup
 
