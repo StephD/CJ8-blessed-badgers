@@ -18,3 +18,4 @@ flake8-isort~=4.0
 black~=21.6b0
 pylint~=2.9.3
 blessed~=1.18.1
+numpy~=1.21.0
