@@ -3,7 +3,7 @@ import sys
 import blessed
 
 from modules.logger import log
-from scenes import StartScene
+from scenes import GameScene, StartScene
 
 
 def main() -> None:
@@ -17,9 +17,11 @@ def main() -> None:
     if keypressed != "q":
         if keypressed == "n":  # New game
             log("New game", "menu")
+            GameScene().render(term)
             pass
         elif keypressed == "t":  # Run the tutorial
             log("New tutorial", "menu")
+            GameScene("tuto").render(term)
             pass
         elif keypressed == "c":  # Load last game
             log("Load last game", "menu")

@@ -47,14 +47,14 @@ repos:
           - flake8-docstrings~=1.5
           - flake8-isort~=4.0
 
-  - repo: https://github.com/PyCQA/pylint
-    rev: v2.9.3
-    hooks:
-      - id: pylint
-        name: pylint
-        # entry: pylint
-        # language: system
-        types: [python]
+  # - repo: https://github.com/PyCQA/pylint
+  #   rev: v2.9.3
+  #   hooks:
+  #     - id: pylint
+  #       name: pylint
+  #       # entry: pylint
+  #       # language: system
+  #       types: [python]
         # always_run: true
         # args: [--disable=C0103]
 
