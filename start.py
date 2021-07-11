@@ -30,6 +30,7 @@ def main() -> None:
             pass
 
     log("The game end")
+    print(term.clear)
     sys.exit(0)
 
 
