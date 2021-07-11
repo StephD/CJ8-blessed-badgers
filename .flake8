@@ -21,7 +21,9 @@ ignore=
     # Comments
     E266,
     # Type Annotations
-    ANN002,ANN003,ANN101,ANN102,ANN204,ANN206
+    ANN002,ANN003,ANN101,ANN102,ANN204,ANN206,
+    # Because it's annoying sorry :'(
+    D101,D102, ANN001
 
 [isort]
 # Select the 5th style (Hanging grid grouped) to handle longer import.
