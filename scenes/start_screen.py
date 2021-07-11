@@ -53,9 +53,7 @@ class Square:
             & (np.dot(am.T, ad) < np.dot(ad, ad))
         ).T
 
-    def update(
-        self, screen_dimensions: tuple[tuple[float, float], tuple[float, float]]
-    ) -> None:
+    def update(self, screen_dimensions: tuple[tuple[float, float], tuple[float, float]]) -> None:
         (lower_x, lower_y), (upper_x, upper_y) = screen_dimensions
         self.translate(self.velocity)
         self.rotate(self.angular_velocity)
@@ -76,14 +74,10 @@ class Square:
                 self.velocity[0] = -abs(self.velocity[0])
 
     def to_be_painted(self, row: np.array, col: np.array) -> set[tuple[int, int]]:
-        return set(
-            (int(x), int(y))
-            for x, y in np.transpose(self.contains(np.array([row, col])).nonzero())
-        )
+        return set((int(x), int(y)) for x, y in np.transpose(self.contains(np.array([row, col])).nonzero()))
 
 
 class StartScene(Scene):
-
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
@@ -146,9 +140,7 @@ class StartScene(Scene):
                 print(title_line + term.move_down + term.move_left(len(title_line)), end="")
 
             title_indices = {
-                (y + title_start_row, x + title_start_col)
-                for x in range(title_width)
-                for y in range(title_height)
+                (y + title_start_row, x + title_start_col) for x in range(title_width) for y in range(title_height)
             }
 
             menu_width = len((" " * 5).join(self.menu_items))
@@ -166,13 +158,8 @@ class StartScene(Scene):
                 for square in squares:
                     square.update(((col[0, 0], row[-1, 0]), (col[0, -1], row[0, 0])))
                     indices_to_be_painted |= square.to_be_painted(row, col)
-                for y, x in (
-                    indices_to_be_painted - old_indices - title_indices - menu_indices
-                ):
+                for y, x in indices_to_be_painted - old_indices - title_indices - menu_indices:
                     print(term.move_xy(x, y) + chr(8226), end="", flush=True)
-                for y, x in (
-                    old_indices - indices_to_be_painted - title_indices - menu_indices
-                ):
+                for y, x in old_indices - indices_to_be_painted - title_indices - menu_indices:
                     print(term.move_xy(x, y) + " ", end="", flush=True)
                 old_indices = indices_to_be_painted
-
