@@ -1,0 +1,26 @@
+{
+    "menu": {
+        "options": {
+            "new_game": "New game [N]",
+            "tutorial": "Tutorial [T]",
+            "continue": "Continue [C]",
+            "about": "About [A]",
+            "language": "Language [L]",
+            "quit": "Quit [Q]"
+        }
+    },
+    "action": {
+        "cancel": "Cancel",
+        "confirm": "Confirm"
+    },
+    "story": {
+        "intro": {
+            "1": "Hey ... Wake up"
+        }
+    },
+    "entity": {
+        "door_locked": "This door is locked",
+        "key_find": "You need to find a key",
+        "key_is_found": "You found a key"
+    }
+}

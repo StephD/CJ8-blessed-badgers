@@ -1,0 +1,12 @@
+{
+    "menu": {
+        "options": {
+            "new_game": "Nouvelle partie [N]",
+            "tutorial": "Tutoriel [T]",
+            "continue": "Continuer [C]",
+            "about": "A propos [A]",
+            "language": "Langue [L]",
+            "quit": "Quitter [Q]"
+        }
+    }
+}
