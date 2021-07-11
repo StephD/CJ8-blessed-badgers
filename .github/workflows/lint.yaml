@@ -47,13 +47,17 @@ jobs:
       # Uncomment the step that matches your setup.
 
       # Default Env setup
-      - name: Run hooks through our requirement file
-        run: |
-          pip install -r dev-requirements.txt
-          pre-commit run --all-files
-        env:
-          # Force pre-commit to do a system install.
-          PIP_USER: 0
+      # - name: Run hooks through our requirement file
+      #   run: |
+      #     pip install -r dev-requirements.txt
+      #     pre-commit run --all-files
+      #   env:
+      #     # Force pre-commit to do a system install.
+      #     PIP_USER: 0
+
+
+      - name: Run pre-commit hooks.
+        uses: pre-commit/action@v2.0.3
 
         # Pipenv setup
         # - name: Run hooks through our Pipenv environment.
