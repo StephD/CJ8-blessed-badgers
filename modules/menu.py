@@ -21,8 +21,8 @@ def make_menu(term: blessed.Terminal, rows: int, cols: int) -> set[tuple[int, in
     """Draws the menu in the terminal, returning the coordinates where it printed."""
     menu_items = [
         "New Game [n]",
+        "Tutorial [t]",
         "Continue [c]",
-        "Help [h]",
         "About [a]",
         "Version [v]",
         "Quit [q]",

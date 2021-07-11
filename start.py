@@ -15,7 +15,19 @@ def main() -> None:
     log(keypressed, "keypressed")
     # Get the result of the menu to start or the tutorial or game
     if keypressed != "q":
-        pass
+        if keypressed == "n":  # New game
+            log("New game", "menu")
+            pass
+        elif keypressed == "t":  # Run the tutorial
+            log("New tutorial", "menu")
+            pass
+        elif keypressed == "c":  # Load last game
+            log("Load last game", "menu")
+            # Load the saved game data
+            pass
+        elif keypressed == "a":  # About the team, jam, why this
+            log("About the game", "menu")
+            pass
 
     log("The game end")
     sys.exit(0)
