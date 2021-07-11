@@ -52,7 +52,7 @@ class StartScene(Scene):
             menu_indices = make_menu(term, rows, cols)
 
             key_input = ""
-            while key_input.lower() not in ["n", "c", "t", "a", "v", "q"]:
+            while key_input.lower() not in ["n", "c", "t", "a", "q"]:
                 key_input = term.inkey(timeout=0.02)
                 indices_to_be_painted = set()
                 for square in self.squares:
