@@ -24,7 +24,6 @@ def make_menu(term: blessed.Terminal, rows: int, cols: int) -> set[tuple[int, in
         "Tutorial [t]",
         "Continue [c]",
         "About [a]",
-        "Version [v]",
         "Quit [q]",
     ]
     menu_width = len((" " * 5).join(menu_items))
