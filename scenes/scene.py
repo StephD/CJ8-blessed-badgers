@@ -4,6 +4,3 @@ class Scene:
 
     This scene will be filled with entities
     """
-
-    def __init__(self) -> None:
-        pass

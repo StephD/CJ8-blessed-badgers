@@ -5,6 +5,3 @@ class Entity:
     Door, frame, enemy,..
     Every thing the the player can interact with.
     """
-
-    def __init__(self) -> None:
-        pass
