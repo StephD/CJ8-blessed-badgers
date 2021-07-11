@@ -39,4 +39,82 @@ The game detect the player go throught a door
 In the tutorial, it's stop here and display message "Well done, you get out of here, wanna try the real challenger?"
 In the game, it will load the next room.
 
-###
+### Start the game
+### Story (STORY TELLER)
+
+First, need to show story displayed on the screen instead of the player. The message will be display in the bottom, top bar? or Pop-up message. I like the message in the bottom as the player don't have to make action with them and it doesn't "block" the game
+
+### Game itself (LEVEL DESIGN)
+
+It will display the game screen. Here is an example. What ever border we can make ahah
+
+```
+.____________________.
+||------°°°°-----|   |
+||               |   |
+||               |   |
+||       @       |   |
+||               |   |
+||---------------|   |
+|________________|___|
+```
+
+Here is example with color:
+
+https://dxtz6bzwq9sxx.cloudfront.net/demo_3rdparty_githeat.gif
+https://github.com/AmmsA/Githeat
+
+The side bar is for displaying the item, of what the player own.
+The bottom bar car be for other kind of informations time the time left
+
+### Movements & actions (USER INTERACTION)
+
+With the keyboard, the player with make action into the game. Arrow keys are use to move. 'a' can be for making an action. 'd' for drop an item. 'u' for using an item (potion to get heal?), 'q' for quit.
+
+
+### Interactions with the environment (GAME INTERACTION)
+
+When the player move, there is a detect of the elements.
+
+Elements can be door, other character, item, look, coin, frame, puzzle, ....
+
+When the player arrive next to something, a message is display and propose the player to interact ('a' for action).
+If it's a puzzle, may be a pop-up message with the question and input the answer.
+
+#### Changing the room
+
+When the player pass a door, the room need to change. The room design need to be loaded and display in the screen.
+
+### Database (DATABASE)
+
+When the player interact with something, there is an player object that will be updated with all the structure of where the player is in the game. I don't know yet the structure but can be :
+```
+{
+    "room":{
+        '1':{
+            is_door_unlock:True,
+            is_key_is found: True,
+            is_secret_door_found: False,
+        },
+        '2':{
+            ...
+        }
+    }
+    "items":{"keys_remaining":1, 'lifes_left':2, ..}
+}
+```
+Need to design it :-)
+
+### Saving the game (FILE MANAGEMENT)
+
+All the user data will be saved into a file and read if the player load the game.
+
+Can use 'pandas' to read into a CSV and associate everything?
+
+### Level generation (FILE MANAGEMENT)
+
+All the actions, door interaction need to be read somewhere. Like what action is need to make this appear. Like the solution of the questions.
+Or what door bring to what room. The game need to read somewhere the passing the door 4 in the room 3 will bring to the room 6, and passing the door 4 in the room 6 will bring the to room 3 !
+
++ Instead of hardcode the room layout. This can be setup into a file and we just need to edit the file to edit a level.
+Need to be a 2D dataset with every rows and lines. Not yet sure how to deal with that
