@@ -9,7 +9,7 @@ from screens.start_screen import StartScreen
 
 class AboutScreen(StartScreen):
     def __init__(self, *args, **kwargs):
-
+        super().__init__(*args, **kwargs)
         num_squares = 3
         self.squares = [Square() for _ in range(num_squares)]
 

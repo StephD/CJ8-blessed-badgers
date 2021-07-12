@@ -10,7 +10,7 @@ class Language:
     """
 
     def __init__(self) -> None:
-        self.language = "EN"
+        self.user_language = "EN"
         # pass
 
     def set_language(self) -> None:
