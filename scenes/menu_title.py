@@ -13,6 +13,7 @@ def make_title(term: blessed.Terminal, rows: int, cols: int) -> set[tuple[int, i
 
     print(term.move_xy(title_start_col, title_start_row), end="")
 
-    [print(title_line + term.move_down + term.move_left(len(title_line)), end="") for title_line in title_lines]
+    for title_line in title_lines:
+        print(title_line + term.move_down + term.move_left(len(title_line)), end="")
 
     return {(y + title_start_row, x + title_start_col) for x in range(title_width) for y in range(title_height)}
