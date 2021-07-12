@@ -2,7 +2,7 @@ import blessed
 import numpy as np
 
 # from modules.language import Language
-from scenes import make_title
+from scenes.menu_title import print_title
 
 from .menu_screen import MenuScreen
 
@@ -21,8 +21,8 @@ class AboutScreen(MenuScreen):
         with term.cbreak(), term.hidden_cursor():
             print(term.home + term.clear)
 
-            title_indices = make_title(term, rows, cols)
-            menu_indices = self.make_menu(term, rows, cols)
+            title_indices = print_title(term, rows, cols)
+            menu_indices = self.print_text(term, rows, cols)
 
             old_indices = set()
             key_input = ""
@@ -32,7 +32,7 @@ class AboutScreen(MenuScreen):
                 old_indices = self.render_flying_square(term, col, row, old_indices, title_indices, menu_indices)
             return key_input
 
-    def make_menu(self, term: blessed.Terminal, rows: int, cols: int) -> set[tuple[int, int]]:
+    def print_text(self, term: blessed.Terminal, rows: int, cols: int) -> set[tuple[int, int]]:
         """Draws the menu in the terminal, returning the coordinates where it printed."""
         # divide menu to sections: What, Who, Why
         what = "This is a gamefied learning experience for young developers"

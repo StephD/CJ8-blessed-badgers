@@ -3,7 +3,7 @@ import blessed
 from assets import load_asset
 
 
-def make_title(term: blessed.Terminal, rows: int, cols: int) -> set[tuple[int, int]]:
+def print_title(term: blessed.Terminal, rows: int, cols: int) -> set[tuple[int, int]]:
     """Draws the title in the terminal, returning the coordinates where it printed."""
     title_lines = load_asset("title.txt")
     title_width = max(term.length(title_line) for title_line in title_lines)
