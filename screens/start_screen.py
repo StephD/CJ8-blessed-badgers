@@ -5,7 +5,8 @@ import numpy as np
 from blessed.keyboard import Keystroke
 
 from assets.flying_square import Square
-from screens.menu import make_menu, make_title
+from scenes import make_title
+from screens.menu import make_menu
 
 
 class StartScreen:

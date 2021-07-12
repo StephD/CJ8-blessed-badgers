@@ -2,7 +2,8 @@ import blessed
 import numpy as np
 
 from assets.flying_square import Square
-from screens.language import make_menu, make_title
+from scenes import make_title
+from screens.language import make_menu
 
 
 class LanguageScreen:
