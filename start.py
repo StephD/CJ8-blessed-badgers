@@ -3,7 +3,7 @@ import sys
 import blessed
 
 from modules.logger import log
-from scenes import AboutScene, GameScene, LangScene, StartScene
+from screens import AboutScreen, GameScreen, LanguageScreen, StartScreen
 
 
 def main() -> None:
@@ -15,14 +15,14 @@ def main() -> None:
     log(keypressed, "keypressed")
     # Get the result of the menu to start or the tutorial or game
     while keypressed != "q":
-        keypressed = StartScene().render(term)
+        keypressed = StartScreen().render(term)
         if keypressed == "n":  # New game
             log("New game", "menu")
-            GameScene().render(term)
+            GameScreen().render(term)
             pass
         elif keypressed == "t":  # Run the tutorial
             log("New tutorial", "menu")
-            GameScene("tuto").render(term)
+            GameScreen("tuto").render(term)
             pass
         elif keypressed == "c":  # Load last game
             log("Load last game", "menu")
@@ -30,10 +30,10 @@ def main() -> None:
             pass
         elif keypressed == "a":  # About the team, jam, why this
             log("About the game", "menu")
-            AboutScene().render(term)
+            AboutScreen().render(term)
         elif keypressed == "l":  # language selection
             log("Language selector opened")
-            LangScene().render(term)
+            LanguageScreen().render(term)
 
     log("The game end")
     print(term.clear)

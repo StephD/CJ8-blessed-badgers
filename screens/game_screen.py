@@ -4,7 +4,7 @@ from modules.logger import log
 from scenes.scene import Scene
 
 
-class GameScene(Scene):
+class GameScreen(Scene):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
