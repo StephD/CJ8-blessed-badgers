@@ -5,6 +5,7 @@ import numpy as np
 from blessed.keyboard import Keystroke
 
 from modules.flying_square import Square
+from modules.language import Language
 from scenes.menu_title import make_title
 
 
@@ -12,6 +13,7 @@ class MenuScreen:
     def __init__(self):
         num_squares = 6
         self.squares = [Square() for _ in range(num_squares)]
+        self.language = Language()
 
     def render(self, term: blessed.Terminal) -> Union[Keystroke, str]:
         """Renders the start screen in the terminal."""
@@ -20,7 +22,7 @@ class MenuScreen:
         cols -= 2
 
         with term.cbreak(), term.hidden_cursor():
-            print(term.home + term.on_blue + term.clear)
+            print(term.home + term.clear)
 
             row, col = np.indices((rows, cols))
             row = row[::-1]
@@ -55,12 +57,12 @@ class MenuScreen:
     def make_menu(self, term: blessed.Terminal, rows: int, cols: int) -> set[tuple[int, int]]:
         """Draws the menu in the terminal, returning the coordinates where it printed."""
         menu_items = [
-            "New Game [n]",
-            "Tutorial [t]",
-            "Continue [c]",
-            "About [a]",
-            "Language [l]",
-            "Quit [q]",
+            self.language.get("menu", "options", "new_game"),
+            self.language.get("menu", "options", "tutorial"),
+            self.language.get("menu", "options", "continue"),
+            self.language.get("menu", "options", "about"),
+            self.language.get("menu", "options", "language"),
+            self.language.get("menu", "options", "quit"),
         ]
         menu_width = len((" " * 5).join(menu_items))
         menu_start_col = (cols - menu_width) // 2
