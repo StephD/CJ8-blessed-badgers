@@ -15,7 +15,7 @@ def make_menu(term: blessed.Terminal, rows: int, cols: int) -> set[tuple[int, in
     for i, section in enumerate(sections):
         menu_width = len(section + " " * 0)
         menu_start_col = (cols - menu_width) // 2
-        menu_row = rows - 14 + i
+        menu_row = rows - 10 + i
         print(term.move_xy(menu_start_col, menu_row), end="")
         print(section)
         coordinates = coordinates.union({(menu_row, x + menu_start_col) for x in range(menu_width)})
