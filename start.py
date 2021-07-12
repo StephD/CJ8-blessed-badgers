@@ -3,7 +3,7 @@ import sys
 import blessed
 
 from modules.logger import log
-from scenes import GameScene, StartScene
+from scenes import AboutScene, GameScene, StartScene
 
 
 def main() -> None:
@@ -29,7 +29,7 @@ def main() -> None:
             pass
         elif keypressed == "a":  # About the team, jam, why this
             log("About the game", "menu")
-            pass
+            AboutScene().render(term)
 
     log("The game end")
     print(term.clear)
