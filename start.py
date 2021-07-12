@@ -11,10 +11,11 @@ def main() -> None:
     log("The game start")
     term = blessed.Terminal()
     # Start the menu
-    keypressed = StartScene().render(term)
+    keypressed = None
     log(keypressed, "keypressed")
     # Get the result of the menu to start or the tutorial or game
     while keypressed != "q":
+        keypressed = StartScene().render(term)
         if keypressed == "n":  # New game
             log("New game", "menu")
             GameScene().render(term)
@@ -30,7 +31,6 @@ def main() -> None:
         elif keypressed == "a":  # About the team, jam, why this
             log("About the game", "menu")
             AboutScene().render(term)
-            keypressed = StartScene().render(term)
 
     log("The game end")
     print(term.clear)
