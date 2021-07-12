@@ -3,7 +3,7 @@ import sys
 import blessed
 
 from modules.logger import log
-from screens import AboutScreen, GameScreen, LanguageScreen, StartScreen
+from screens import AboutScreen, GameScreen, LanguageScreen, MenuScreen
 
 
 def main() -> None:
@@ -17,7 +17,7 @@ def main() -> None:
 
     with term.fullscreen(), term.cbreak():
         while keypressed != "q":
-            keypressed = StartScreen().render(term)
+            keypressed = MenuScreen().render(term)
             if keypressed == "n":  # New game
                 log("New game", "menu")
                 GameScreen().render(term)
