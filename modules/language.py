@@ -14,23 +14,21 @@ class Language:
         # pass
 
     # Code edited by FamethystForLife
-    def get(self,*args):
-        l = [*args]
+    def get(self, *args):
+        selections = [*args]
 
         # Parse appropriate JSON language file based on lang param
         file_template = "../assets/lang/lang_{}.json"
         copy = self.language
         selected_lang_path = file_template.format(copy.lower())
-        with open(selected_lang_path,"r") as lang:
+        with open(selected_lang_path, "r") as lang:
             lang_dict = json.load(lang)
 
         # Obtain appropriate string
-        for key in l:
+        for key in selections:
             lang_dict = lang_dict[key]
 
         return lang_dict
-
-
 
     def set_language(self) -> None:
         pass
@@ -41,5 +39,3 @@ class Language:
     def get_text(self, text_category, text_command) -> str:
         #
         pass
-
-

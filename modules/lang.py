@@ -36,4 +36,3 @@ def make_menu(term: blessed.Terminal, rows: int, cols: int) -> set[tuple[int, in
         print(section)
         coordinates = coordinates.union({(menu_row, x + menu_start_col) for x in range(menu_width)})
     return coordinates
-
