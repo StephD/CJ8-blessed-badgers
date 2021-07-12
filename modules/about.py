@@ -19,18 +19,17 @@ def make_title(term: blessed.Terminal, rows: int, cols: int) -> set[tuple[int, i
 
 def make_menu(term: blessed.Terminal, rows: int, cols: int) -> set[tuple[int, int]]:
     """Draws the menu in the terminal, returning the coordinates where it printed."""
-    menu_items = [
-        "New Game [n]",
-        "Tutorial [t]",
-        "Continue [c]",
-        "About [a]",
-        "Quit [q]",
-    ]
-    menu_width = len((" " * 5).join(menu_items))
-    menu_start_col = (cols - menu_width) // 2
-    menu_row = rows - 3
-    print(term.move_xy(menu_start_col, menu_row), end="")
-    for menu_item in menu_items:
-        print(menu_item + term.move_right(5), end="")
-
-    return {(menu_row, x + menu_start_col) for x in range(menu_width)}
+    # divide menu to sections: What, Who, Why
+    what = "This is a gamefied learning experience for young developers"
+    who = "Made by young developers: Blessed badgers"
+    why = "For fun and codejam :)"
+    sections = [what, who, why]
+    coordinates = set()
+    for i, section in enumerate(sections):
+        menu_width = len(section + " " * 2)
+        menu_start_col = (cols - menu_width) // 2
+        menu_row = rows - 5 + i
+        print(term.move_xy(menu_start_col, menu_row), end="")
+        print(section)
+        coordinates = coordinates.union({(menu_row, x + menu_start_col) for x in range(menu_width)})
+    return coordinates

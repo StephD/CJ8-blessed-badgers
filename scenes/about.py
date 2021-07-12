@@ -2,15 +2,15 @@ import blessed
 import numpy as np
 
 from assets.flying_square import Square
-from modules.menu import make_menu, make_title
+from modules.about import make_menu, make_title
 from scenes.scene import Scene
 
 
-class StartScene(Scene):
+class AboutScene(Scene):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        num_squares = 6
+        num_squares = 3
         self.squares = [
             Square(
                 np.array(
@@ -52,7 +52,7 @@ class StartScene(Scene):
             menu_indices = make_menu(term, rows, cols)
 
             key_input = ""
-            while key_input.lower() not in ["n", "c", "t", "a", "q"]:
+            while key_input.lower() not in ["b"]:
                 key_input = term.inkey(timeout=0.02)
                 indices_to_be_painted = set()
                 for square in self.squares:
