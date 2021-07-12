@@ -11,17 +11,41 @@ class Square:
     velocity: np.array
     angular_velocity: float
 
-    def __init__(self, vertices: np.array, velocity: np.array, angular_velocity: float):
-        self.vertices = vertices
+    def __init__(self, vertices: np.array = None, velocity: np.array = None, angular_velocity: float = None):
+        if vertices is None:
+            self.vertices = np.array(
+                [
+                    [-2.0, 1.0],
+                    [-2.0, 5.0],
+                    [2.0, 5.0],
+                    [2.0, 1.0],
+                ]
+            )
+        else:
+            self.vertices = vertices
+        self.velocity = (
+            velocity
+            if velocity is not None
+            else np.array(
+                [
+                    np.random.uniform(0.2, 0.3) * np.random.choice([-1, 1]),
+                    np.random.uniform(0.2, 0.3) * np.random.choice([-1, 1]),
+                ]
+            )
+        )
+        self.angular_velocity = (
+            angular_velocity
+            if angular_velocity is not None
+            else np.random.uniform(0.02, 0.05) * np.random.choice([-1, 1])
+        )
+
         self.center = np.array(
             [
-                sum(point[0] for point in vertices) / len(vertices),
-                sum(point[1] for point in vertices) / len(vertices),
+                sum(point[0] for point in self.vertices) / len(self.vertices),
+                sum(point[1] for point in self.vertices) / len(self.vertices),
             ]
         )
         self.rotation = 0
-        self.velocity = velocity
-        self.angular_velocity = angular_velocity
 
     def rotate(self, delta_theta: float) -> None:
         self.rotation = (self.rotation + delta_theta) % (2 * pi)
