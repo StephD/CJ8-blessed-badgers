@@ -2,9 +2,7 @@ from blessed import Terminal
 
 
 class Game:
-    '''
-    Basic Game.
-    '''
+    """Basic Game."""
 
     player = "@"
 
@@ -15,9 +13,7 @@ class Game:
         self.obstacles = obstacles
 
     def draw_map(self) -> str:
-        """
-        Draw a map and the player.
-        """
+        """Draw a map and the player."""
         width = self.term.width // 2
         height = self.term.height // 2
 
@@ -48,9 +44,7 @@ class Game:
         return box
 
     def move_player(self, mov) -> None:
-        """
-        Move player with
-        """
+        """Move player with"""
         # Make a copy of the position of the player.
         pos_x, pos_y = self.pos_x, self.pos_y
 
@@ -75,9 +69,7 @@ class Game:
 
 
 def main() -> None:
-    '''
-    Main
-    '''
+    """Main"""
     term = Terminal()
     inp = ""
     game = Game(term)

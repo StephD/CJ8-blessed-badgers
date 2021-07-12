@@ -20,7 +20,7 @@ class Language:
         selections = [*args]
 
         # Parse appropriate JSON language file based on lang param
-        with open(LANGUAGE_PATH + f"lang_{self.game_language}.json", "r", encoding='utf-8') as lang:
+        with open(LANGUAGE_PATH + f"lang_{self.game_language}.json", "r", encoding="utf-8") as lang:
             lang_dict = json.load(lang)
 
         # Obtain appropriate string
