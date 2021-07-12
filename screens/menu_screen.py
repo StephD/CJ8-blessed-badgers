@@ -10,7 +10,7 @@ from screens.menu import make_menu
 
 
 class MenuScreen:
-    def __init__(self, *args, **kwargs):
+    def __init__(self):
         num_squares = 6
         self.squares = [Square() for _ in range(num_squares)]
 
