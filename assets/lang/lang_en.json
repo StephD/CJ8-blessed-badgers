@@ -14,7 +14,9 @@
         "languages": {
             "english": "English",
             "french": "Francais",
-            "spanish": "Espanol"
+            "spanish": "Español",
+            "russian":  "русский",
+            "german": "Deutsch"
         }
     },
     "action": {

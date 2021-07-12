@@ -23,7 +23,7 @@ class Game:
 
         box = "┌" + "─" * width + "┐\n"
         for i in range(height):
-            box += "│" + " " * width + "|\n"
+            box += "│" + " " * width + "│\n"
 
         box += "└" + "─" * width + "┘"
 
@@ -58,13 +58,13 @@ class Game:
         term_erase = self.term.move_xy(pos_x, pos_y) + " "
 
         # Update the position.
-        if mov == "j":
-            pos_y += 1
-        if mov == "k":
+        if mov == "\x1b[A":
             pos_y -= 1
-        if mov == "h":
+        if mov == "\x1b[B":
+            pos_y += 1
+        if mov == "\x1b[D":
             pos_x -= 1
-        if mov == "l":
+        if mov == "\x1b[C":
             pos_x += 1
 
         if (pos_x, pos_y) not in self.obstacles:
@@ -85,7 +85,8 @@ def main() -> None:
     print(term.home + term.clear + game.draw_map())
     with term.cbreak(), term.hidden_cursor():
         while inp != "q":
-            inp = term.inkey().lower()
+            inp = term.inkey()
+            print(str(inp))
             game.move_player(inp)
         print(term.clear, "BYE!")
 
