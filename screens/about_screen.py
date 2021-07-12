@@ -4,32 +4,10 @@ import numpy as np
 from assets.flying_square import Square
 from scenes import make_title
 from screens.about import make_menu
+from screens.start_screen import StartScreen
 
 
-class AboutScreen:
-    def __init__(self, *args, **kwargs):
-
-        num_squares = 3
-        self.squares = [
-            Square(
-                np.array(
-                    [
-                        [-2.0, 1.0],
-                        [-2.0, 5.0],
-                        [2.0, 5.0],
-                        [2.0, 1.0],
-                    ]
-                ),
-                np.array(
-                    [
-                        np.random.uniform(0.2, 0.3) * np.random.choice([-1, 1]),
-                        np.random.uniform(0.2, 0.3) * np.random.choice([-1, 1]),
-                    ]
-                ),
-                np.random.uniform(0.02, 0.05) * np.random.choice([-1, 1]),
-            )
-            for _ in range(num_squares)
-        ]
+class AboutScreen(StartScreen):
 
     def render(self, term: blessed.Terminal) -> None:
         """Renders the start screen in the terminal."""
