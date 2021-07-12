@@ -14,7 +14,7 @@ class Language:
         # pass
 
     # Code edited by FamethystForLife
-    def get(self, *args):
+    def get(self, *args) -> str:
         selections = [*args]
 
         # Parse appropriate JSON language file based on lang param
