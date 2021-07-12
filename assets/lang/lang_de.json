@@ -1,0 +1,26 @@
+{
+    "menu": {
+        "options": {
+            "new_game": "Neues Spiel [N]",
+            "tutorial": "Lernprogramm [T]",
+            "continue": "Fortsetzen [C]",
+            "about": "Über [A]",
+            "language": "Sprache [L]",
+            "quit": "Verlassen [Q]"
+        }
+    },
+    "action": {
+        "cancel": "Aufheben",
+        "confirm": "Bestätigen"
+    },
+    "story": {
+        "intro": {
+            "1": "Hallo!... Aufwachen"
+        }
+    },
+    "entity": {
+        "door_locked": "Diese Tür ist verschlossen",
+        "key_find": "Du musst den schlüssel finden",
+        "key_is_found": "Du hast einen Schlüssel gefunden"
+    }
+}
