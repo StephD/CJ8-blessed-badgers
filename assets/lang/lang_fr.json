@@ -8,5 +8,19 @@
             "language": "Langue [L]",
             "quit": "Quitter [Q]"
         }
+    },
+    "action": {
+        "cancel": "Annuler",
+        "confirm": "Confirmer"
+    },
+    "story": {
+        "intro": {
+            "1": "Hey! Tu dois te réveiller."
+        }
+    },
+    "entity": {
+        "door_locked": "Cette porte est verrouillée",
+        "key_find": "Vous devez trouver une clé",
+        "key_is_found": "Vous avez trouvé une clé"
     }
 }

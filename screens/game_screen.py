@@ -1,12 +1,13 @@
 import blessed
 
 from modules.logger import log
-from scenes.scene import Scene
+
+# from scenes.scene import Scene
 
 
-class GameScene(Scene):
+class GameScreen:
     def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+        pass
 
     def render(self, term: blessed.Terminal) -> None:
         """Renders the start screen in the terminal."""

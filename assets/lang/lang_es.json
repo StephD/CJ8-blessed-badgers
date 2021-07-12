@@ -1,0 +1,26 @@
+{
+    "menu": {
+        "options": {
+            "new_game": "Neuvo Juego [N]",
+            "tutorial": "Tutorial [T]",
+            "continue": "Seguir [C]",
+            "about": " Sobre [A]",
+            "language": "Idioma [L]",
+            "quit": "Dejar [Q]"
+        }
+    },
+    "action": {
+        "cancel": "Cancelar",
+        "confirm": "Confirmar"
+    },
+    "story": {
+        "intro": {
+            "1": "¡Oye!... Despierta"
+        }
+    },
+    "entity": {
+        "door_locked": "La puerta está cerrada",
+        "key_find": "Encuentra una llave",
+        "key_is_found": "Encontraste una llave"
+    }
+}

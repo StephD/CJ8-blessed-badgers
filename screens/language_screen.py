@@ -1,36 +1,17 @@
 import blessed
 import numpy as np
 
-from assets.flying_square import Square
-from modules.menu import make_menu, make_title
-from scenes.scene import Scene
+from modules.flying_square import Square
+from scenes import make_title
+from screens.about_screen import AboutScreen
+from screens.language import make_menu
 
 
-class StartScene(Scene):
+class LanguageScreen(AboutScreen):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-
-        num_squares = 6
-        self.squares = [
-            Square(
-                np.array(
-                    [
-                        [-2.0, 1.0],
-                        [-2.0, 5.0],
-                        [2.0, 5.0],
-                        [2.0, 1.0],
-                    ]
-                ),
-                np.array(
-                    [
-                        np.random.uniform(0.2, 0.3) * np.random.choice([-1, 1]),
-                        np.random.uniform(0.2, 0.3) * np.random.choice([-1, 1]),
-                    ]
-                ),
-                np.random.uniform(0.02, 0.05) * np.random.choice([-1, 1]),
-            )
-            for _ in range(num_squares)
-        ]
+        num_squares = 3
+        self.squares = [Square() for _ in range(num_squares)]
 
     def render(self, term: blessed.Terminal) -> None:
         """Renders the start screen in the terminal."""
@@ -52,7 +33,7 @@ class StartScene(Scene):
             menu_indices = make_menu(term, rows, cols)
 
             key_input = ""
-            while key_input.lower() not in ["n", "c", "t", "a", "q", "l"]:
+            while key_input.lower() not in ["b"]:
                 key_input = term.inkey(timeout=0.02)
                 indices_to_be_painted = set()
                 for square in self.squares:
