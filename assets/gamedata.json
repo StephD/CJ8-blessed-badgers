@@ -1,4 +1,7 @@
 {
-    "is_game_already_played": false,
-    "game_mode": "game/tutorial"
+    "game": {
+        "is_game_already_played": false,
+        "game_mode": "game/tutorial",
+        "language": "EN"
+    }
 }
