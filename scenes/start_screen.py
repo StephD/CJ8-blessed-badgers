@@ -57,14 +57,19 @@ class StartScene(Scene):
             key_input = ""
             while key_input.lower() not in ["n", "c", "t", "a", "q", "l"]:
                 key_input = term.inkey(timeout=0.02)
+
+                # Print the flying square
                 indices_to_be_painted = set()
                 for square in self.squares:
                     square.update(((col[0, 0], row[-1, 0]), (col[0, -1], row[0, 0])))
                     indices_to_be_painted |= square.to_be_painted(row, col)
+
                 for y_index, x_index in indices_to_be_painted - old_indices - title_indices - menu_indices:
                     print(term.move_xy(x_index, y_index) + chr(8226), end="", flush=True)
+
                 for y_index, x_index in old_indices - indices_to_be_painted - title_indices - menu_indices:
                     print(term.move_xy(x_index, y_index) + " ", end="", flush=True)
+
                 old_indices = indices_to_be_painted
 
             return key_input
