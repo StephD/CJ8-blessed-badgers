@@ -1,19 +1,16 @@
-from typing import Union
-
 import blessed
 import numpy as np
-from blessed.keyboard import Keystroke
 
 from assets.flying_square import Square
-from modules.menu import make_menu, make_title
+from modules.lang import make_menu, make_title
 from scenes.scene import Scene
 
 
-class StartScene(Scene):
+class LangScene(Scene):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        num_squares = 6
+        num_squares = 3
         self.squares = [
             Square(
                 np.array(
@@ -35,7 +32,7 @@ class StartScene(Scene):
             for _ in range(num_squares)
         ]
 
-    def render(self, term: blessed.Terminal) -> Union[Keystroke, str]:
+    def render(self, term: blessed.Terminal) -> None:
         """Renders the start screen in the terminal."""
         cols, rows = term.width, term.height
         rows -= 2
@@ -55,21 +52,16 @@ class StartScene(Scene):
             menu_indices = make_menu(term, rows, cols)
 
             key_input = ""
-            while key_input.lower() not in ["n", "c", "t", "a", "q", "l"]:
+            while key_input.lower() not in ["b"]:
                 key_input = term.inkey(timeout=0.02)
-
-                # Print the flying square
                 indices_to_be_painted = set()
                 for square in self.squares:
                     square.update(((col[0, 0], row[-1, 0]), (col[0, -1], row[0, 0])))
                     indices_to_be_painted |= square.to_be_painted(row, col)
-
                 for y_index, x_index in indices_to_be_painted - old_indices - title_indices - menu_indices:
                     print(term.move_xy(x_index, y_index) + chr(8226), end="", flush=True)
-
                 for y_index, x_index in old_indices - indices_to_be_painted - title_indices - menu_indices:
                     print(term.move_xy(x_index, y_index) + " ", end="", flush=True)
-
                 old_indices = indices_to_be_painted
 
             return key_input
