@@ -3,10 +3,11 @@ import numpy as np
 
 from modules.flying_square import Square
 from scenes import make_title
+from screens.about_screen import AboutScreen
 from screens.language import make_menu
 
 
-class LanguageScreen:
+class LanguageScreen(AboutScreen):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 

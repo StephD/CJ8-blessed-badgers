@@ -4,9 +4,10 @@ import numpy as np
 from modules.flying_square import Square
 from scenes import make_title
 from screens.about import make_menu
+from screens.start_screen import StartScreen
 
 
-class AboutScreen:
+class AboutScreen(StartScreen):
     def __init__(self, *args, **kwargs):
 
         num_squares = 3
