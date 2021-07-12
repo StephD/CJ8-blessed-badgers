@@ -23,7 +23,8 @@ def make_menu(term: blessed.Terminal, rows: int, cols: int) -> set[tuple[int, in
     what = "This is a gamefied learning experience for young developers"
     who = "Made by young developers: Blessed badgers"
     why = "For fun and codejam :)"
-    sections = [what, who, why]
+    exit_text = "press [b] to return to Main menu"
+    sections = [what, who, why, exit_text]
     coordinates = set()
     for i, section in enumerate(sections):
         menu_width = len(section + " " * 2)
