@@ -38,11 +38,6 @@ class AboutScene(Scene):
         rows -= 2
         cols -= 2
 
-        key_input = ""
-        if key_input.lower() == "b":
-            print("TRIGGER TRIGGER TRIGGER")
-            return set()
-
         with term.cbreak(), term.hidden_cursor():
             row, col = np.indices((rows, cols))
             row = row[::-1]
