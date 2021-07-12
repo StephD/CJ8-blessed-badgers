@@ -3,7 +3,7 @@ import sys
 import blessed
 
 from modules.logger import log
-from scenes import AboutScene, GameScene, StartScene
+from scenes import AboutScene, GameScene, LangScene, StartScene
 
 
 def main() -> None:
@@ -31,6 +31,9 @@ def main() -> None:
         elif keypressed == "a":  # About the team, jam, why this
             log("About the game", "menu")
             AboutScene().render(term)
+        elif keypressed == "l":  # language selection
+            log("Language selector opened")
+            LangScene().render(term)
 
     log("The game end")
     print(term.clear)
