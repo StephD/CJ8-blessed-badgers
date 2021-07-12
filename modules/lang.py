@@ -20,12 +20,12 @@ def make_title(term: blessed.Terminal, rows: int, cols: int) -> set[tuple[int, i
 def make_menu(term: blessed.Terminal, rows: int, cols: int) -> set[tuple[int, int]]:
     """Draws the menu in the terminal, returning the coordinates where it printed."""
     # divide menu to sections: What, Who, Why
-    en = "Select English" + " "*5 + "[1]"
-    ru = "выбрать русский" + " "*4 + "[2]"
-    es = "Elegir español" + " "*5 + "[3]"
-    fr = "Elija francés" + " "*6 + "[4]"
+    en = "Select English" + " " * 5 + "[1]"
+    ru = "выбрать русский" + " " * 4 + "[2]"
+    es = "Elegir español" + " " * 5 + "[3]"
+    fr = "Elija francés" + " " * 6 + "[4]"
     de = "Wählen Sie Deutsch" + " " + "[5]"
-    exit_text = "Exit" + " "*15 + "[b]"
+    exit_text = "Exit" + " " * 15 + "[b]"
     sections = [en, ru, es, fr, de, exit_text]
     coordinates = set()
     for i, section in enumerate(sections):

@@ -3,7 +3,7 @@ import sys
 import blessed
 
 from modules.logger import log
-from scenes import AboutScene, GameScene, StartScene, LangScene
+from scenes import AboutScene, GameScene, LangScene, StartScene
 
 
 def main() -> None:
