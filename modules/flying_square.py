@@ -90,4 +90,4 @@ class Square:
                 self.velocity[0] = -abs(self.velocity[0])
 
     def to_be_painted(self, row: np.array, col: np.array) -> set[tuple[int, int]]:
-        return set((int(x), int(y)) for x, y in np.transpose(self.contains(np.array([row, col])).nonzero()))
+        return {(int(x), int(y)) for x, y in np.transpose(self.contains(np.array([row, col])).nonzero())}
