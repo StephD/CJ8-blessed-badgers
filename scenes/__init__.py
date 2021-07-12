@@ -1,1 +1,1 @@
-from .menu_title import make_title
+from .menu_title import print_title

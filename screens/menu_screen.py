@@ -6,7 +6,7 @@ from blessed.keyboard import Keystroke
 
 from modules.flying_square import Square
 from modules.language import Language
-from scenes.menu_title import make_title
+from scenes.menu_title import print_title
 
 
 class MenuScreen:
@@ -27,8 +27,8 @@ class MenuScreen:
         with term.cbreak(), term.hidden_cursor():
             print(term.home + term.blue + term.clear)
 
-            title_indices = make_title(term, rows, cols)
-            menu_indices = self.make_menu(term, rows, cols)
+            title_indices = print_title(term, rows, cols)
+            menu_indices = self.print_text(term, rows, cols)
 
             old_indices = set()
             key_input = ""
@@ -39,7 +39,7 @@ class MenuScreen:
 
             return key_input
 
-    def make_menu(self, term: blessed.Terminal, rows: int, cols: int) -> set[tuple[int, int]]:
+    def print_text(self, term: blessed.Terminal, rows: int, cols: int) -> set[tuple[int, int]]:
         """Draws the menu in the terminal, returning the coordinates where it printed."""
         menu_items = [
             self.language.get("menu", "options", "new_game"),

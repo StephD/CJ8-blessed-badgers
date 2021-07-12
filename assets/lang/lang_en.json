@@ -7,11 +7,20 @@
             "about": "About [A]",
             "language": "Language [L]",
             "quit": "Quit [Q]"
+        },
+        "about": {
+            "who": ""
+        },
+        "languages": {
+            "english": "English",
+            "french": "Francais",
+            "spanish": "Espanol"
         }
     },
     "action": {
         "cancel": "Cancel",
-        "confirm": "Confirm"
+        "confirm": "Confirm",
+        "return": "Return"
     },
     "story": {
         "intro": {
