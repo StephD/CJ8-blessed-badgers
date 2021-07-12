@@ -1,10 +1,9 @@
 import blessed
 import numpy as np
 
-from assets.flying_square import Square
 from scenes import make_title
-from screens.language import make_menu
 from screens.about_screen import AboutScreen
+from screens.language import make_menu
 
 
 class LanguageScreen(AboutScreen):

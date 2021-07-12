@@ -1,14 +1,12 @@
 import blessed
 import numpy as np
 
-from assets.flying_square import Square
 from scenes import make_title
 from screens.about import make_menu
 from screens.start_screen import StartScreen
 
 
 class AboutScreen(StartScreen):
-
     def render(self, term: blessed.Terminal) -> None:
         """Renders the start screen in the terminal."""
         cols, rows = term.width, term.height
