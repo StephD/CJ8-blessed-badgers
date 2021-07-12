@@ -9,7 +9,7 @@ from scenes.menu_title import make_title
 from screens.menu import make_menu
 
 
-class StartScreen:
+class MenuScreen:
     def __init__(self, *args, **kwargs):
         num_squares = 6
         self.squares = [Square() for _ in range(num_squares)]
@@ -21,14 +21,14 @@ class StartScreen:
         cols -= 2
 
         with term.cbreak(), term.hidden_cursor():
+            print(term.home + term.on_blue + term.clear)
+
             row, col = np.indices((rows, cols))
             row = row[::-1]
             row = (row - rows // 2) * 1 / 2
             col = (col - cols // 2) / 3 * 1 / 2
 
             old_indices = set()
-
-            print(term.home + term.clear)
 
             title_indices = make_title(term, rows, cols)
             menu_indices = make_menu(term, rows, cols)
