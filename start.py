@@ -14,7 +14,7 @@ def main() -> None:
     keypressed = StartScene().render(term)
     log(keypressed, "keypressed")
     # Get the result of the menu to start or the tutorial or game
-    if keypressed != "q":
+    while keypressed != "q":
         if keypressed == "n":  # New game
             log("New game", "menu")
             GameScene().render(term)
@@ -30,6 +30,7 @@ def main() -> None:
         elif keypressed == "a":  # About the team, jam, why this
             log("About the game", "menu")
             AboutScene().render(term)
+            keypressed = StartScene().render(term)
 
     log("The game end")
     print(term.clear)
