@@ -1,5 +1,8 @@
+from typing import Union
+
 import blessed
 import numpy as np
+from blessed.keyboard import Keystroke
 
 from assets.flying_square import Square
 from modules.menu import make_menu, make_title
@@ -32,7 +35,7 @@ class StartScene(Scene):
             for _ in range(num_squares)
         ]
 
-    def render(self, term: blessed.Terminal) -> None:
+    def render(self, term: blessed.Terminal) -> Union[Keystroke, str]:
         """Renders the start screen in the terminal."""
         cols, rows = term.width, term.height
         rows -= 2
