@@ -2,7 +2,7 @@
     "game": {
         "is_game_already_played": false,
         "game_mode": "normal",
-        "language": "france"
+        "language": "en"
     },
     "player": {
         "lifes_left": 3,
