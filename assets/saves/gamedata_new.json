@@ -1,36 +1,7 @@
 {
     "game": {
         "is_game_already_played": false,
-        "game_mode": "game/tutorial",
-        "language": "EN",
-        "last_saved": "10:44 7/12/2021"
-    },
-    "room": {
-        "1": {
-            "is_door_unlock": true,
-            "is_key_is_found": true,
-            "is_secret_door_found": false,
-            "items": {
-                "potion": {
-                    "last_pos": [
-                        1,
-                        1
-                    ]
-                }
-            },
-            "interactions": {
-                "npc_1": true,
-                "item_1": true
-            }
-        },
-        "2": {},
-        "3": {
-            "is_door_unlock": false,
-            "is_key_is_found": false,
-            "is_secret_door_found": false,
-            "items": {},
-            "interactions": {}
-        }
+        "game_mode": "new"
     },
     "player": {
         "lifes_left": 3,

@@ -4,8 +4,10 @@ import json
 # from datetime import datetime
 from modules.logger import log
 
-GAMEDATA_PATH = "assets"
-GAMESAVE_NAME = "gamedata_save"
+ASSETS_PATH = "assets"
+GAMEDATA_PATH = f"{ASSETS_PATH}/gamedata.json"
+GAMESAVE_NEW = f"{ASSETS_PATH}/saves/gamedata_new.json"
+GAMESAVE_SAVE = f"{ASSETS_PATH}/saves/gamedata_save.json"
 
 
 # class GameException(Exception):
@@ -19,20 +21,46 @@ class GameData:
 
     def __init__(self):
         try:
-            with open(f"{GAMEDATA_PATH}/gamedata.json", "r+") as file:
+            with open(GAMEDATA_PATH, "r") as file:
                 self.data = json.load(file)
         except FileNotFoundError:
             pass
 
     def update_file_game_data(function):
-        """Save game data back into JSON file"""
+        """Decorator used to save the game_data into a file when it's updated"""
 
         def inner(self, *args):
             function(self, *args)
-            with open(f"{GAMEDATA_PATH}/gamedata.json", "w+") as file:
+            with open(GAMEDATA_PATH, "w") as file:
                 json.dump(self.data, file, indent=4)
 
         return inner
+
+    @update_file_game_data
+    def save_game(self) -> None:
+        with open(GAMESAVE_SAVE, "w") as file:
+            json.dump(self.data, file, indent=4)
+
+    @update_file_game_data
+    def load_game(self, type: str = "new") -> None:
+        if type == "new":
+            path = GAMESAVE_NEW
+        elif type == "saved":
+            path = GAMESAVE_SAVE
+
+        with open(path, "r") as file:
+            data_tmp = json.load(file)
+            data_tmp["game"]["language"] = self.data["game"]["language"]
+            self.data = data_tmp
+
+    @update_file_game_data
+    def update_game_mode(self, game_mode):
+        self.data["game"]["game_mode"] = game_mode
+
+    # TODO Check if key exist first. Or it can crash
+    @update_file_game_data
+    def update_game_key(self, key, value) -> None:
+        self.data["game"][key] = value
 
     def get_language(self) -> None:
         return self.data["game"]["language"]
@@ -40,3 +68,12 @@ class GameData:
     @update_file_game_data
     def update_language(self, language) -> None:
         self.data["game"]["language"] = language
+
+    def get_game_key(self, key) -> tuple[bool, str]:
+        return self.data["game"][key]
+
+    def get_inventory_items(self) -> list:
+        return list(self.data["player"]["inventory"].keys())
+
+    def get_inventory_item(self, key) -> dict:
+        return self.data["player"]["inventory"][key]
