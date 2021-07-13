@@ -5,7 +5,7 @@
         "language": "EN",
         "last_saved": "10:44 7/12/2021"
     },
-    "room": {
+    "scene": {
         "1": {
             "is_door_unlock": true,
             "is_key_is_found": true,
