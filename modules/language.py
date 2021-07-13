@@ -1,6 +1,7 @@
 import json
 
-GAMEDATA_PATH = "assets/gamedata.json"
+from modules.game_data import GameData
+
 LANGUAGE_PATH = "assets/lang/"
 
 
@@ -12,8 +13,8 @@ class Language:
     Language are pick in a CSV
     """
 
-    def __init__(self, language) -> None:
-        self.game_language = self.get_language()
+    def __init__(self, language: str = None) -> None:
+        self.game_language = language or GameData().get_language()
 
     # Code edited by FamethystForLife
     def get(self, *args) -> str:
@@ -28,15 +29,3 @@ class Language:
             lang_dict = lang_dict[key]
 
         return lang_dict
-
-    def set_language(self) -> None:
-        pass
-
-    def get_language(self) -> str:
-        with open(GAMEDATA_PATH, "r") as file:
-            db = json.load(file)
-        return db["game"]["language"].lower()
-
-    def get_text(self, text_category, text_command) -> str:
-        #
-        pass

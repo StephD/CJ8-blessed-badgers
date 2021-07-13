@@ -15,7 +15,7 @@ class MenuScreen:
         num_squares = 4
         self.squares = [Square() for _ in range(num_squares)]
         self.game_data = GameData()
-        self.language = Language(self.game_data.get_language())
+        self.language = Language()
 
     def render(self, term: blessed.Terminal) -> Union[Keystroke, str]:
         """Renders the start screen in the terminal."""
