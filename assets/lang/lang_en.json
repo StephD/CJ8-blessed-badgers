@@ -9,14 +9,20 @@
             "quit": "Quit [Q]"
         },
         "about": {
-            "who": ""
+            "who": "Made by young developers: Blessed badgers",
+            "about": "",
+            "what": "This is a gamefied learning experience for young developers"
         },
         "languages": {
             "english": "English",
-            "french": "Francais",
+            "french": "Français",
             "spanish": "Español",
-            "russian":  "русский",
+            "russian": "русский",
             "german": "Deutsch"
+        },
+        "actions": {
+            "cancel": "Cancel [C]",
+            "return": "Return [R]"
         }
     },
     "action": {

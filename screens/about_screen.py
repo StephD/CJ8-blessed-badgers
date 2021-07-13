@@ -26,7 +26,7 @@ class AboutScreen(MenuScreen):
 
             old_indices = set()
             key_input = ""
-            while key_input.lower() not in ["b"]:
+            while key_input.lower() not in ["r"]:
                 key_input = term.inkey(timeout=0.02)
 
                 old_indices = self.render_flying_square(term, col, row, old_indices, title_indices, menu_indices)
@@ -34,18 +34,22 @@ class AboutScreen(MenuScreen):
 
     def print_text(self, term: blessed.Terminal, rows: int, cols: int) -> set[tuple[int, int]]:
         """Draws the menu in the terminal, returning the coordinates where it printed."""
-        # divide menu to sections: What, Who, Why
-        what = "This is a gamefied learning experience for young developers"
-        who = "Made by young developers: Blessed badgers"
-        why = "For fun and codejam :)"
-        exit_text = "press [b] to return to Main menu"
-        sections = [what, who, why, exit_text]
+        sections = []
+        sections.append(self.language.get("menu", "about", "about"))
+        sections.append(self.language.get("menu", "about", "who"))
+
+        sections.append("")
+        sections.append(self.language.get("menu", "actions", "return"))
+
         coordinates = set()
         for i, section in enumerate(sections):
             menu_width = len(section + " " * 2)
             menu_start_col = (cols - menu_width) // 2
             menu_row = rows - 5 + i
+
             print(term.move_xy(menu_start_col, menu_row), end="")
             print(section)
+
             coordinates = coordinates.union({(menu_row, x + menu_start_col) for x in range(menu_width)})
+
         return coordinates
