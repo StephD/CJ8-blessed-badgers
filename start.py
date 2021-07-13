@@ -24,6 +24,8 @@ def main() -> None:
             keypressed = menu_screen.render(term)
             if keypressed == "n":  # New game
                 print(term.clear)
+                # game_data.set_game_mode("new")
+                GameScreen().render(term)
                 game_data.load_game("new")
                 game_data.update_game_mode("normal")
                 game_screen.game
@@ -43,7 +45,7 @@ def main() -> None:
                 if lang_selected:
                     game_data.update_language(lang_selected)
 
-    print(term.clear)
+    print(f"BYE!{term.normal}")
     sys.exit(0)
 
 
