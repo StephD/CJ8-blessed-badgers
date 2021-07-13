@@ -14,11 +14,11 @@
             "what": "This is a gamefied learning experience for young developers"
         },
         "languages": {
-            "english": "English",
-            "french": "Français",
-            "spanish": "Español",
-            "russian": "русский",
-            "german": "Deutsch"
+            "en": "English",
+            "fr": "Français",
+            "es": "Español",
+            "ru": "русский",
+            "de": "Deutsch"
         },
         "actions": {
             "cancel": "Cancel [C]",

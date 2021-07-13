@@ -7,6 +7,10 @@ from .menu_screen import MenuScreen
 
 
 class LanguageScreen(MenuScreen):
+    def __init__(self, *args, **kwargs) -> None:
+        super().__init__(*args, **kwargs)
+        self.languages = []
+
     def render(self, term: blessed.Terminal) -> None:
         """Renders the start screen in the terminal."""
         cols, rows = term.width, term.height
@@ -24,19 +28,26 @@ class LanguageScreen(MenuScreen):
 
             old_indices = set()
             key_input = ""
-            while key_input.lower() not in ["r"]:
+            while key_input.lower() not in ["r"] and (
+                not key_input.isnumeric() or int(key_input) not in range(len(self.languages))
+            ):
                 key_input = term.inkey(timeout=0.02)
 
                 old_indices = self.render_flying_square(term, col, row, old_indices, title_indices, menu_indices)
 
-            return key_input
+            lang = None
+            if key_input.isnumeric() and 0 < int(key_input) < len(self.languages):
+                index = int(key_input) - 1
+                lang = list(self.languages.keys())[index]
+
+            return lang
 
     def print_text(self, term: blessed.Terminal, rows: int, cols: int) -> set[tuple[int, int]]:
         """Draws the menu in the terminal, returning the coordinates where it printed."""
-        languages = self.language.get("menu", "languages")
+        self.languages = self.language.get("menu", "languages")
         langs = [
             ("{:<15}".format(self.language.get("menu", "languages", lang)) + f"[{i+1}]")
-            for i, lang in enumerate(languages)
+            for i, lang in enumerate(self.languages)
         ]
 
         langs.append("")
