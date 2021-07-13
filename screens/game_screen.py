@@ -7,6 +7,7 @@ from modules.logger import log
 
 class GameScreen:
     def __init__(self, *args, **kwargs):
+        self.game_mode = "normal"
         pass
 
     def render(self, term: blessed.Terminal) -> None:
@@ -28,3 +29,6 @@ class GameScreen:
                     print("got {0}.".format(val))
 
             print(f"bye!{term.normal}")
+
+    def render_layout(self):
+        pass
