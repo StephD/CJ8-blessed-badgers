@@ -25,7 +25,7 @@ class MenuScreen:
         cols, rows = term.width - 2, term.height - 2
 
         with term.cbreak(), term.hidden_cursor():
-            print(term.home + term.blue + term.clear)
+            print(term.home + term.lightskyblue_on_gray20 + term.clear)
 
             title_indices = print_title(term, rows, cols)
             menu_indices = self.print_text(term, rows, cols)
