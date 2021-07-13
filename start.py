@@ -15,6 +15,7 @@ def main() -> None:
     menu_screen = MenuScreen(game_data=game_data)
     about_screen = AboutScreen(game_data=game_data)
     language_screen = LanguageScreen(game_data=game_data)
+    game_screen = GameScreen(game_data=game_data)
     keypressed = None
 
     with term.fullscreen(), term.cbreak():
@@ -25,7 +26,8 @@ def main() -> None:
                 print(term.clear)
                 game_data.load_game("new")
                 game_data.update_game_mode("normal")
-                # GameScreen(game_data=game_data).render(term)
+                game_screen.game
+                game_screen.render(term)
             elif keypressed == "t":
                 game_data.update_game_mode("tutorial")
                 # GameScreen(game_data=game_data).render(term)

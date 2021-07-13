@@ -6,7 +6,7 @@ from scenes.entity import SubtractableDict
 
 class GameScreen:
     def __init__(self, *args, **kwargs):
-        self.game_mode = "normal"
+        self.game_data = args["game_data"]
         self.game = Game()
         self.currently_rendered = SubtractableDict()
 
