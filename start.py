@@ -18,6 +18,7 @@ def main() -> None:
         while keypressed != "q":
             keypressed = MenuScreen().render(term)
             if keypressed == "n":  # New game
+                print(term.clear)
                 GameScreen().render(term)
                 pass
             elif keypressed == "t":  # Run the tutorial
