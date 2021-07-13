@@ -29,7 +29,7 @@ def main():
         # In most programs, you'll want to set some kind of 'dirty' flag,
         # perhaps by a Semaphore like threading.Event or (thanks to the GIL)
         # a simple global variable will suffice.
-        print('height={t.height}, width={t.width}\r'.format(t=term))
+        print("height={t.height}, width={t.width}\r".format(t=term))
 
     signal.signal(signal.SIGWINCH, on_resize)
 
@@ -39,12 +39,10 @@ def main():
     with term.cbreak():
         print("press 'X' to stop.")
         inp = None
-        while inp != 'X':
+        while inp != "X":
             inp = term.inkey()
             print(repr(inp))
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
-
-

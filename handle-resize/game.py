@@ -3,34 +3,41 @@ import sys
 
 from blessed import Terminal
 
+
 class GameException(Exception):
     """Base class for exceptions in this module."""
+
     pass
 
-class Game():
-    '''
+
+class Game:
+    """
     Test game class implementing all necessary methods.
-    '''
+    """
+
     PLAYER = "@"
+
     def __init__(self, term=Terminal()) -> None:
         self.term = term
         self.obstacles = set()
         self.message_pos = set()
         # Main message: Look around in the game.
-        self.message =  {"X": "Syntax to print in python is print('Hello, World')",
-                    "M": "To solve the current challenge understand the syntax", 
-                    "A": "Whats the code to print Hello in python ?"}
+        self.message = {
+            "X": "Syntax to print in python is print('Hello, World')",
+            "M": "To solve the current challenge understand the syntax",
+            "A": "Whats the code to print Hello in python ?",
+        }
         self.current_map = None
         self.pos_x = 2
         self.pos_y = 2
 
     def get_neighbour(self, i, j) -> set:
-        '''
+        """
         Small helper function
-        '''
+        """
         pos = set()
-        for i in range(i-1, i+1):
-            for j in range(j-1, j+1):
+        for i in range(i - 1, i + 1):
+            for j in range(j - 1, j + 1):
                 # Specify max width and max height
                 if i != j and (0 < j < 21 and 0 < i < 21):
                     continue
@@ -39,10 +46,10 @@ class Game():
         return pos
 
     def load_map(self, level=0) -> str:
-        '''
+        """
         Load map from the directory according to the specified level.
         Note: Assuming level is safe and has the type integer.
-        '''
+        """
         with open(f"maps/{level}.txt") as map_fd:
             map_data = map_fd.read()
 
@@ -66,9 +73,9 @@ class Game():
         self.obstacles = obstacles
 
     def render(self):
-        '''
+        """
         Render the game.
-        '''
+        """
         if not self.current_map:
             raise GameException("Map is not loaded")
 
@@ -76,9 +83,9 @@ class Game():
         print(self.term.home + self.term.clear + self.current_map + player, end="", flush=True)
 
     def move_player(self, mov):
-        '''
+        """
         Move player.
-        '''
+        """
         # Make a copy of the position of the player.
         pos_x, pos_y = self.pos_x, self.pos_y
 
@@ -105,18 +112,18 @@ class Game():
             term_player = self.term.move_xy(self.pos_x, self.pos_y) + self.PLAYER
             msg = "┌" + "─" * 21 + "┐\n"
             for i in range(10):
-                msg +=  "│" + " " * 21 + "│\n" 
+                msg += "│" + " " * 21 + "│\n"
             msg += "└" + "─" * 21 + "┘\n"
             print(self.term.clear + self.current_map + msg, end="", flush=True)
-        
+
     def display_msg(self) -> None:
         pass
 
 
 if __name__ == "__main__":
-    '''
+    """
     Main
-    '''
+    """
     game = Game()
     game.load_map()
     game.render()
