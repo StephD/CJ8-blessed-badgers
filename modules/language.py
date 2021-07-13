@@ -19,8 +19,12 @@ class Language:
     def get_str_in_language(self, *args) -> str:
         selections = [*args]
 
-        with open(LANGUAGE_PATH + f"lang_{self.game_language}.json", "r", encoding="utf-8") as lang:
-            lang_dict = json.load(lang)
+        try:
+            with open(LANGUAGE_PATH + f"lang_{self.game_language}.json", "r", encoding="utf-8") as lang:
+                lang_dict = json.load(lang)
+        except FileNotFoundError:
+            with open(LANGUAGE_PATH + "lang_en.json", "r", encoding="utf-8") as lang:
+                lang_dict = json.load(lang)
 
         for key in selections:
             lang_dict = lang_dict[key]

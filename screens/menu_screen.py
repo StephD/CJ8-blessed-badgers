@@ -74,7 +74,7 @@ class MenuScreen:
             indices_to_be_painted |= square.to_be_painted(row, col)
 
         for y_index, x_index in indices_to_be_painted - old_indices - title_indices - menu_indices:
-            print(term.move_xy(x_index, y_index) + chr(8226), end="", flush=True)
+            print(term.move_xy(x_index, y_index) + chr(9830), end="", flush=True)
 
         for y_index, x_index in old_indices - indices_to_be_painted - title_indices - menu_indices:
             print(term.move_xy(x_index, y_index) + " ", end="", flush=True)
