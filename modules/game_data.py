@@ -2,27 +2,16 @@ import json
 
 # import os
 # from datetime import datetime
+from modules.logger import log
 
 GAMEDATA_PATH = "assets"
 GAMESAVE_NAME = "gamedata_save"
 
 
-def save_game(function) -> None:
-    """Save game data back into JSON file"""
+# class GameException(Exception):
+#     """Base class for exceptions in this module."""
 
-    def inner(self, *args):
-        ret = function(self, *args)
-        with open(f"{GAMEDATA_PATH}/saves/{GAMESAVE_NAME}.json", "w+") as file:
-            json.dump(self.data, file, indent=4)
-        return ret
-
-    return inner
-
-
-class GameException(Exception):
-    """Base class for exceptions in this module."""
-
-    pass
+#     pass
 
 
 class GameData:
@@ -35,9 +24,19 @@ class GameData:
         except FileNotFoundError:
             pass
 
+    def update_file_game_data(function):
+        """Save game data back into JSON file"""
+
+        def inner(self, *args):
+            function(self, *args)
+            with open(f"{GAMEDATA_PATH}/gamedata.json", "w+") as file:
+                json.dump(self.data, file, indent=4)
+
+        return inner
+
     def get_language(self) -> None:
         return self.data["game"]["language"]
 
-    # @save_game
+    @update_file_game_data
     def update_language(self, language) -> None:
         self.data["game"]["language"] = language
