@@ -1,8 +1,8 @@
 {
     "game": {
-        "is_game_already_played": false,
-        "game_mode": "game/tutorial",
-        "language": "EN",
+        "is_game_already_played": true,
+        "game_mode": "normal",
+        "language": "en",
         "last_saved": "12/07/2021 23:14:48"
     },
     "room": {

@@ -16,24 +16,20 @@ def main() -> None:
 
     with term.fullscreen(), term.cbreak():
         while keypressed != "q":
-            keypressed = MenuScreen().render(term)
+            keypressed = MenuScreen(game_data=game_data).render(term)
             if keypressed == "n":  # New game
                 print(term.clear)
-                # game_data.set_game_mode("new")
-                GameScreen().render(term)
-            keypressed = MenuScreen(game_data=game_data).render(term)
-            if keypressed == "n":
-                # game_data.set_game_mode("new")
-                GameScreen(game_data=game_data).render(term)
-                pass
+                game_data.load_game("new")
+                game_data.update_game_mode("normal")
+                # GameScreen(game_data=game_data).render(term)
             elif keypressed == "t":
-                # game_data.set_game_mode("tutorial")
-                GameScreen(game_data=game_data).render(term)
+                game_data.update_game_mode("tutorial")
+                # GameScreen(game_data=game_data).render(term)
                 pass
             elif keypressed == "c":
-                # game_data.set_game_mode("continue")
-                # Load the saved game data
-                pass
+                game_data.load_game("saved")
+                game_data.update_game_mode("normal")
+                # GameScreen(game_data=game_data).render(term)
             elif keypressed == "a":
                 AboutScreen(game_data=game_data).render(term)
             elif keypressed == "l":
