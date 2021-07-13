@@ -62,7 +62,10 @@ class MenuScreen:
         print(term.move_xy(menu_start_col, menu_row), end="")
 
         for menu_item in menu_items:
-            print(menu_item + term.move_right(5), end="")
+            print(
+                f"{menu_item[:-3]}{term.green3}{menu_item[-3:]}{term.lightskyblue_on_gray20}{term.move_right(5)}",
+                end="",
+            )
 
         return {(menu_row, x + menu_start_col) for x in range(menu_width)}
 

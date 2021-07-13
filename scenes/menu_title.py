@@ -10,10 +10,14 @@ def print_title(term: blessed.Terminal, rows: int, cols: int) -> set[tuple[int, 
     title_height = len(title_lines)
     title_start_col = (cols - title_width) // 2
     title_start_row = (rows - title_height) // 4
+    term_color = term.lightskyblue_on_gray20
 
     print(term.move_xy(title_start_col, title_start_row), end="")
 
     for title_line in title_lines:
-        print(title_line + term.move_down + term.move_left(len(title_line)), end="")
+        print(
+            f"{term.turquoise3}{title_line}{term_color}{term.move_down + term.move_left(len(title_line))}",
+            end="",
+        )
 
     return {(y + title_start_row, x + title_start_col) for x in range(title_width) for y in range(title_height)}
