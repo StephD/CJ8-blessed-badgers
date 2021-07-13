@@ -16,7 +16,7 @@ def save_game(function) -> None:
             json.dump(self.data, file, indent=4)
         return ret
 
-    return inner()
+    return inner
 
 
 class GameException(Exception):
@@ -35,5 +35,9 @@ class GameData:
         except FileNotFoundError:
             pass
 
-    def get_data(self):
-        return self.data
+    def get_language(self) -> None:
+        return self.data["game"]["language"]
+
+    @save_game
+    def update_language(self, language) -> None:
+        self.data["game"]["language"] = language

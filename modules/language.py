@@ -12,7 +12,7 @@ class Language:
     Language are pick in a CSV
     """
 
-    def __init__(self) -> None:
+    def __init__(self, language) -> None:
         self.game_language = self.get_language()
 
     # Code edited by FamethystForLife
