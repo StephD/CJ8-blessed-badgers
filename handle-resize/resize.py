@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 """
 Example application for the 'blessed' Terminal library for python.
+
 Window size changes are caught by the 'on_resize' function using a traditional signal handler.
 Meanwhile, blocking keyboard input is displayed to stdout. If a resize event is discovered, an empty
 string is returned by term.inkey().

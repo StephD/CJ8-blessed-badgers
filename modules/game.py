@@ -40,6 +40,37 @@ class Game:
                     pos.add((i, j))
         return pos
 
+    def draw_map(self) -> str:
+        """Draw a map and the player."""
+        width = self.term.width // 2
+        height = self.term.height // 2
+
+        box = "┌" + "─" * width + "┐\n"
+        for i in range(height):
+            box += "│" + " " * width + "│\n"
+
+        box += "└" + "─" * width + "┘"
+
+        # Add Walls to obstacles
+        obstacles = []
+        # For left & right side walls.
+        for i in range(width):
+            obstacles.append((i, 0))
+            obstacles.append((i, height + 1))
+
+        # For top & bottom walls.
+        for i in range(height + 1):
+            obstacles.append((0, i))
+            obstacles.append((width, i))
+
+        self.obstacles = set(obstacles)
+
+        self.pos_x = width // 2
+        self.pos_y = height // 2
+        box += self.term.move_xy(self.pos_x, self.pos_y) + self.player
+
+        return box
+
     def load_map(self, level=0) -> str:
         """
         Load map from the directory according to the specified level.
@@ -85,6 +116,7 @@ class Game:
         term_erase = self.term.move_xy(pos_x, pos_y) + " "
 
         # Update the position.
+        # if mov == "\x1b[A":
         if mov == "j":
             pos_y += 1
         if mov == "k":
@@ -96,6 +128,7 @@ class Game:
 
         # Check the orientation what is x and y ?
         if (pos_y, pos_x) not in self.obstacles:
+            # term_player = self.term.move_xy(pos_x, pos_y) + "@"
             term_player = self.term.move_xy(pos_x, pos_y) + self.PLAYER
             print(term_erase + term_player, end="", flush=True)
             # Update the position of the player.
@@ -110,16 +143,3 @@ class Game:
 
     def display_msg(self) -> None:
         pass
-
-
-if __name__ == "__main__":
-    """Main"""
-    game = Game()
-    game.load_map()
-    game.render()
-    inp = ""
-    with game.term.cbreak(), game.term.hidden_cursor():
-        while inp != "q":
-            inp = game.term.inkey().lower()
-            game.move_player(inp)
-        print(game.term.clear, "BYE!")
