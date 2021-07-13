@@ -2,36 +2,40 @@ import sys
 
 import blessed
 
+from modules.game_data import GameData
 from modules.logger import log
 from screens import AboutScreen, GameScreen, LanguageScreen, MenuScreen
 
 
 def main() -> None:
     """Main function"""
-    log("The game start")
+    log("The game start", "Title")
     term = blessed.Terminal()
-    # Start the menu
+    game_data = GameData()
     keypressed = None
-    # Get the result of the menu to start or the tutorial or game
 
     with term.fullscreen(), term.cbreak():
         while keypressed != "q":
-            keypressed = MenuScreen().render(term)
-            if keypressed == "n":  # New game
-                GameScreen().render(term)
+            keypressed = MenuScreen(game_data=game_data).render(term)
+            if keypressed == "n":
+                # game_data.set_game_mode("new")
+                GameScreen(game_data=game_data).render(term)
                 pass
-            elif keypressed == "t":  # Run the tutorial
-                GameScreen("tuto").render(term)
+            elif keypressed == "t":
+                # game_data.set_game_mode("tutorial")
+                GameScreen(game_data=game_data).render(term)
                 pass
-            elif keypressed == "c":  # Load last game
+            elif keypressed == "c":
+                # game_data.set_game_mode("continue")
                 # Load the saved game data
                 pass
-            elif keypressed == "a":  # About the team, jam, why this
-                AboutScreen().render(term)
-            elif keypressed == "l":  # language selection
-                LanguageScreen().render(term)
+            elif keypressed == "a":
+                AboutScreen(game_data=game_data).render(term)
+            elif keypressed == "l":
+                lang_selected = LanguageScreen(game_data=game_data).render(term)
+                if lang_selected:
+                    game_data.update_language(lang_selected)
 
-    log("The game end")
     print(term.clear)
     sys.exit(0)
 

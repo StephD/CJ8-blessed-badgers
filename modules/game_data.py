@@ -38,6 +38,6 @@ class GameData:
     def get_language(self) -> None:
         return self.data["game"]["language"]
 
-    @save_game
+    # @save_game
     def update_language(self, language) -> None:
         self.data["game"]["language"] = language
