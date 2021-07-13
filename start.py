@@ -12,11 +12,15 @@ def main() -> None:
     log("The game start", "Title")
     term = blessed.Terminal()
     game_data = GameData()
+    menu_screen = MenuScreen(game_data=game_data)
+    about_screen = AboutScreen(game_data=game_data)
+    language_screen = LanguageScreen(game_data=game_data)
     keypressed = None
 
     with term.fullscreen(), term.cbreak():
         while keypressed != "q":
-            keypressed = MenuScreen(game_data=game_data).render(term)
+            menu_screen.game_data.data = game_data.data
+            keypressed = menu_screen.render(term)
             if keypressed == "n":  # New game
                 print(term.clear)
                 # game_data.set_game_mode("new")
@@ -33,9 +37,9 @@ def main() -> None:
                 game_data.update_game_mode("normal")
                 # GameScreen(game_data=game_data).render(term)
             elif keypressed == "a":
-                AboutScreen(game_data=game_data).render(term)
+                about_screen.render(term)
             elif keypressed == "l":
-                lang_selected = LanguageScreen(game_data=game_data).render(term)
+                lang_selected = language_screen.render(term)
                 if lang_selected:
                     game_data.update_language(lang_selected)
 
