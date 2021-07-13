@@ -1,15 +1,15 @@
+import sys
+
 import blessed
 
 from modules.game import Game
 from modules.logger import log
 from scenes.entity import SubtractableDict
 
-import sys
-
 
 class GameScreen:
-    def __init__(self, *args, **kwargs):
-        self.game_data = args["game_data"]
+    def __init__(self, game_data, *args, **kwargs):
+        self.game_data = game_data
         self.game = Game()
         self.currently_rendered = SubtractableDict()
 

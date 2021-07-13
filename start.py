@@ -16,28 +16,27 @@ def main() -> None:
     about_screen = AboutScreen(game_data=game_data)
     language_screen = LanguageScreen(game_data=game_data)
     game_screen = GameScreen(game_data=game_data)
-    keypressed = None
 
+    keypressed = None
     with term.fullscreen(), term.cbreak():
         while keypressed != "q":
             menu_screen.game_data.data = game_data.data
             keypressed = menu_screen.render(term)
             if keypressed == "n":  # New game
                 print(term.clear)
-                # game_data.set_game_mode("new")
-                GameScreen().render(term)
                 game_data.load_game("new")
                 game_data.update_game_mode("normal")
+                game_screen.game_data.data = game_data.data
                 game_screen.game
                 game_screen.render(term)
             elif keypressed == "t":
                 game_data.update_game_mode("tutorial")
-                # GameScreen(game_data=game_data).render(term)
+                # game_screen.render(term)
                 pass
             elif keypressed == "c":
                 game_data.load_game("saved")
                 game_data.update_game_mode("normal")
-                # GameScreen(game_data=game_data).render(term)
+                # game_screen.render(term)
             elif keypressed == "a":
                 about_screen.render(term)
             elif keypressed == "l":
