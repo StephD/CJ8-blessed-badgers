@@ -1,24 +1,39 @@
 {
     "game": {
-        "is_game_already_played": false,
+        "is_game_already_played": true,
         "game_mode": "normal",
-        "language": "en"
+        "language": "de",
+        "last_saved": "12/07/2021 23:14:48"
+    },
+    "room": {
+        "1": {
+            "is_door_unlock": true,
+            "is_key_is_found": false,
+            "is_secret_door_found": false,
+            "items": {
+                "Potion": {
+                    "last_pos": [
+                        1,
+                        6
+                    ]
+                }
+            },
+            "interactions": {
+                "Wizard": true
+            }
+        }
     },
     "player": {
-        "lifes_left": 3,
+        "lifes_left": 2,
         "current_room": 1,
         "last_position": [
-            1,
-            1
+            0,
+            0
         ],
         "inventory": {
-            "potion_1": {
-                "origin": 1,
-                "quantity": 1
-            },
-            "key_1": {
-                "origin:": 1,
-                "quantity": 1
+            "Poison": {
+                "origin": "1",
+                "quantity": "2"
             }
         }
     }
