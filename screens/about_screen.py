@@ -8,6 +8,10 @@ from .menu_screen import MenuScreen
 
 
 class AboutScreen(MenuScreen):
+    def __init__(self, *args, **kwargs) -> None:
+        super().__init__(*args, **kwargs)
+        self.languages = []
+
     def render(self, term: blessed.Terminal) -> None:
         """Renders the start screen in the terminal."""
         cols, rows = term.width, term.height
@@ -35,11 +39,11 @@ class AboutScreen(MenuScreen):
     def print_text(self, term: blessed.Terminal, rows: int, cols: int) -> set[tuple[int, int]]:
         """Draws the menu in the terminal, returning the coordinates where it printed."""
         sections = []
-        sections.append(self.language.get("menu", "about", "about"))
-        sections.append(self.language.get("menu", "about", "who"))
+        sections.append(self.get_language("menu", "about", "about"))
+        sections.append(self.get_language("menu", "about", "who"))
 
         sections.append("")
-        sections.append(self.language.get("menu", "actions", "return"))
+        sections.append(self.get_language("menu", "actions", "return"))
 
         coordinates = set()
         for i, section in enumerate(sections):

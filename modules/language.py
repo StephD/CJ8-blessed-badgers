@@ -13,18 +13,15 @@ class Language:
     Language are pick in a CSV
     """
 
-    def __init__(self, language: str = None) -> None:
-        self.game_language = language or GameData().get_language()
+    def __init__(self, language: str = "en") -> None:
+        self.game_language = language
 
-    # Code edited by FamethystForLife
-    def get(self, *args) -> str:
+    def get_str_in_language(self, *args) -> str:
         selections = [*args]
 
-        # Parse appropriate JSON language file based on lang param
         with open(LANGUAGE_PATH + f"lang_{self.game_language}.json", "r", encoding="utf-8") as lang:
             lang_dict = json.load(lang)
 
-        # Obtain appropriate string
         for key in selections:
             lang_dict = lang_dict[key]
 

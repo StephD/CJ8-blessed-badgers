@@ -41,15 +41,19 @@ class MenuScreen:
 
             return key_input.lower()
 
+    def get_language(self, *args):
+        self.language.game_language = self.game_data.get_language()
+        return self.language.get_str_in_language(*args)
+
     def print_text(self, term: blessed.Terminal, rows: int, cols: int) -> set[tuple[int, int]]:
         """Draws the menu in the terminal, returning the coordinates where it printed."""
         menu_items = [
-            self.language.get("menu", "options", "new_game"),
-            self.language.get("menu", "options", "tutorial"),
-            self.language.get("menu", "options", "continue"),
-            self.language.get("menu", "options", "about"),
-            self.language.get("menu", "options", "language"),
-            self.language.get("menu", "options", "quit"),
+            self.get_language("menu", "options", "new_game"),
+            self.get_language("menu", "options", "tutorial"),
+            self.get_language("menu", "options", "continue"),
+            self.get_language("menu", "options", "about"),
+            self.get_language("menu", "options", "language"),
+            self.get_language("menu", "options", "quit"),
         ]
         menu_width = len((" " * 5).join(menu_items))
         menu_start_col = (cols - menu_width) // 2

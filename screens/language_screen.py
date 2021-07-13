@@ -44,14 +44,14 @@ class LanguageScreen(MenuScreen):
 
     def print_text(self, term: blessed.Terminal, rows: int, cols: int) -> set[tuple[int, int]]:
         """Draws the menu in the terminal, returning the coordinates where it printed."""
-        self.languages = self.language.get("menu", "languages")
+        self.languages = self.get_language("menu", "languages")
         langs = [
-            ("{:<15}".format(self.language.get("menu", "languages", lang)) + f"[{i+1}]")
+            ("{:<15}".format(self.get_language("menu", "languages", lang)) + f"[{i+1}]")
             for i, lang in enumerate(self.languages)
         ]
 
         langs.append("")
-        langs.append(self.language.get("menu", "actions", "return"))
+        langs.append(self.get_language("menu", "actions", "return"))
 
         coordinates = set()
         for i, section in enumerate(langs):
