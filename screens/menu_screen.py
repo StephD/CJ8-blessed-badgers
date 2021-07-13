@@ -37,7 +37,7 @@ class MenuScreen:
 
                 old_indices = self.render_flying_square(term, col, row, old_indices, title_indices, menu_indices)
 
-            return key_input
+            return key_input.lower()
 
     def print_text(self, term: blessed.Terminal, rows: int, cols: int) -> set[tuple[int, int]]:
         """Draws the menu in the terminal, returning the coordinates where it printed."""
