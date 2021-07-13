@@ -71,7 +71,7 @@ class Game:
     def move_player(self, mov: str) -> None:
         """Move player."""
         # Make a copy of the position of the player.
-        pos_x, pos_y = self.player.position
+        pos_y, pos_x = self.player.position
 
         # Update the position.
         if mov == "j":
@@ -85,7 +85,7 @@ class Game:
 
         # Check the orientation what is x and y ?
         if (pos_y, pos_x) not in self.obstacles:
-            self.player.position = pos_x, pos_y
+            self.player.position = pos_y, pos_x
         elif (pos_y, pos_x) in self.message_pos:
             pass
 

@@ -1,7 +1,10 @@
 import blessed
 
 from modules.game import Game
+from modules.logger import log
 from scenes.entity import SubtractableDict
+
+import sys
 
 
 class GameScreen:
@@ -16,17 +19,13 @@ class GameScreen:
             val = ""
             while val.lower() != "q":
                 self.render_layout(term)
-                val = term.inkey(timeout=3)
+                val = term.inkey()
                 if not val:
                     continue
                 elif val.is_sequence:
                     self.game.move_player(val.name)
-                    continue
                 elif val:
                     self.game.move_player(val)
-                    continue
-
-            print(f"bye!{term.normal}")
 
     def render_layout(self, term: blessed.Terminal) -> None:
         to_be_rendered = self.game.get_to_be_rendered()
