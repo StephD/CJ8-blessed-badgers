@@ -1,6 +1,8 @@
 import blessed
 
-from modules.logger import log
+from modules.game import Game
+
+# from modules.logger import log
 
 # from scenes.scene import Scene
 
@@ -8,14 +10,13 @@ from modules.logger import log
 class GameScreen:
     def __init__(self, *args, **kwargs):
         self.game_mode = "normal"
-        pass
+        self.game = Game()
 
     def render(self, term: blessed.Terminal) -> None:
         """Renders the start screen in the terminal."""
-        cols, rows = term.width, term.height
-        log(f"{[cols, rows]}")
-        rows -= 2
-        cols -= 2
+        # cols, rows = term.width, term.height
+
+        # self.game.render_layout()
 
         with term.cbreak(), term.hidden_cursor():
             val = ""

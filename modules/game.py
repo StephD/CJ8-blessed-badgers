@@ -12,7 +12,7 @@ class GameException(Exception):
 
 
 class Game:
-    """Test game class implementing all necessary methods."""
+    """Game class that will handle the game screen and render the necessary scene"""
 
     PLAYER = "@"
 
