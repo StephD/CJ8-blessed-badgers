@@ -74,13 +74,13 @@ class Game:
         pos_y, pos_x = self.player.position
 
         # Update the position.
-        if mov == "j":
+        if mov == "s":
             pos_y += 1
-        if mov == "k":
+        if mov == "w":
             pos_y -= 1
-        if mov == "h":
+        if mov == "a":
             pos_x -= 1
-        if mov == "l":
+        if mov == "d":
             pos_x += 1
 
         # Check the orientation what is x and y ?
