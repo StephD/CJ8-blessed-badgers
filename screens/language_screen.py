@@ -24,7 +24,7 @@ class LanguageScreen(MenuScreen):
 
             old_indices = set()
             key_input = ""
-            while key_input.lower() not in ["c"]:
+            while key_input.lower() not in ["r"]:
                 key_input = term.inkey(timeout=0.02)
 
                 old_indices = self.render_flying_square(term, col, row, old_indices, title_indices, menu_indices)
@@ -40,7 +40,7 @@ class LanguageScreen(MenuScreen):
         ]
 
         langs.append("")
-        langs.append(self.language.get("action", "cancel") + " [C]")
+        langs.append(self.language.get("menu", "actions", "return"))
 
         coordinates = set()
         for i, section in enumerate(langs):
