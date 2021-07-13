@@ -1,3 +1,6 @@
+# TODO
+
+
 def draw_map(self) -> str:
     """Draw a map and the player."""
     width = self.term.width // 2
