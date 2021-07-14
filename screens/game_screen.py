@@ -26,6 +26,12 @@ class GameScreen:
                     self.game.move_player(val.name)
                 elif val:
                     self.game.move_player(val)
+        # Remove all
+        """
+        self.currently_rendered = self.currently_rendered 
+                                    - self.currently_rendered
+        """
+        self.currently_rendered = SubtractableDict()
 
     def render_layout(self, term: blessed.Terminal) -> None:
         to_be_rendered = self.game.get_to_be_rendered()
