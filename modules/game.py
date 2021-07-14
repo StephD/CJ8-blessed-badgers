@@ -1,5 +1,6 @@
 from typing import Optional
 
+from modules.game_data import GameData
 from modules.logger import log
 from scenes.entity import Entity, SubtractableDict
 
@@ -38,7 +39,8 @@ That's no entirely true, you might be able to get away. But can you ?!""",
 class Game:
     """Game class that will handle the game screen and render the necessary scene"""
 
-    def __init__(self) -> None:
+    def __init__(self, game_data: GameData) -> None:
+        self.game_data = game_data
         self.obstacles: set[tuple[int, int]] = set()
         self.message_pos = set()
         self.message_ = None
