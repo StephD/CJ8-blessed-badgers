@@ -3,14 +3,15 @@ import sys
 import blessed
 
 from modules.game import Game
+from modules.game_data import GameData
 from modules.logger import log
 from scenes.entity import SubtractableDict
 
 
 class GameScreen:
-    def __init__(self, game_data, *args, **kwargs):
+    def __init__(self, game_data: GameData, *args, **kwargs):
         self.game_data = game_data
-        self.game = Game()
+        self.game = Game(game_data)
         self.currently_rendered = SubtractableDict()
 
     def render(self, term: blessed.Terminal) -> None:
