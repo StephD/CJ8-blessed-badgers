@@ -55,7 +55,7 @@ class GameData:
 
     @update_file_game_data
     def update_game_mode(self, game_mode):
-        self.data["game"]["game_mode"] = game_mode
+        self.data["game"]["mode"] = game_mode
 
     # TODO Check if key exist first. Or it can crash
     @update_file_game_data
