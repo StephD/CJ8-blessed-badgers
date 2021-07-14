@@ -57,10 +57,8 @@ class GameData:
     def update_game_mode(self, game_mode):
         self.data["game"]["mode"] = game_mode
 
-    # TODO Check if key exist first. Or it can crash
-    @update_file_game_data
-    def update_game_key(self, key, value) -> None:
-        self.data["game"][key] = value
+    def get_game_mode(self) -> str:
+        return self.data["game"]["mode"]
 
     def get_language(self) -> None:
         return self.data["game"]["language"]
