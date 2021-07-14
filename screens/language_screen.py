@@ -9,7 +9,7 @@ from .menu_screen import MenuScreen
 class LanguageScreen(MenuScreen):
     def __init__(self, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
-        self.languages = []
+        self.languages = self.get_language("menu", "languages")
 
     def render(self, term: blessed.Terminal) -> None:
         """Renders the start screen in the terminal."""
@@ -29,14 +29,14 @@ class LanguageScreen(MenuScreen):
             old_indices = set()
             key_input = ""
             while key_input.lower() not in ["r"] and (
-                not key_input.isnumeric() or int(key_input) not in range(len(self.languages))
+                not key_input.isnumeric() or int(key_input) not in range(1, 1 + len(self.languages))
             ):
                 key_input = term.inkey(timeout=0.02)
 
                 old_indices = self.render_flying_square(term, col, row, old_indices, title_indices, menu_indices)
 
             lang = None
-            if key_input.isnumeric() and 0 < int(key_input) < len(self.languages):
+            if key_input.isnumeric() and 0 < int(key_input) < 1 + len(self.languages):
                 index = int(key_input) - 1
                 lang = list(self.languages.keys())[index]
 
@@ -44,7 +44,6 @@ class LanguageScreen(MenuScreen):
 
     def print_text(self, term: blessed.Terminal, rows: int, cols: int) -> set[tuple[int, int]]:
         """Draws the menu in the terminal, returning the coordinates where it printed."""
-        self.languages = self.get_language("menu", "languages")
         langs = [
             ("{:<15}".format(self.get_language("menu", "languages", lang)) + f"[{i+1}]")
             for i, lang in enumerate(self.languages)
@@ -60,7 +59,7 @@ class LanguageScreen(MenuScreen):
             menu_row = rows - (2 + len(langs)) + i
 
             print(term.move_xy(menu_start_col, menu_row), end="")
-            print(section)
+            print(f"{section[:-3]}{term.green3}{section[-3:]}{term.lightskyblue_on_gray20}")
 
             coordinates = coordinates.union({(menu_row, x + menu_start_col) for x in range(menu_width)})
 

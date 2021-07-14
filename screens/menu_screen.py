@@ -62,7 +62,10 @@ class MenuScreen:
         print(term.move_xy(menu_start_col, menu_row), end="")
 
         for menu_item in menu_items:
-            print(menu_item + term.move_right(5), end="")
+            print(
+                f"{menu_item[:-3]}{term.green3}{menu_item[-3:]}{term.lightskyblue_on_gray20}{term.move_right(5)}",
+                end="",
+            )
 
         return {(menu_row, x + menu_start_col) for x in range(menu_width)}
 
@@ -74,7 +77,7 @@ class MenuScreen:
             indices_to_be_painted |= square.to_be_painted(row, col)
 
         for y_index, x_index in indices_to_be_painted - old_indices - title_indices - menu_indices:
-            print(term.move_xy(x_index, y_index) + chr(8226), end="", flush=True)
+            print(term.move_xy(x_index, y_index) + chr(9830), end="", flush=True)
 
         for y_index, x_index in old_indices - indices_to_be_painted - title_indices - menu_indices:
             print(term.move_xy(x_index, y_index) + " ", end="", flush=True)

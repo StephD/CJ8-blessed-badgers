@@ -41,9 +41,11 @@ class AboutScreen(MenuScreen):
         sections = []
         sections.append(self.get_language("menu", "about", "about"))
         sections.append(self.get_language("menu", "about", "who"))
+        sections.append("Version : 0.1")
 
         sections.append("")
         sections.append(self.get_language("menu", "actions", "return"))
+        term_color = term.lightskyblue_on_gray20
 
         coordinates = set()
         for i, section in enumerate(sections):
@@ -52,7 +54,7 @@ class AboutScreen(MenuScreen):
             menu_row = rows - 5 + i
 
             print(term.move_xy(menu_start_col, menu_row), end="")
-            print(section)
+            print(f"{section[:-3]}{term.green3 if i==len(sections)-1 else term_color}{section[-3:]}{term_color}")
 
             coordinates = coordinates.union({(menu_row, x + menu_start_col) for x in range(menu_width)})
 
