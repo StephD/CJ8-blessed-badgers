@@ -42,10 +42,10 @@ class GameData:
             json.dump(self.data, file, indent=4)
 
     @update_file_game_data_decorator
-    def load_game(self, type: str = "new") -> None:
-        if type == "new":
+    def load_game(self, game_type: str = "new") -> None:
+        if game_type == "new":
             path = GAMESAVE_NEW
-        elif type == "saved":
+        elif game_type == "saved":
             path = GAMESAVE_SAVE
 
         with open(path, "r") as file:
