@@ -8,9 +8,6 @@ from .menu_screen import MenuScreen
 
 
 class AboutScreen(MenuScreen):
-    def __init__(self, *args, **kwargs) -> None:
-        super().__init__(*args, **kwargs)
-
     def render(self, term: blessed.Terminal) -> None:
         """Renders the start screen in the terminal."""
         cols, rows = term.width - 2, term.height - 2
