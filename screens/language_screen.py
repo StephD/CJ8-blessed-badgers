@@ -59,7 +59,11 @@ class LanguageScreen(MenuScreen):
             menu_row = rows - (2 + len(langs)) + i
 
             print(term.move_xy(menu_start_col, menu_row), end="")
-            print(f"{section[:-3]}{term.green3}{section[-3:]}{term.lightskyblue_on_gray20}")
+            print(
+                f"{section[:-3]}"
+                f"{getattr(term,self.menu_color_choice)}{section[-3:]}"
+                f"{getattr(term,self.term_color)}"
+            )
 
             coordinates = coordinates.union({(menu_row, x + menu_start_col) for x in range(menu_width)})
 

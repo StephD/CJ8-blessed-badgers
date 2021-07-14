@@ -69,8 +69,8 @@ class MenuScreen:
 
         for menu_item in menu_items:
             print(
-                f"{getattr(term,self.term_color)}"
                 f"{menu_item[:-3]}{getattr(term,self.menu_color_choice)}{menu_item[-3:]}"
+                f"{getattr(term,self.term_color)}"
                 f"{term.move_right(5)}",
                 end="",
             )
