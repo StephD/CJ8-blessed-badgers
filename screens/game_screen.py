@@ -1,5 +1,5 @@
-from typing import Union
 import sys
+from typing import Union
 
 import blessed
 
