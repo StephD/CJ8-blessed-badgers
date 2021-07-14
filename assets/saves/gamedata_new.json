@@ -1,8 +1,7 @@
 {
     "game": {
         "is_game_already_played": false,
-        "game_mode": "normal",
-        "language": "en"
+        "game_mode": "new"
     },
     "player": {
         "lifes_left": 3,

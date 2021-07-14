@@ -1,5 +1,9 @@
 import json
 
+from modules.game_data import GameData
+
+LANGUAGE_PATH = "assets/lang/"
+
 
 class Language:
     """
@@ -9,33 +13,20 @@ class Language:
     Language are pick in a CSV
     """
 
-    def __init__(self) -> None:
-        self.user_language = "EN"
-        # pass
+    def __init__(self, language: str = "en") -> None:
+        self.game_language = language
 
-    # Code edited by FamethystForLife
-    def get(self, *args) -> str:
+    def get_str_in_language(self, *args) -> str:
         selections = [*args]
 
-        # Parse appropriate JSON language file based on lang param
-        file_template = "../assets/lang/lang_{}.json"
-        copy = self.language
-        selected_lang_path = file_template.format(copy.lower())
-        with open(selected_lang_path, "r") as lang:
-            lang_dict = json.load(lang)
+        try:
+            with open(LANGUAGE_PATH + f"lang_{self.game_language}.json", "r", encoding="utf-8") as lang:
+                lang_dict = json.load(lang)
+        except FileNotFoundError:
+            with open(LANGUAGE_PATH + "lang_en.json", "r", encoding="utf-8") as lang:
+                lang_dict = json.load(lang)
 
-        # Obtain appropriate string
         for key in selections:
             lang_dict = lang_dict[key]
 
         return lang_dict
-
-    def set_language(self) -> None:
-        pass
-
-    def get_language(self) -> str:
-        pass
-
-    def get_text(self, text_category, text_command) -> str:
-        #
-        pass

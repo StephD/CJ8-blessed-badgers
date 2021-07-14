@@ -2,41 +2,51 @@ import sys
 
 import blessed
 
+from modules.game_data import GameData
 from modules.logger import log
-from screens import AboutScreen, GameScreen, LanguageScreen, StartScreen
+from screens import AboutScreen, GameScreen, LanguageScreen, MenuScreen
 
 
 def main() -> None:
     """Main function"""
-    log("The game start")
+    log("The game start", "Title")
     term = blessed.Terminal()
-    # Start the menu
-    keypressed = None
-    log(keypressed, "keypressed")
-    # Get the result of the menu to start or the tutorial or game
-    while keypressed != "q":
-        keypressed = StartScreen().render(term)
-        if keypressed == "n":  # New game
-            log("New game", "menu")
-            GameScreen().render(term)
-            pass
-        elif keypressed == "t":  # Run the tutorial
-            log("New tutorial", "menu")
-            GameScreen("tuto").render(term)
-            pass
-        elif keypressed == "c":  # Load last game
-            log("Load last game", "menu")
-            # Load the saved game data
-            pass
-        elif keypressed == "a":  # About the team, jam, why this
-            log("About the game", "menu")
-            AboutScreen().render(term)
-        elif keypressed == "l":  # language selection
-            log("Language selector opened")
-            LanguageScreen().render(term)
+    game_data = GameData()
+    menu_screen = MenuScreen(game_data=game_data)
+    about_screen = AboutScreen(game_data=game_data)
+    language_screen = LanguageScreen(game_data=game_data)
+    # game_screen = GameScreen(game_data=game_data)
 
-    log("The game end")
-    print(term.clear)
+    keypressed = None
+    with term.fullscreen(), term.cbreak():
+        while keypressed != "q":
+            menu_screen.game_data.data = game_data.data
+            keypressed = menu_screen.render(term)
+            if keypressed == "n":  # New game
+                print(term.clear)
+                pass
+                # game_data.load_game("new")
+                # game_data.update_game_mode("normal")
+                # game_screen.game_data.data = game_data.data
+                # game_screen.render(term)
+            elif keypressed == "t":
+                pass
+                # game_data.update_game_mode("tutorial")
+                # game_screen.render(term)
+                pass
+            elif keypressed == "c":
+                pass
+                # game_data.load_game("saved")
+                # game_data.update_game_mode("normal")
+                # game_screen.render(term)
+            elif keypressed == "a":
+                about_screen.render(term)
+            elif keypressed == "l":
+                lang_selected = language_screen.render(term)
+                if lang_selected:
+                    game_data.update_language(lang_selected)
+
+    print(f"BYE!{term.normal}")
     sys.exit(0)
 
 
