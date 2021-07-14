@@ -26,27 +26,19 @@ class Message(Entity):
         self.message = message
 
 
-# This will load from somewhere.
-Messages = [
-    """I am sorry to let you know that you are stuck here.
-Mmhh...
-That's no entirely true, you might be able to get away. But can you ?!""",
-    "You have the secret Message0: Look around who knows you might find a clue.",
-    "Can you print I can escape(whatever)",
-]
-
-
 class Game:
     """Game class that will handle the game screen and render the necessary scene"""
 
     def __init__(self, game_data: GameData) -> None:
         self.game_data = game_data
-        if self.game_data.get_game_mode() == "tutorial":
+        if self.game_data.get_game_mode() == "normal":
+            self.story = self.game_data.get_str_in_language(["messages"]["story"]["normal"])
             # Render tutorial map
-            pass
+        else:
+            self.story = self.game_data.get_str_in_language(["messages"]["story"]["tutorial"])
+
         self.obstacles: set[tuple[int, int]] = set()
         self.message_pos = set()
-        self.message_ = None
         self.entities: set[Optional[Entity]] = set()
         self.player = Player((2, 2))
         self.entities.add(self.player)
