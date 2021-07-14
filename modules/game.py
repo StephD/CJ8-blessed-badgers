@@ -4,8 +4,10 @@ from scenes.entity import Entity, SubtractableDict
 
 from modules.logger import log
 
+
 class GameException(Exception):
     """Base class for exceptions in this module."""
+
     pass
 
 
@@ -23,10 +25,14 @@ class Message(Entity):
         super().__init__(*args)
         self.message = message
 
+
 # This will load from somewhere.
-Messages = ["I am sorry to let you know that you are stuck here.\nMmhh...\nThat's no entirely true, you might be able to get away. But can you ?!", 
-        "You have the secret Message0: Look around who knows you might find a clue.",
-        "Can you print I can escape(whatever)"]
+Messages = [
+    "I am sorry to let you know that you are stuck here.\nMmhh...\nThat's no entirely true, you might be able to get away. But can you ?!",
+    "You have the secret Message0: Look around who knows you might find a clue.",
+    "Can you print I can escape(whatever)",
+]
+
 
 class Game:
     """Game class that will handle the game screen and render the necessary scene"""
