@@ -6,7 +6,6 @@ from blessed.keyboard import Keystroke
 
 from modules.flying_square import Square
 from modules.game_data import GameData
-from modules.language import Language
 from scenes.menu_title import print_title
 
 
@@ -15,7 +14,6 @@ class MenuScreen:
         num_squares = 4
         self.squares = [Square() for _ in range(num_squares)]
         self.game_data = game_data
-        self.language = Language(self.game_data.get_language())
 
     def render(self, term: blessed.Terminal) -> Union[Keystroke, str]:
         """Renders the start screen in the terminal."""
@@ -42,8 +40,7 @@ class MenuScreen:
             return key_input.lower()
 
     def get_language(self, *args):
-        self.language.game_language = self.game_data.get_language()
-        return self.language.get_str_in_language(*args)
+        return self.game_data.get_str_in_language(*args)
 
     def print_text(self, term: blessed.Terminal, rows: int, cols: int) -> set[tuple[int, int]]:
         """Draws the menu in the terminal, returning the coordinates where it printed."""
