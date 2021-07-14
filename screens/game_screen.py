@@ -15,6 +15,21 @@ def _lies_within_bounds(bounds: Bounds, point: tuple[int, int]):
     return start_i < i < end_i and start_j < j < end_j
 
 
+def chunk(string: str, width: int) -> list[str]:
+    lines = string.splitlines()
+    chunked = []
+    for line in lines:
+        chunked.append("")
+        words = line.split()
+        if any(len(word) >= width for word in words):
+            raise ValueError("Insufficient width")
+        for word in words:
+            if len(f"{chunked[-1]} {word}") >= width:
+                chunked.append("")
+            chunked[-1] += word + " "
+    return [line.strip() for line in chunked]
+
+
 class GameScreen:
     def __init__(self, *args, **kwargs):
         self.game_mode = "normal"
@@ -31,6 +46,7 @@ class GameScreen:
             val = ""
             while val.lower() != "q":
                 self.render_scene(term)
+                self.render_sidebar(term)
                 val = term.inkey(timeout=3)
                 if not val:
                     continue
@@ -61,10 +77,20 @@ class GameScreen:
         self._render_dict(term, {(i, j): " " for i, j in self.currently_rendered - to_be_rendered})
         self.currently_rendered = to_be_rendered
 
+    def render_sidebar(self, term: blessed.Terminal):
+        start_i, end_i, start_j, end_j = self.sidebar_bounds
+        self._render_dict(
+            term, {(i, j): " " for i in range(*self.sidebar_bounds[:2]) for j in range(*self.sidebar_bounds[2:])}
+        )
+        sidebar_content = self.game.get_sidebar_content()
+        panel_width = end_j - start_j
+        print(term.move_yx(start_i, start_j))
+        for line in chunk(sidebar_content, panel_width):
+            print(line, end='', flush=True)
+            print(term.move_left(len(line)) + term.move_down, end='', flush=True)
+
     @staticmethod
-    def _make_border(
-        bounds: Bounds, charset: tuple[str, str, str, str, str, str]
-    ) -> SubtractableDict:
+    def _make_border(bounds: Bounds, charset: tuple[str, str, str, str, str, str]) -> SubtractableDict:
         start_i, end_i, start_j, end_j = bounds
         top_left, top_right, bottom_left, bottom_right, vertical, horizontal = charset
         return SubtractableDict(

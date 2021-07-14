@@ -99,3 +99,9 @@ class Game:
         for entity in self.entities:
             to_be_rendered |= entity.get_to_be_rendered()
         return to_be_rendered
+
+    def get_sidebar_content(self) -> str:
+        """
+        Get the text to be rendered on the sidebar.
+        """
+        pass
