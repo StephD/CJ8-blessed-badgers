@@ -24,11 +24,10 @@ def main() -> None:
             keypressed = menu_screen.render(term)
             if keypressed == "n":  # New game
                 print(term.clear)
-                pass
-                # game_data.load_game("new")
-                # game_data.update_game_mode("normal")
-                # game_screen.game_data.data = game_data.data
-                # game_screen.render(term)
+                game_data.load_game("new")
+                game_data.update_game_mode("normal")
+                game_screen.game_data.data = game_data.data
+                game_screen.render(term)
             elif keypressed == "t":
                 pass
                 # game_data.update_game_mode("tutorial")

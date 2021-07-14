@@ -2,6 +2,8 @@ from typing import Optional
 
 from scenes.entity import Entity, SubtractableDict
 
+from modules.logger import log
+
 
 class GameException(Exception):
     """Base class for exceptions in this module."""
@@ -24,12 +26,21 @@ class Message(Entity):
         self.message = message
 
 
+# This will load from somewhere.
+Messages = [
+    "I am sorry to let you know that you are stuck here.\nMmhh...\nThat's no entirely true, you might be able to get away. But can you ?!",
+    "You have the secret Message0: Look around who knows you might find a clue.",
+    "Can you print I can escape(whatever)",
+]
+
+
 class Game:
     """Game class that will handle the game screen and render the necessary scene"""
 
     def __init__(self) -> None:
         self.obstacles: set[tuple[int, int]] = set()
         self.message_pos = set()
+        self.message_ = None
         self.entities: set[Optional[Entity]] = set()
         self.player = Player((2, 2))
         self.entities.add(self.player)
@@ -74,20 +85,20 @@ class Game:
         pos_y, pos_x = self.player.position
 
         # Update the position.
-        if mov == "s":
+        if mov == "j" or mov == "KEY_DOWN":
             pos_y += 1
-        if mov == "w":
+        if mov == "k" or mov == "KEY_UP":
             pos_y -= 1
-        if mov == "a":
+        if mov == "h" or mov == "KEY_LEFT":
             pos_x -= 1
-        if mov == "d":
+        if mov == "l" or mov == "KEY_RIGHT":
             pos_x += 1
 
         # Check the orientation what is x and y ?
+        if (pos_y, pos_x) in self.message_pos:
+            log(repr(self.entities))
         if (pos_y, pos_x) not in self.obstacles:
             self.player.position = pos_y, pos_x
-        elif (pos_y, pos_x) in self.message_pos:
-            pass
 
     def get_to_be_rendered(self) -> SubtractableDict:
         """
