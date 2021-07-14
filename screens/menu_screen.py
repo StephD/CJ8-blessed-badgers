@@ -79,7 +79,7 @@ class MenuScreen:
 
     def render_flying_square(self, term, col, row, old_indices, title_indices, menu_indices) -> set:
         """It will render the flying square around the screen"""
-        print(eval("term." + self.menu_color_square))
+        print(getattr(term, self.menu_color_square))
 
         indices_to_be_painted = set()
         for square in self.squares:
@@ -92,4 +92,5 @@ class MenuScreen:
         for y_index, x_index in old_indices - indices_to_be_painted - title_indices - menu_indices:
             print(term.move_xy(x_index, y_index) + " ", end="", flush=True)
 
+        print(getattr(term, self.term_color))
         return indices_to_be_painted
