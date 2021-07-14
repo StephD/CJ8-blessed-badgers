@@ -30,7 +30,7 @@ def main() -> None:
                 game_data.update_game_mode("tutorial")
                 game_screen.render(term)
             elif keypressed == "c":
-                game_data.load_game("saved")
+                # game_data.load_game("saved")
                 game_data.update_game_mode("normal")
                 game_screen.render(term)
             elif keypressed == "a":
