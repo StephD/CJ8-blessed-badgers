@@ -1,5 +1,7 @@
 from typing import Optional
 
+from modules.game_data import GameData
+from modules.logger import log
 from scenes.entity import Entity, SubtractableDict
 
 
@@ -27,7 +29,14 @@ class Message(Entity):
 class Game:
     """Game class that will handle the game screen and render the necessary scene"""
 
-    def __init__(self) -> None:
+    def __init__(self, game_data: GameData) -> None:
+        self.game_data = game_data
+        if self.game_data.get_game_mode() == "normal":
+            self.story = self.game_data.get_str_in_language("messages", "story", "normal")
+            # Render tutorial map
+        else:
+            self.story = self.game_data.get_str_in_language("messages", "story", "tutorial")
+
         self.obstacles: set[tuple[int, int]] = set()
         self.message_pos = set()
         self.entities: set[Optional[Entity]] = set()
@@ -71,23 +80,23 @@ class Game:
     def move_player(self, mov: str) -> None:
         """Move player."""
         # Make a copy of the position of the player.
-        pos_x, pos_y = self.player.position
+        pos_y, pos_x = self.player.position
 
         # Update the position.
-        if mov == "j":
+        if mov == "j" or mov == "KEY_DOWN":
             pos_y += 1
-        if mov == "k":
+        if mov == "k" or mov == "KEY_UP":
             pos_y -= 1
-        if mov == "h":
+        if mov == "h" or mov == "KEY_LEFT":
             pos_x -= 1
-        if mov == "l":
+        if mov == "l" or mov == "KEY_RIGHT":
             pos_x += 1
 
         # Check the orientation what is x and y ?
+        if (pos_y, pos_x) in self.message_pos:
+            log(repr(self.entities))
         if (pos_y, pos_x) not in self.obstacles:
-            self.player.position = pos_x, pos_y
-        elif (pos_y, pos_x) in self.message_pos:
-            pass
+            self.player.position = pos_y, pos_x
 
     def get_to_be_rendered(self) -> SubtractableDict:
         """
