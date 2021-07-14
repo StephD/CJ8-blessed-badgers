@@ -28,7 +28,7 @@ class GameScreen:
                     self.game.move_player(val)
         # Remove all
         """
-        self.currently_rendered = self.currently_rendered 
+        self.currently_rendered = self.currently_rendered
                                     - self.currently_rendered
         """
         self.currently_rendered = SubtractableDict()

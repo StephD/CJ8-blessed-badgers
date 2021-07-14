@@ -1,8 +1,7 @@
 from typing import Optional
 
-from scenes.entity import Entity, SubtractableDict
-
 from modules.logger import log
+from scenes.entity import Entity, SubtractableDict
 
 
 class GameException(Exception):
@@ -28,7 +27,9 @@ class Message(Entity):
 
 # This will load from somewhere.
 Messages = [
-    "I am sorry to let you know that you are stuck here.\nMmhh...\nThat's no entirely true, you might be able to get away. But can you ?!",
+    """I am sorry to let you know that you are stuck here.
+Mmhh...
+That's no entirely true, you might be able to get away. But can you ?!""",
     "You have the secret Message0: Look around who knows you might find a clue.",
     "Can you print I can escape(whatever)",
 ]
