@@ -5,17 +5,18 @@ import blessed
 from modules.game import Game
 from scenes.entity import SubtractableDict
 
-
 Bounds = tuple[int, int, int, int]
 
 
-def _lies_within_bounds(bounds: Bounds, point: tuple[int, int]):
+def _lies_within_bounds(bounds: Bounds, point: tuple[int, int]) -> bool:
+    """Check whether the given point lies within the given bounds."""
     start_i, end_i, start_j, end_j = bounds
     i, j = point
     return start_i < i < end_i and start_j < j < end_j
 
 
 def chunk(string: str, width: int) -> list[str]:
+    """Split the given string into a list of lines, where the length of each line is less than the given width."""
     lines = string.splitlines()
     chunked = []
     for line in lines:
@@ -46,7 +47,7 @@ class GameScreen:
             val = ""
             while val.lower() != "q":
                 self.render_scene(term)
-                self.render_sidebar(term)
+                # self.render_sidebar(term)
                 val = term.inkey(timeout=3)
                 if not val:
                     continue
@@ -86,8 +87,8 @@ class GameScreen:
         panel_width = end_j - start_j
         print(term.move_yx(start_i, start_j))
         for line in chunk(sidebar_content, panel_width):
-            print(line, end='', flush=True)
-            print(term.move_left(len(line)) + term.move_down, end='', flush=True)
+            print(line, end="", flush=True)
+            print(term.move_left(len(line)) + term.move_down, end="", flush=True)
 
     @staticmethod
     def _make_border(bounds: Bounds, charset: tuple[str, str, str, str, str, str]) -> SubtractableDict:
@@ -131,6 +132,6 @@ class GameScreen:
         return clipped_map
 
     @staticmethod
-    def _render_dict(term: blessed.Terminal, data: Union[dict, SubtractableDict]):
+    def _render_dict(term: blessed.Terminal, data: Union[dict, SubtractableDict]) -> None:
         for (i, j), char in data.items():
             print(term.move_yx(i, j) + char, end="", flush=True)

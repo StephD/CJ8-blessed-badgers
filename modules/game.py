@@ -101,7 +101,5 @@ class Game:
         return to_be_rendered
 
     def get_sidebar_content(self) -> str:
-        """
-        Get the text to be rendered on the sidebar.
-        """
+        """Get the text to be rendered on the sidebar."""
         pass
