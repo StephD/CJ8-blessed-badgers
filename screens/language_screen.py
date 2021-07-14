@@ -13,12 +13,11 @@ class LanguageScreen(MenuScreen):
 
     def render(self, term: blessed.Terminal) -> None:
         """Renders the start screen in the terminal."""
-        cols, rows = term.width, term.height
+        cols, rows = term.width - 1, term.height - 1
         row, col = np.indices((rows, cols))
         row = row[::-1]
         row = (row - rows // 2) * 1 / 2
         col = (col - cols // 2) / 3 * 1 / 2
-        cols, rows = term.width - 2, term.height - 2
 
         with term.cbreak(), term.hidden_cursor():
             print(term.home + term.clear)

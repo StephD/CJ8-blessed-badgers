@@ -13,7 +13,7 @@ class AboutScreen(MenuScreen):
 
     def render(self, term: blessed.Terminal) -> None:
         """Renders the start screen in the terminal."""
-        cols, rows = term.width, term.height
+        cols, rows = term.width - 1, term.height - 1
         rows -= 2
         cols -= 2
         row, col = np.indices((rows, cols))
