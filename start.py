@@ -12,36 +12,35 @@ def main() -> None:
     log("The game start", "Title")
     term = blessed.Terminal()
     game_data = GameData()
-    keypressed = None
+    menu_screen = MenuScreen(game_data=game_data)
+    about_screen = AboutScreen(game_data=game_data)
+    language_screen = LanguageScreen(game_data=game_data)
+    game_screen = GameScreen(game_data=game_data)
 
+    keypressed = None
     with term.fullscreen(), term.cbreak():
         while keypressed != "q":
-            keypressed = MenuScreen(game_data=game_data).render(term)
+            keypressed = menu_screen.render(term)
             if keypressed == "n":  # New game
                 print(term.clear)
-                # game_data.set_game_mode("new")
-                GameScreen().render(term)
-            keypressed = MenuScreen(game_data=game_data).render(term)
-            if keypressed == "n":
-                # game_data.set_game_mode("new")
-                GameScreen(game_data=game_data).render(term)
-                pass
+                game_data.load_game("new")
+                game_data.update_game_mode("normal")
+                game_screen.render(term)
             elif keypressed == "t":
-                # game_data.set_game_mode("tutorial")
-                GameScreen(game_data=game_data).render(term)
-                pass
+                game_data.update_game_mode("tutorial")
+                game_screen.render(term)
             elif keypressed == "c":
-                # game_data.set_game_mode("continue")
-                # Load the saved game data
-                pass
+                game_data.load_game("saved")
+                game_data.update_game_mode("normal")
+                game_screen.render(term)
             elif keypressed == "a":
-                AboutScreen(game_data=game_data).render(term)
+                about_screen.render(term)
             elif keypressed == "l":
-                lang_selected = LanguageScreen(game_data=game_data).render(term)
+                lang_selected = language_screen.render(term)
                 if lang_selected:
                     game_data.update_language(lang_selected)
 
-    print(term.clear)
+    print(f"BYE!{term.normal}")
     sys.exit(0)
 
 

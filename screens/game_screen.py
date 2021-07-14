@@ -1,8 +1,11 @@
 from typing import Union
+import sys
 
 import blessed
 
 from modules.game import Game
+from modules.game_data import GameData
+from modules.logger import log
 from scenes.entity import SubtractableDict
 
 Bounds = tuple[int, int, int, int]
@@ -32,9 +35,9 @@ def chunk(string: str, width: int) -> list[str]:
 
 
 class GameScreen:
-    def __init__(self, *args, **kwargs):
-        self.game_mode = "normal"
-        self.game = Game()
+    def __init__(self, game_data: GameData, *args, **kwargs):
+        self.game_data = game_data
+        self.game = Game(game_data)
         self.currently_rendered = SubtractableDict()
         self.scene_bounds: Bounds = ...
         self.sidebar_bounds: Bounds = ...
@@ -43,9 +46,15 @@ class GameScreen:
     def render(self, term: blessed.Terminal) -> None:
         """Renders the start screen in the terminal."""
         with term.cbreak(), term.hidden_cursor():
+            # Render layout
+            # Render scene
+            # Render entities
+            # Render message
+            # Render gamedata
             self.render_layout(term)
             val = ""
             while val.lower() != "q":
+                self.render_layout(term)
                 self.render_scene(term)
                 # self.render_sidebar(term)
                 val = term.inkey(timeout=3)
@@ -53,12 +62,14 @@ class GameScreen:
                     continue
                 elif val.is_sequence:
                     self.game.move_player(val.name)
-                    continue
                 elif val:
                     self.game.move_player(val)
-                    continue
-
-            print(f"bye!{term.normal}")
+        # Remove all
+        """
+        self.currently_rendered = self.currently_rendered
+                                    - self.currently_rendered
+        """
+        self.currently_rendered = SubtractableDict()
 
     def render_layout(self, term: blessed.Terminal) -> None:
         width, height = term.width, term.height

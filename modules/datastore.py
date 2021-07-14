@@ -2,7 +2,7 @@ import json
 import os
 from datetime import datetime
 
-# TODO
+# TODO BACKUP FILE
 
 
 class Datastore:
@@ -17,7 +17,7 @@ class Datastore:
             base_save = {
                 "game": {
                     "is_game_already_played": False,
-                    "game_mode": "game/tutorial",
+                    "mode": "game/tutorial",
                     "language": "EN",
                     "last_saved": datetime.now().strftime("%d/%m/%Y %H:%M:%S"),
                 },
@@ -31,50 +31,37 @@ class Datastore:
             with open(f"./assets/saves/{self.save_name}.json", "r+") as f:
                 self.data = json.load(f)
 
-    def save_game(self) -> None:
-        """Save game data back into JSON file"""
-        with open(f"./assets/saves/{self.save_name}.json", "w+") as f:
-            json.dump(self.data, f, indent=4)
+    # def add_scene(self, scene_id) -> None:
+    #     """Adds a room to the game"""
+    #     base_scene = {
+    #         "is_door_unlock": False,
+    #         "is_key_is_found": False,
+    #         "is_secret_door_found": False,
+    #         "items": {},
+    #         "interactions": {},
+    #     }
+    #     self.data["scenes"][scene_id] = base_scene
+    #     self.save_game()
 
-    def update_lang(self, lang) -> None:
-        self.data["game"]["language"] = lang
-        self.save_game()
+    # def add_item_to_room(self, room_id, item_name, item_pos) -> None:
+    #     self.data["room"][room_id]["items"] = {item_name: {"last_pos": item_pos}}
+    #     self.save_game()
 
-    def update_game_attr(self, game, key, value) -> None:
-        self.data["game"][key] = value
-        self.save_game()
+    # def add_interactive_to_room(self, room_id, interaction_name) -> None:
+    #     self.data["room"][room_id]["interactions"] = {interaction_name: False}
+    #     self.save_game()
 
-    def add_room(self, room_id) -> None:
-        """Adds a room to the game"""
-        base_room = {
-            "is_door_unlock": False,
-            "is_key_is_found": False,
-            "is_secret_door_found": False,
-            "items": {},
-            "interactions": {},
-        }
-        self.data["room"][room_id] = base_room
-        self.save_game()
+    # def update_room_attr(self, room_id, key, value) -> None:
+    #     self.data["room"][room_id][key] = value
+    #     self.save_game()
 
-    def add_item_to_room(self, room_id, item_name, item_pos) -> None:
-        self.data["room"][room_id]["items"] = {item_name: {"last_pos": item_pos}}
-        self.save_game()
+    # def update_room_item(self, room_id, item, last_pos) -> None:
+    #     self.data["room"][room_id]["items"][item] = {"last_pos": last_pos}
+    #     self.save_game()
 
-    def add_interactive_to_room(self, room_id, interaction_name) -> None:
-        self.data["room"][room_id]["interactions"] = {interaction_name: False}
-        self.save_game()
-
-    def update_room_attr(self, room_id, key, value) -> None:
-        self.data["room"][room_id][key] = value
-        self.save_game()
-
-    def update_room_item(self, room_id, item, last_pos) -> None:
-        self.data["room"][room_id]["items"][item] = {"last_pos": last_pos}
-        self.save_game()
-
-    def update_room_interactive(self, room_id, interactive, value) -> None:
-        self.data["room"][room_id]["interactions"][interactive] = value
-        self.save_game()
+    # def update_room_interactive(self, room_id, interactive, value) -> None:
+    #     self.data["room"][room_id]["interactions"][interactive] = value
+    #     self.save_game()
 
     def update_player_attr(self, key, value) -> None:
         self.data["player"][key] = value
@@ -90,9 +77,6 @@ class Datastore:
         else:
             pass
 
-    def get_game(self, key) -> tuple[bool, str]:
-        return self.data["game"][key]
-
     def get_room(self, room_id, type, key) -> tuple[bool, str, dict]:
         if type == "base":
             return self.data["room"][room_id][key]
@@ -103,9 +87,3 @@ class Datastore:
 
     def get_player(self, key) -> tuple[int, list, dict]:
         return self.data["player"][key]
-
-    def get_inventory_list(self) -> list:
-        return list(self.data["player"]["inventory"].keys())
-
-    def get_inventory_item(self, key) -> dict:
-        return self.data["player"]["inventory"][key]
