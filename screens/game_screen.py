@@ -17,9 +17,14 @@ class GameScreen:
     def render(self, term: blessed.Terminal) -> None:
         """Renders the start screen in the terminal."""
         with term.cbreak(), term.hidden_cursor():
+            # Render layout
+            self.render_layout(term)
+            # Render scene
+            # Render entities
+            # Render message
+            # Render gamedata
             val = ""
             while val.lower() != "q":
-                self.render_layout(term)
                 val = term.inkey()
                 if not val:
                     continue

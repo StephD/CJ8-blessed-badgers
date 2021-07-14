@@ -1,3 +1,4 @@
+import ast
 from typing import Union
 
 import blessed
@@ -6,14 +7,22 @@ from blessed.keyboard import Keystroke
 
 from modules.flying_square import Square
 from modules.game_data import GameData
+from modules.logger import log
 from scenes.menu_title import print_title
 
 
 class MenuScreen:
     def __init__(self, game_data: GameData):
         num_squares = 4
-        self.squares = [Square() for _ in range(num_squares)]
         self.game_data = game_data
+        self.squares = [Square() for _ in range(num_squares)]
+        gd = self.game_data.data
+        self.menu_color_choice = f'{gd["game"]["colors"]["menu"]["choice"]}'
+        self.menu_color_title = f'{gd["game"]["colors"]["menu"]["title"]}'
+        self.menu_color_text = f'{gd["game"]["colors"]["menu"]["text"]}'
+        self.menu_color_bg = f'{gd["game"]["colors"]["menu"]["bg"]}'
+        self.menu_color_square = f'{gd["game"]["colors"]["menu"]["square"]}'
+        self.term_color = f"{self.menu_color_text}_on_{self.menu_color_bg}"
 
     def render(self, term: blessed.Terminal) -> Union[Keystroke, str]:
         """Renders the start screen in the terminal."""
@@ -25,9 +34,9 @@ class MenuScreen:
         cols, rows = term.width - 2, term.height - 2
 
         with term.cbreak(), term.hidden_cursor():
-            print(term.home + term.lightskyblue_on_gray20 + term.clear)
+            print(term.home + getattr(term, self.term_color) + term.clear)
 
-            title_indices = print_title(term, rows, cols)
+            title_indices = print_title(term, rows, cols, self.menu_color_title, self.term_color)
             menu_indices = self.print_text(term, rows, cols)
 
             old_indices = set()
@@ -57,10 +66,13 @@ class MenuScreen:
         menu_row = rows - 3
 
         print(term.move_xy(menu_start_col, menu_row), end="")
+        mcc = self.menu_color_choice
 
         for menu_item in menu_items:
             print(
-                f"{menu_item[:-3]}{term.green3}{menu_item[-3:]}{term.lightskyblue_on_gray20}{term.move_right(5)}",
+                f"{getattr(term,self.term_color)}"
+                f"{menu_item[:-3]}{getattr(term,mcc)}{menu_item[-3:]}"
+                f"{term.move_right(5)}",
                 end="",
             )
 
@@ -68,6 +80,8 @@ class MenuScreen:
 
     def render_flying_square(self, term, col, row, old_indices, title_indices, menu_indices) -> set:
         """It will render the flying square around the screen"""
+        print(eval("term." + self.menu_color_square))
+
         indices_to_be_painted = set()
         for square in self.squares:
             square.update(((col[0, 0], row[-1, 0]), (col[0, -1], row[0, 0])))

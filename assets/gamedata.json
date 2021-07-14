@@ -3,7 +3,25 @@
         "is_game_already_played": true,
         "mode": "normal",
         "language": "en",
-        "last_saved": "12/07/2021 23:14:48"
+        "last_saved": "12/07/2021 23:14:48",
+        "colors": {
+            "menu": {
+                "bg": "gray20",
+                "text": "lightskyblue",
+                "title": "green3",
+                "choice": "green3",
+                "square": "lightskyblue",
+                "term_color": "lightskyblue_on_gray20"
+            },
+            "game": {
+                "bg": "grey20",
+                "text": "lightskyblue",
+                "choice": "green3",
+                "layout": "",
+                "door": "",
+                "key": ""
+            }
+        }
     },
     "room": {
         "1": {

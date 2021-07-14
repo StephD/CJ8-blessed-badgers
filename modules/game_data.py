@@ -51,7 +51,7 @@ class GameData:
 
         with open(path, "r") as file:
             data_tmp = json.load(file)
-            data_tmp["game"]["language"] = self.data["game"]["language"]
+            data_tmp["game"] = self.data["game"]
             self.data = data_tmp
 
     def get_game_mode(self) -> str:
