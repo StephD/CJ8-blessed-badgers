@@ -30,4 +30,4 @@ build/
 # MacOS
 .DS_Store
 
-assets/gamedata.json
+gamedata.json
