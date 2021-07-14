@@ -2,7 +2,6 @@ import json
 
 # import os
 # from datetime import datetime
-from modules.logger import log
 
 ASSETS_PATH = "assets"
 LANGUAGE_PATH = f"{ASSETS_PATH}/lang/"
@@ -79,7 +78,12 @@ class GameData:
                 lang_dict = json.load(lang)
 
         for key in selections:
-            lang_dict = lang_dict[key]
+            try:
+                lang_dict = lang_dict[key]
+            except KeyError:
+                lang_dict = key
+            except TypeError:
+                lang_dict = key
 
         return lang_dict
 
