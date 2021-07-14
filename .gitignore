@@ -29,4 +29,5 @@ build/
 .vscode/
 # MacOS
 .DS_Store
+
 assets/gamedata.json
