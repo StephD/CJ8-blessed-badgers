@@ -24,7 +24,7 @@ class AboutScreen(MenuScreen):
         with term.cbreak(), term.hidden_cursor():
             print(term.home + term.clear)
 
-            title_indices = print_title(term, rows, cols)
+            title_indices = print_title(term, rows, cols, self.menu_color_title, self.term_color)
             menu_indices = self.print_text(term, rows, cols)
 
             old_indices = set()
@@ -44,7 +44,6 @@ class AboutScreen(MenuScreen):
 
         sections.append("")
         sections.append(self.get_language("menu", "actions", "return"))
-        term_color = term.lightskyblue_on_gray20
 
         coordinates = set()
         for i, section in enumerate(sections):
@@ -53,7 +52,11 @@ class AboutScreen(MenuScreen):
             menu_row = rows - 5 + i
 
             print(term.move_xy(menu_start_col, menu_row), end="")
-            print(f"{section[:-3]}{term.green3 if i==len(sections)-1 else term_color}{section[-3:]}{term_color}")
+            print(
+                f"{section[:-3]}"
+                f"{getattr(term,self.menu_color_choice) if i==len(sections)-1 else getattr(term,self.term_color)}"
+                f"{section[-3:]}{getattr(term,self.term_color)}"
+            )
 
             coordinates = coordinates.union({(menu_row, x + menu_start_col) for x in range(menu_width)})
 

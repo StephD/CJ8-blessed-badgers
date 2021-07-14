@@ -66,12 +66,11 @@ class MenuScreen:
         menu_row = rows - 3
 
         print(term.move_xy(menu_start_col, menu_row), end="")
-        mcc = self.menu_color_choice
 
         for menu_item in menu_items:
             print(
                 f"{getattr(term,self.term_color)}"
-                f"{menu_item[:-3]}{getattr(term,mcc)}{menu_item[-3:]}"
+                f"{menu_item[:-3]}{getattr(term,self.menu_color_choice)}{menu_item[-3:]}"
                 f"{term.move_right(5)}",
                 end="",
             )

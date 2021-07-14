@@ -23,7 +23,7 @@ class LanguageScreen(MenuScreen):
         with term.cbreak(), term.hidden_cursor():
             print(term.home + term.clear)
 
-            title_indices = print_title(term, rows, cols)
+            title_indices = print_title(term, rows, cols, self.menu_color_title, self.term_color)
             menu_indices = self.print_text(term, rows, cols)
 
             old_indices = set()
