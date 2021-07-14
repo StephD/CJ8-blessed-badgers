@@ -41,6 +41,9 @@ class Game:
 
     def __init__(self, game_data: GameData) -> None:
         self.game_data = game_data
+        if self.game_data.get_game_mode() == "tutorial":
+            # Render tutorial map
+            pass
         self.obstacles: set[tuple[int, int]] = set()
         self.message_pos = set()
         self.message_ = None

@@ -5,6 +5,7 @@ import json
 from modules.logger import log
 
 ASSETS_PATH = "assets"
+LANGUAGE_PATH = f"{ASSETS_PATH}/lang/"
 GAMEDATA_PATH = f"{ASSETS_PATH}/gamedata.json"
 GAMESAVE_NEW = f"{ASSETS_PATH}/saves/gamedata_new.json"
 GAMESAVE_SAVE = f"{ASSETS_PATH}/saves/gamedata_save.json"
@@ -26,7 +27,7 @@ class GameData:
         except FileNotFoundError:
             pass
 
-    def update_file_game_data(function):
+    def update_file_game_data_decorator(function):
         """Decorator used to save the game_data into a file when it's updated"""
 
         def inner(self, *args):
@@ -36,12 +37,12 @@ class GameData:
 
         return inner
 
-    @update_file_game_data
+    @update_file_game_data_decorator
     def save_game(self) -> None:
         with open(GAMESAVE_SAVE, "w") as file:
             json.dump(self.data, file, indent=4)
 
-    @update_file_game_data
+    @update_file_game_data_decorator
     def load_game(self, type: str = "new") -> None:
         if type == "new":
             path = GAMESAVE_NEW
@@ -53,21 +54,34 @@ class GameData:
             data_tmp["game"]["language"] = self.data["game"]["language"]
             self.data = data_tmp
 
-    @update_file_game_data
-    def update_game_mode(self, game_mode):
-        self.data["game"]["game_mode"] = game_mode
+    def get_game_mode(self) -> str:
+        return self.data["game"]["mode"]
 
-    # TODO Check if key exist first. Or it can crash
-    @update_file_game_data
-    def update_game_key(self, key, value) -> None:
-        self.data["game"][key] = value
+    @update_file_game_data_decorator
+    def update_game_mode(self, game_mode):
+        self.data["game"]["mode"] = game_mode
 
     def get_language(self) -> None:
         return self.data["game"]["language"]
 
-    @update_file_game_data
+    @update_file_game_data_decorator
     def update_language(self, language) -> None:
         self.data["game"]["language"] = language
+
+    def get_str_in_language(self, *args) -> str:
+        selections = [*args]
+
+        try:
+            with open(LANGUAGE_PATH + f"lang_{self.get_language()}.json", "r", encoding="utf-8") as lang:
+                lang_dict = json.load(lang)
+        except FileNotFoundError:
+            with open(LANGUAGE_PATH + "lang_en.json", "r", encoding="utf-8") as lang:
+                lang_dict = json.load(lang)
+
+        for key in selections:
+            lang_dict = lang_dict[key]
+
+        return lang_dict
 
     def get_game_key(self, key) -> tuple[bool, str]:
         return self.data["game"][key]

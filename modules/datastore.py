@@ -17,7 +17,7 @@ class Datastore:
             base_save = {
                 "game": {
                     "is_game_already_played": False,
-                    "game_mode": "game/tutorial",
+                    "mode": "game/tutorial",
                     "language": "EN",
                     "last_saved": datetime.now().strftime("%d/%m/%Y %H:%M:%S"),
                 },

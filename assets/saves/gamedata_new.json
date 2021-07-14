@@ -1,7 +1,7 @@
 {
     "game": {
         "is_game_already_played": false,
-        "game_mode": "new"
+        "mode": "new"
     },
     "player": {
         "lifes_left": 3,
