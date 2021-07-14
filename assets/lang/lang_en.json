@@ -31,9 +31,13 @@
         "return": "Return"
     },
     "messages": {
-        "game": {},
+        "game": {
+            "actions": {
+                "esc": "Do you want to leave? quit [Q] - save [S] - cancel [C]"
+            }
+        },
         "story": {
-            "intro": {
+            "normal": {
                 "1": "Hey ... Wake up",
                 "2": "I think that you felt down from there, above",
                 "3": "Did you ask where you were?",
