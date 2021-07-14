@@ -6,18 +6,31 @@ from modules.game import Game
 from scenes.entity import SubtractableDict
 
 
+Bounds = tuple[int, int, int, int]
+
+
+def _lies_within_bounds(bounds: Bounds, point: tuple[int, int]):
+    start_i, end_i, start_j, end_j = bounds
+    i, j = point
+    return start_i < i < end_i and start_j < j < end_j
+
+
 class GameScreen:
     def __init__(self, *args, **kwargs):
         self.game_mode = "normal"
         self.game = Game()
         self.currently_rendered = SubtractableDict()
+        self.scene_bounds: Bounds = ...
+        self.sidebar_bounds: Bounds = ...
+        self.action_bar_bounds: Bounds = ...
 
     def render(self, term: blessed.Terminal) -> None:
         """Renders the start screen in the terminal."""
         with term.cbreak(), term.hidden_cursor():
+            self.render_layout(term)
             val = ""
             while val.lower() != "q":
-                self.render_layout(term)
+                self.render_scene(term)
                 val = term.inkey(timeout=3)
                 if not val:
                     continue
@@ -31,27 +44,28 @@ class GameScreen:
             print(f"bye!{term.normal}")
 
     def render_layout(self, term: blessed.Terminal) -> None:
-
         width, height = term.width, term.height
 
-        sidebar_bounds: tuple[int, int, int, int] = (1, height - 2, int(3 / 4 * width), width - 2)
-        scene_bounds = (1, int(3 / 4 * height), 1, int(3 / 4 * width) - 1)
-        action_bar_bounds = (int(3 / 4 * height) + 1, height - 2, 1, int(3 / 4 * width) - 1)
+        self.sidebar_bounds = (1, height - 2, int(3 / 4 * width), width - 2)
+        self.scene_bounds = (1, int(3 / 4 * height), 1, int(3 / 4 * width) - 1)
+        self.action_bar_bounds = (int(3 / 4 * height) + 1, height - 2, 1, int(3 / 4 * width) - 1)
 
-        self._render_dict(term, self._make_border(0, height - 1, 0, width - 1, tuple("╔╗╚╝║═")))
-        self._render_dict(term, self._make_border(*sidebar_bounds, tuple("┌┐└┘│─")))
-        self._render_dict(term, self._make_border(*scene_bounds, tuple("┌┐└┘│─")))
-        self._render_dict(term, self._make_border(*action_bar_bounds, tuple("┌┐└┘│─")))
+        self._render_dict(term, self._make_border((0, height - 1, 0, width - 1), tuple("╔╗╚╝║═")))
+        self._render_dict(term, self._make_border(self.sidebar_bounds, tuple("┌┐└┘│─")))
+        self._render_dict(term, self._make_border(self.scene_bounds, tuple("┌┐└┘│─")))
+        self._render_dict(term, self._make_border(self.action_bar_bounds, tuple("┌┐└┘│─")))
 
-        to_be_rendered = self.game.get_to_be_rendered()
-        # self._render_dict(term, to_be_rendered - self.currently_rendered)
-        # self._render_dict(term, {(i, j): " " for i, j in self.currently_rendered - to_be_rendered})
+    def render_scene(self, term: blessed.Terminal):
+        to_be_rendered = self._make_scene(self.scene_bounds, self.game.get_to_be_rendered())
+        self._render_dict(term, to_be_rendered - self.currently_rendered)
+        self._render_dict(term, {(i, j): " " for i, j in self.currently_rendered - to_be_rendered})
         self.currently_rendered = to_be_rendered
 
     @staticmethod
     def _make_border(
-        start_i: int, end_i: int, start_j: int, end_j: int, charset: tuple[str, str, str, str, str, str]
+        bounds: Bounds, charset: tuple[str, str, str, str, str, str]
     ) -> SubtractableDict:
+        start_i, end_i, start_j, end_j = bounds
         top_left, top_right, bottom_left, bottom_right, vertical, horizontal = charset
         return SubtractableDict(
             {
@@ -65,6 +79,32 @@ class GameScreen:
         )
 
     @staticmethod
+    def _make_scene(bounds: Bounds, game_map: SubtractableDict) -> SubtractableDict:
+
+        start_i, end_i, start_j, end_j = bounds
+        scene_panel_width = end_j - start_j
+        scene_panel_height = end_i - start_i
+        clipped_map = SubtractableDict()
+
+        scene_start_i = min(coordinate[0] for coordinate in game_map)
+        scene_end_i = max(coordinate[0] for coordinate in game_map)
+        scene_start_j = min(coordinate[1] for coordinate in game_map)
+        scene_end_j = max(coordinate[1] for coordinate in game_map)
+
+        scene_height = scene_end_i - scene_start_i
+        scene_width = scene_end_j - scene_start_j
+
+        central_i, central_j = (scene_height // 2, scene_width // 2)
+
+        for (i, j), char in game_map.items():
+            new_i = i - central_i + scene_panel_height // 2
+            new_j = j - central_j + scene_panel_width // 2
+            if _lies_within_bounds(bounds, (new_i, new_j)):
+                clipped_map[new_i, new_j] = char
+
+        return clipped_map
+
+    @staticmethod
     def _render_dict(term: blessed.Terminal, data: Union[dict, SubtractableDict]):
         for (i, j), char in data.items():
-            print(term.move_yx(i, j) + char, end="")
+            print(term.move_yx(i, j) + char, end="", flush=True)
