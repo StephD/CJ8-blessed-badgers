@@ -16,7 +16,7 @@ def main() -> None:
 
     with term.fullscreen(), term.cbreak():
         while keypressed != "q":
-            keypressed = MenuScreen().render(term)
+            keypressed = MenuScreen(game_data=game_data).render(term)
             if keypressed == "n":  # New game
                 print(term.clear)
                 # game_data.set_game_mode("new")
