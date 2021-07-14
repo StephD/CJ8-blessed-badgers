@@ -86,8 +86,8 @@ class GameScreen:
         panel_width = end_j - start_j
         print(term.move_yx(start_i, start_j))
         for line in chunk(sidebar_content, panel_width):
-            print(line, end='', flush=True)
-            print(term.move_left(len(line)) + term.move_down, end='', flush=True)
+            print(line, end="", flush=True)
+            print(term.move_left(len(line)) + term.move_down, end="", flush=True)
 
     @staticmethod
     def _make_border(bounds: Bounds, charset: tuple[str, str, str, str, str, str]) -> SubtractableDict:
