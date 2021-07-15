@@ -41,9 +41,7 @@ class GameScreen:
         self.game = Game(game_data)
         self.currently_rendered = set()
         self.stories_id = 1
-        # self.scene_bounds: Bounds = ...
-        # self.sidebar_bounds: Bounds = ...
-        # self.message_bar_bounds: Bounds = ...
+        self.init_colors()
 
     def init_bound(self, term: blessed.Terminal):
         """Initialize the layout side and frame size+position"""
@@ -57,6 +55,10 @@ class GameScreen:
 
         # Render the screen border
         self._render_dict(term, self._make_border((0, height - 1, 0, width - 1), tuple("╔╗╚╝║═")))
+
+    def init_colors(self):
+        self.colors = self.game_data.data["game"]["colors"]["game"].copy()
+        self.term_color = f"{self.colors['text']}_on_{self.colors['bg']}"
 
     def render(self, term: blessed.Terminal) -> None:
         """Renders the start screen in the terminal."""
@@ -78,7 +80,6 @@ class GameScreen:
                     break
                 self.stories_id += 1
 
-            # Clean the message bar
             self.render_sidebar_content(term)
 
             # while not in esc menu and key different then 'q'
@@ -139,16 +140,25 @@ class GameScreen:
         for data_key, data_obj in sidebar_content.items():
             if data_key == "game_data":
                 print(
-                    # term.orangered
-                    "Game data"
-                    + " " * (panel_width - len("Game data : "))
-                    + term.move_left(panel_width - 3)
-                    + term.move_down,
-                    # + term.normal,
+                    getattr(term, self.colors["choice"])
+                    + "Game data"
+                    + " " * (panel_width - (len("Game data") + 2))
+                    + term.move_left(panel_width - 2)
+                    + term.move_down
+                    + getattr(term, self.term_color),
                     end="",
                 )
             elif data_key == "player_data":
-                print("Game data : ", end="")
+                print(
+                    term.move_down
+                    + getattr(term, self.colors["choice"])
+                    + "In your box"
+                    + " " * (panel_width - (len("In your box") + 2))
+                    + term.move_left(panel_width - 2)
+                    + term.move_down
+                    + getattr(term, self.term_color),
+                    end="",
+                )
             for key, value in data_obj.items():
                 for line in chunk(f"{key} : {value}", panel_width):
                     print(line, end="", flush=True)
