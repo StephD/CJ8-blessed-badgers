@@ -1,6 +1,5 @@
 from typing import Optional
 
-from modules.game_data import GameData
 from modules.logger import log
 from scenes.entity import Entity, SubtractableDict
 
@@ -24,6 +23,10 @@ class Message(Entity):
     def __init__(self, message: str, *args):
         super().__init__(*args)
         self.message = message
+
+
+# This will load from somewhere.
+Messages = []
 
 
 class Game:
