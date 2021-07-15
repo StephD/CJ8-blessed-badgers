@@ -3,7 +3,6 @@ from typing import Optional
 from modules.game_data import GameData
 from modules.logger import log
 from scenes.entity import Entity
-from testing.test import game_layout
 
 
 class GameException(Exception):
@@ -66,7 +65,7 @@ class Game:
             for j, char in enumerate(line):
                 if char == " ":
                     continue
-                elif char in "XD":
+                if char in "XD":
                     self.message_pos.update(self.get_neighbours(i, j))
                 self.entities.add(Obstacle((i, j), [char]))
                 self.obstacles.add((i, j))
@@ -77,13 +76,13 @@ class Game:
         pos_y, pos_x = self.player.position
 
         # Update the position.
-        if mov == "j" or mov == "KEY_DOWN":
+        if mov in ("j", "KEY_DOWN"):
             pos_y += 1
-        if mov == "k" or mov == "KEY_UP":
+        if mov in ("k", "KEY_UP"):
             pos_y -= 1
-        if mov == "h" or mov == "KEY_LEFT":
+        if mov in ("h", "KEY_LEFT"):
             pos_x -= 1  # 2 for more smoothness
-        if mov == "l" or mov == "KEY_RIGHT":
+        if mov in ("l", "KEY_RIGHT"):
             pos_x += 1
 
         # Check the orientation what is x and y ?
@@ -105,7 +104,7 @@ class Game:
             to_be_rendered |= entity.get_to_be_rendered()
         return to_be_rendered
 
-    def get_sidebar_content(self) -> str:
+    def get_sidebar_content(self) -> dict:
         data = {"game_data": {}}
 
         game_data = self.game_data.data["game"].copy()
