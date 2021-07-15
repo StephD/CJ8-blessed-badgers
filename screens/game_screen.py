@@ -72,7 +72,7 @@ class GameScreen:
 
             # Render message in the bottom bar
             while self.game.story[str(self.stories_id)] != "":
-                self.render_messagebar_content(term, self.game.story[str(self.stories_id)])
+                self.render_messagebar_content(term, self.game.story[str(self.stories_id)], 0.03)
                 term.inkey(timeout=5)
                 if self.stories_id == 1:
                     break
@@ -92,12 +92,14 @@ class GameScreen:
                             key_input = term.inkey()
                             if key_input == "s":
                                 self.game_data.save_game()
-                                self.render_messagebar_content(term, "saving in progress")
-                                sleep(1)
+                                self.render_messagebar_content(term, "Saving in progress")
+                                sleep(0.8)
+                                self.render_messagebar_content(term, "Saving is done")
+                                sleep(0.7)
                             elif key_input == "q":
                                 key_input = "esc"
                                 self.render_messagebar_content(term, "bye ..")
-                                sleep(1)
+                                sleep(0.8)
 
                         self.render_messagebar_content(term, "")
                     else:
@@ -171,7 +173,10 @@ class GameScreen:
                     print(term.move_left(len(line)) + term.move_down, end="", flush=True)
                 print(term.move_down, end="", flush=True)
 
-    def render_messagebar_content(self, term: blessed.Terminal, message: str = ""):
+        print(term.move_yx(end_y - 1, start_x + 2), end="", flush=True)
+        print(getattr(term, self.colors["choice"]) + "Menu <ESC>" + getattr(term, self.term_color), end="", flush=True)
+
+    def render_messagebar_content(self, term: blessed.Terminal, message: str = "", writing_speed: float = 0.01):
         start_y, end_y, start_x, end_x = self.message_bar_bounds
         panel_height = end_y - start_y
         panel_width = end_x - start_x
@@ -184,7 +189,7 @@ class GameScreen:
         # Check if it can fit in first line using "chunk"?
         for letter in message:
             print(letter, end="", flush=True)
-            sleep(0.04)
+            sleep(writing_speed)
 
     @staticmethod
     def _make_border(bounds: Bounds, charset: tuple[str, str, str, str, str, str]) -> set[tuple[int, int, str]]:
