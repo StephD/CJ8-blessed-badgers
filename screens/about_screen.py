@@ -10,7 +10,7 @@ from .menu_screen import MenuScreen
 class AboutScreen(MenuScreen):
     def render(self, term: blessed.Terminal) -> None:
         """Renders the start screen in the terminal."""
-        cols, rows = term.width, term.height - 2
+        cols, rows = term.width - 2, term.height - 2
         row, col = np.indices((rows, cols))
         row = row[::-1]
         row = (row - rows // 2) * 1 / 2

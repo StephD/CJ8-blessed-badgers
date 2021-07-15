@@ -173,8 +173,9 @@ class GameScreen:
         # Clean the content
         print(term.move_xy(start_x + 4, start_y + round(panel_height / 2)), end="")
         print(" " * (panel_width - 6), end="", flush=True)
-
         print(term.move_left(panel_width - 7), end="")
+
+        # Check if it can fit in first line using "chunk"?
         for letter in message:
             print(letter, end="", flush=True)
             sleep(0.05)
