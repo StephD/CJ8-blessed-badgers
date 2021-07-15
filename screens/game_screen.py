@@ -67,15 +67,16 @@ class GameScreen:
             # Render scene
             self.render_scene(term)
             # Render scene entities
-            # Render sidebar content
-            # self.render_sidebar_content(term)
             # Render message in the bottom bar
             while self.game.story[str(self.stories_id)] != "":
                 self.render_messagebar_content(term, self.game.story[str(self.stories_id)])
                 term.inkey(timeout=5)
-                if self.stories_id == 5:
+                if self.stories_id == 1:
                     break
                 self.stories_id += 1
+
+            # Render sidebar content
+            self.render_sidebar_content(term)
 
             # while not in esc menu and key different then 'q'
             while key_input.lower() != "q":
@@ -90,10 +91,11 @@ class GameScreen:
                     self.game.move_player(key_input)
                     self.render_scene(term)
                     self.render_messagebar_content(term)
-        """
-        self.currently_rendered = self.currently_rendered
-                                    - self.currently_rendered
-        """
+
+        # """
+        # self.currently_rendered = self.currently_rendered
+        #                             - self.currently_rendered
+        # """
         # Remove all
         # self.currently_rendered = SubtractableDict()
 
@@ -117,28 +119,27 @@ class GameScreen:
     def render_sidebar_content(self, term: blessed.Terminal):
         """Render the content of the sidebar. Will display all the game data"""
         start_y, end_y, start_x, end_x = self.sidebar_bounds
-
-        # Look like it avoid the cursor to be in a random pos
-        self._render_dict(
-            term, {(i, j): " " for i in range(*self.sidebar_bounds[:2]) for j in range(*self.sidebar_bounds[2:])}
-        )
-
-        log(str(start_x), "x_side")
-        log(str(start_y), "y_side")
-        print(term.move_yx(start_y, start_x), end="")
-
-        sidebar_content = self.game.get_sidebar_content()
         panel_width = end_x - start_x
-        log(str(panel_width), "sidepanel_width")
-        for line in chunk(sidebar_content, panel_width):
-            print(line, end="", flush=True)
-            print(term.move_left(len(line)) + term.move_down, end="", flush=True)
+        sidebar_content = self.game.get_sidebar_content()
+
+        # What does it do?
+        # self._render_dict(
+        #     term, {(i, j): " " for i in range(*self.sidebar_bounds[:2]) for j in range(*self.sidebar_bounds[2:])}
+        # )
+
+        print(term.move_yx(start_y + 2, start_x + 2), end="")
+
+        for key, value in sidebar_content.items():
+            for line in chunk(f"{key} : {value}", panel_width):
+                print(line, end="", flush=True)
+                print(term.move_left(len(line)) + term.move_down, end="", flush=True)
+            print(term.move_down, end="", flush=True)
 
     def render_messagebar_content(self, term: blessed.Terminal, message: str = ""):
         start_y, end_y, start_x, end_x = self.message_bar_bounds
-
         panel_height = end_y - start_y
         panel_width = end_x - start_x
+
         print(term.move_xy(start_x + 4, start_y + round(panel_height / 2)), end="")
         print(message + " " * int(panel_width - (len(message) + 4)), end="", flush=True)
 

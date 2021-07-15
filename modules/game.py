@@ -110,4 +110,8 @@ class Game:
         return to_be_rendered
 
     def get_sidebar_content(self) -> str:
-        return "test"
+        data = {}
+        data.update(self.game_data.data["game"])
+        data.pop("colors")
+        data.pop("last_saved")
+        return data
