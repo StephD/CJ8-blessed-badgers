@@ -97,7 +97,8 @@ class Game:
 
         # Check the orientation what is x and y ?
         if (pos_y, pos_x) in self.message_pos:
-            log(repr(self.entities))
+            # log(repr(self.entities))
+            pass
         if (pos_y, pos_x) not in self.obstacles:
             self.player.position = pos_y, pos_x
 

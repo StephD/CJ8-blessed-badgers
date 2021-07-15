@@ -25,6 +25,7 @@ def main() -> None:
                 print(term.clear)
                 # game_data.load_game("new")
                 game_data.update_game_mode("normal")
+                game_screen = GameScreen(game_data=game_data)
                 game_screen.render(term)
             elif keypressed == "t":
                 game_data.update_game_mode("tutorial")

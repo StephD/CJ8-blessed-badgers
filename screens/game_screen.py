@@ -41,7 +41,7 @@ class GameScreen:
         self.currently_rendered = SubtractableDict()
         # self.scene_bounds: Bounds = ...
         # self.sidebar_bounds: Bounds = ...
-        # self.action_bar_bounds: Bounds = ...
+        # self.message_bar_bounds: Bounds = ...
 
     def init_bound(self, term: blessed.Terminal):
         width, height = term.width, term.height
@@ -50,7 +50,7 @@ class GameScreen:
         # Top - Bottom - Left - Right
         self.sidebar_bounds = (1, height - 2, int(3 / 4 * width) + 1, width - 3)
         self.scene_bounds = (1, int(3 / 4 * height), 2, int(3 / 4 * width) - 1)
-        self.action_bar_bounds = (int(3 / 4 * height) + 1, height - 2, 2, int(3 / 4 * width) - 1)
+        self.message_bar_bounds = (int(3 / 4 * height) + 1, height - 2, 2, int(3 / 4 * width) - 1)
 
         self._render_dict(term, self._make_border((0, height - 1, 0, width - 1), tuple("╔╗╚╝║═")))
 
@@ -66,8 +66,7 @@ class GameScreen:
             self.render_scene(term)
             # Render scene entities
             # Render sidebar content
-            self.render_sidebar(term)
-            # Render gamedata in the sidebar
+            self.render_sidebar_content(term)
             # Render message in the bottom bar
             # while not in esc menu and key different then 'q'
             while key_input.lower() != "q":
@@ -90,7 +89,7 @@ class GameScreen:
     def render_layout(self, term: blessed.Terminal) -> None:
         self._render_dict(term, self._make_border(self.sidebar_bounds, tuple("┌┐└┘│─")))
         self._render_dict(term, self._make_border(self.scene_bounds, tuple("┌┐└┘│─")))
-        self._render_dict(term, self._make_border(self.action_bar_bounds, tuple("┌┐└┘│─")))
+        self._render_dict(term, self._make_border(self.message_bar_bounds, tuple("┌┐└┘│─")))
 
     # Render scene need to be pickup from a file
     def render_scene(self, term: blessed.Terminal):
@@ -102,25 +101,27 @@ class GameScreen:
 
         self.currently_rendered = to_be_rendered
 
-    def render_sidebar(self, term: blessed.Terminal):
+    def render_sidebar_content(self, term: blessed.Terminal):
         start_y, end_y, start_x, end_x = self.sidebar_bounds
 
+        # Look like it avoid the cursor to be in a random pos
         self._render_dict(
             term, {(i, j): " " for i in range(*self.sidebar_bounds[:2]) for j in range(*self.sidebar_bounds[2:])}
         )
 
-        print(term.move_yx(start_y, start_x))
+        log(str(start_x), "x")
+        log(str(start_y), "y")
+        term.move_yx(start_y, start_x)
 
         sidebar_content = self.game.get_sidebar_content()
         panel_width = end_x - start_x
+        log(str(panel_width), "panel_width")
         for line in chunk(sidebar_content, panel_width):
             print(line, end="", flush=True)
             print(term.move_left(len(line)) + term.move_down, end="", flush=True)
 
-    def write_message(self, term: blessed.Terminal, message):
-        pass
-
-    def update_sidebar(self, term: blessed.Terminal):
+    def render_messagebar_content(self, term: blessed.Terminal):
+        start_y, end_y, start_x, end_x = self.message_bar_bounds
         pass
 
     @staticmethod
