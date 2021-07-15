@@ -1,7 +1,7 @@
 {
     "game": {
         "is_game_already_played": true,
-        "level": "1",
+        "level": 1,
         "language": "en",
         "last_saved": "12/07/2021 23:14:48",
         "colors": {
@@ -17,9 +17,10 @@
                 "bg": "grey20",
                 "text": "lightskyblue",
                 "choice": "green3",
-                "layout": "",
-                "door": "",
-                "key": ""
+                "layout": "darkslategray",
+                "door": "sienna",
+                "key": "gold",
+                "scene_wall": "lightskyblue4"
             }
         }
     },
@@ -39,7 +40,7 @@
             0
         ],
         "inventory": {
-            "keys": 1
+            "keys": 0
         }
     }
 }

@@ -57,10 +57,10 @@ class GameData:
         return self.data["game"]["level"]
 
     @update_file_game_data_decorator
-    def update_game_level(self, game_level):
+    def update_game_level(self, game_level) -> None:
         self.data["game"]["level"] = game_level
 
-    def get_language(self) -> None:
+    def get_language(self) -> str:
         return self.data["game"]["language"]
 
     @update_file_game_data_decorator
@@ -90,8 +90,16 @@ class GameData:
     def get_game_key(self, key) -> tuple[bool, str]:
         return self.data["game"][key]
 
+    @update_file_game_data_decorator
+    def update_game_by_key(self, key, value) -> None:
+        self.data["game"][key] = value
+
     def get_inventory_items(self) -> list:
         return list(self.data["player"]["inventory"].keys())
 
     def get_inventory_item(self, key) -> dict:
         return self.data["player"]["inventory"][key]
+
+    @update_file_game_data_decorator
+    def update_inventory_item_by_key(self, key, value) -> None:
+        self.data["player"]["inventory"][key] = value
