@@ -43,18 +43,31 @@ class GameScreen:
         # self.sidebar_bounds: Bounds = ...
         # self.action_bar_bounds: Bounds = ...
 
+    def init_bound(self, term: blessed.Terminal):
+        width, height = term.width, term.height
+
+        # The layout have to be fixed and the size of the scene
+        # Top - Bottom - Left - Right
+        self.sidebar_bounds = (1, height - 2, int(3 / 4 * width) + 1, width - 3)
+        self.scene_bounds = (1, int(3 / 4 * height), 2, int(3 / 4 * width) - 1)
+        self.action_bar_bounds = (int(3 / 4 * height) + 1, height - 2, 2, int(3 / 4 * width) - 1)
+
+        self._render_dict(term, self._make_border((0, height - 1, 0, width - 1), tuple("╔╗╚╝║═")))
+
     def render(self, term: blessed.Terminal) -> None:
         """Renders the start screen in the terminal."""
+        self.init_bound(term)
+
         key_input = ""
         with term.cbreak(), term.hidden_cursor():
             # Render layout
             self.render_layout(term)
             # Render scene
             self.render_scene(term)
-            # Render sidebar content
-            # self.render_sidebar(term)
-            # Render gamedata in the sidebar
             # Render scene entities
+            # Render sidebar content
+            self.render_sidebar(term)
+            # Render gamedata in the sidebar
             # Render message in the bottom bar
             # while not in esc menu and key different then 'q'
             while key_input.lower() != "q":
@@ -73,15 +86,6 @@ class GameScreen:
         # self.currently_rendered = SubtractableDict()
 
     def render_layout(self, term: blessed.Terminal) -> None:
-        width, height = term.width, term.height
-
-        # The layout have to be fixed and the size of the scene
-        # Top - Bottom - Left - Right
-        self.sidebar_bounds = (1, height - 2, int(3 / 4 * width) + 1, width - 3)
-        self.scene_bounds = (1, int(3 / 4 * height), 2, int(3 / 4 * width) - 1)
-        self.action_bar_bounds = (int(3 / 4 * height) + 1, height - 2, 2, int(3 / 4 * width) - 1)
-
-        self._render_dict(term, self._make_border((0, height - 1, 0, width - 1), tuple("╔╗╚╝║═")))
         self._render_dict(term, self._make_border(self.sidebar_bounds, tuple("┌┐└┘│─")))
         self._render_dict(term, self._make_border(self.scene_bounds, tuple("┌┐└┘│─")))
         self._render_dict(term, self._make_border(self.action_bar_bounds, tuple("┌┐└┘│─")))
@@ -89,18 +93,24 @@ class GameScreen:
     # Render scene need to be pickup from a file
     def render_scene(self, term: blessed.Terminal):
         to_be_rendered = self._make_scene(self.scene_bounds, self.game.get_to_be_rendered())
+
         self._render_dict(term, to_be_rendered - self.currently_rendered)
+        # What is this?
         self._render_dict(term, {(i, j): " " for i, j in self.currently_rendered - to_be_rendered})
+
         self.currently_rendered = to_be_rendered
 
     def render_sidebar(self, term: blessed.Terminal):
-        start_i, end_i, start_j, end_j = self.sidebar_bounds
+        start_y, end_y, start_x, end_x = self.sidebar_bounds
+
         self._render_dict(
             term, {(i, j): " " for i in range(*self.sidebar_bounds[:2]) for j in range(*self.sidebar_bounds[2:])}
         )
+
+        print(term.move_yx(start_y, start_x))
+
         sidebar_content = self.game.get_sidebar_content()
-        panel_width = end_j - start_j
-        print(term.move_yx(start_i, start_j))
+        panel_width = end_x - start_x
         for line in chunk(sidebar_content, panel_width):
             print(line, end="", flush=True)
             print(term.move_left(len(line)) + term.move_down, end="", flush=True)
