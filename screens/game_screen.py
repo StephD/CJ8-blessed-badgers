@@ -7,6 +7,7 @@ from modules.game_data import GameData
 from modules.logger import log
 
 Bounds = tuple[int, int, int, int]
+RenderableCoordinate = tuple[int, int, str]
 
 
 def _lies_within_bounds(bounds: Bounds, point: tuple[int, int]) -> bool:
@@ -38,10 +39,13 @@ class GameScreen:
     def __init__(self, game_data: GameData):
         self.game_data = game_data
         self.game = Game(game_data)
-        self.currently_rendered = set()
+        self.currently_rendered: set[RenderableCoordinate] = set()
         self.stories_id = 1
         self.colors = self.game_data.data["game"]["colors"]["game"].copy()
         self.term_color = f"{self.colors['text']}_on_{self.colors['bg']}"
+        self.sidebar_bounds: Bounds = ...
+        self.scene_bounds: Bounds = ...
+        self.message_bar_bounds: Bounds = ...
 
     def init_bound(self, term: blessed.Terminal):
         """Initialize the layout side and frame size+position"""
@@ -94,8 +98,8 @@ class GameScreen:
 
             self.render_sidebar_content(term)
 
-            # while not in esc menu and key different then 'q'
-            while key_input.lower() != "esc":
+            # Exit and player movement.
+            while 1:
                 key_input = term.inkey(timeout=3)
                 if key_input.is_sequence:
                     if key_input.name == "KEY_ESCAPE":
@@ -195,7 +199,7 @@ class GameScreen:
         panel_height = end_y - start_y
         panel_width = end_x - start_x
 
-        # Clean the content
+        # Clear the box before rendering any new message.
         print(term.move_xy(start_x + 4, start_y + round(panel_height / 2)), end="")
         print(" " * (panel_width - 4), end="", flush=True)
         print(term.move_left(panel_width - 4), end="")
@@ -206,7 +210,7 @@ class GameScreen:
             sleep(writing_speed)
 
     @staticmethod
-    def _make_border(bounds: Bounds, charset: tuple[str, str, str, str, str, str]) -> set[tuple[int, int, str]]:
+    def _make_border(bounds: Bounds, charset: tuple[str, str, str, str, str, str]) -> set[RenderableCoordinate]:
         start_i, end_i, start_j, end_j = bounds
         top_left, top_right, bottom_left, bottom_right, vertical, horizontal = charset
         return (
@@ -224,7 +228,7 @@ class GameScreen:
         )
 
     @staticmethod
-    def _make_scene(bounds: Bounds, game_map: set[tuple[int, int, str]]) -> set[tuple[int, int, str]]:
+    def _make_scene(bounds: Bounds, game_map: set[RenderableCoordinate]) -> set[RenderableCoordinate]:
 
         scene_panel_height = bounds[1] - bounds[0]  # uppermost row - lowermost row
         scene_panel_width = bounds[3] - bounds[2]  # rightmost column - leftmost column
@@ -249,6 +253,6 @@ class GameScreen:
         return clipped_map
 
     @staticmethod
-    def _render_dict(term: blessed.Terminal, data: set[tuple[int, int, str]]) -> None:
+    def _render_dict(term: blessed.Terminal, data: set[RenderableCoordinate]) -> None:
         for i, j, char in data:
             print(term.move_yx(i, j) + char, end="", flush=True)
