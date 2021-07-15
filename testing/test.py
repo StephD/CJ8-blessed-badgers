@@ -1,12 +1,12 @@
 from blessed import Terminal
 
-'''
+"""
 Pros
 Easy to render no need to use subtractable dict.
 
 Cons
 hard code every position
-'''
+"""
 
 PLAYER = "@"
 MSG_POS = (2, 26)
@@ -14,62 +14,67 @@ MSG_POS = (2, 26)
 # Don't create object for every wall maintain a different sets.
 wall_pos = set()
 # Entities Dictionary for now -> convert it to objects.
-entity= {}
+entity = {}
 # Player position (x, y)
 player_pos = (0, 0)
 
 # For Now
 message = {
-            "M": "I have left the key somewhere. find the ✕ mark", 
-            "X": "The door seem to be closed.", 
-            "P": "Beware of this poisonous block. This might decrease your life.",
-            "✕": "Hurray! You have found the key.",
-            "completed": "You have completed the tutorial"
-          }
+    "M": "I have left the key somewhere. find the ✕ mark",
+    "X": "The door seem to be closed.",
+    "P": "Beware of this poisonous block. This might decrease your life.",
+    "✕": "Hurray! You have found the key.",
+    "completed": "You have completed the tutorial",
+}
 
 # For Now
 found_key = False
 
 log_fd = open("log", "w")
 
+
 def log(s):
-    '''
+    """
     Simple log function.
-    '''
+    """
     log_fd.write(s)
 
+
 def _print(s):
-    '''
+    """
     Do we need this ?
-    '''
+    """
     print(s, end="", flush=True)
 
+
 def global_frame(term):
-    '''
+    """
     This will render global frame from gframe.txt
-    '''
-    with open("gframe.txt", encoding="utf-8") as fd:
+    """
+    with open("testing/gframe.txt", encoding="utf-8") as fd:
         data = fd.read()
-    _print(data) 
+    _print(data)
+
 
 def get_neighbour(x, y):
-    '''
+    """
     Get neighbour position of an entity.
     Note: change the height and width if gframe or map is changed.
-    '''
+    """
     neighbours = set()
     for i in range(x - 1, x + 2):
         for j in range(y - 1, y + 2):
-            if (i == x and j == y) or not(1 < i < 25 and 1 < j < 57):
+            if (i == x and j == y) or not (1 < i < 25 and 1 < j < 57):
                 continue
             neighbours.add((i, j))
     return neighbours
 
+
 def game_layout(term, level=0, pos=(2, 1)):
-    '''
+    """
     Assuming level is int.
-    '''
-    with open(f"{level}.txt", encoding="utf-8") as fd:
+    """
+    with open(f"testing/{level}.txt", encoding="utf-8") as fd:
         data = fd.readlines()
     x, y = pos
     for i, line in enumerate(data):
@@ -81,9 +86,9 @@ def game_layout(term, level=0, pos=(2, 1)):
                 continue
             # Note it is a cross(U+2715).
             elif char in "MPX✕":
-                entity[char] = get_neighbour(i+1, j+2)
+                entity[char] = get_neighbour(i + 1, j + 2)
             # why j + 2?
-            wall_pos.add((i+1, j+2))
+            wall_pos.add((i + 1, j + 2))
     # Let the player be at the center of the game.
     global player_pos
     player_pos = len(data[0]) // 2, len(data) // 2
@@ -93,6 +98,7 @@ def game_layout(term, level=0, pos=(2, 1)):
 
     data = "".join(data)
     _print(data + term.move_xy(*player_pos) + PLAYER)
+
 
 def put_msg(term, msg):
     # Is it okay to call this
@@ -106,8 +112,9 @@ def put_msg(term, msg):
     else:
         # Break and print and keep it under 6 lines
         pass
-    x, y= 5, 26
-     
+    x, y = 5, 26
+
+
 def clr_msg(term):
     # Position of message box
     max_width = 72
@@ -117,12 +124,13 @@ def clr_msg(term):
         _print(term.move_xy(x, y) + " " * max_width)
         x += 1
 
+
 def sidebar(term, field_id, msg):
     # Move the level to somewhere else
     # max_with maybe 10
     max_width = 10
     if field_id == 0:
-        # update Level 
+        # update Level
         x, y = 68, 2
         _print(term.move_xy(x, y) + msg)
     if field_id == 1:
@@ -136,10 +144,11 @@ def sidebar(term, field_id, msg):
     else:
         log("msg too long from sidebar.")
 
+
 def mov_player(term, mov):
-    '''
+    """
     Update the player position
-    '''
+    """
     global player_pos, found_key
     x, y = player_pos
 
@@ -169,10 +178,11 @@ def mov_player(term, mov):
         _print(prev_pos + term.move_xy(x, y) + PLAYER)
         player_pos = x, y
 
+
 def main():
-    '''
+    """
     Just testing out an idea.
-    '''
+    """
     term = Terminal()
     # clear screen.
     with term.cbreak(), term.hidden_cursor():
@@ -202,6 +212,7 @@ def main():
     # Fix this
     global log_fd
     log_fd.close()
+
 
 if __name__ == "__main__":
     main()
