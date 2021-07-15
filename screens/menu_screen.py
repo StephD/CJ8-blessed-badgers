@@ -1,4 +1,3 @@
-import ast
 from typing import Union
 
 import blessed
@@ -7,7 +6,6 @@ from blessed.keyboard import Keystroke
 
 from modules.flying_square import Square
 from modules.game_data import GameData
-from modules.logger import log
 from scenes.menu_title import print_title
 
 
@@ -16,12 +14,12 @@ class MenuScreen:
         num_squares = 4
         self.game_data = game_data
         self.squares = [Square() for _ in range(num_squares)]
-        gd = self.game_data.data
-        self.menu_color_choice = f'{gd["game"]["colors"]["menu"]["choice"]}'
-        self.menu_color_title = f'{gd["game"]["colors"]["menu"]["title"]}'
-        self.menu_color_text = f'{gd["game"]["colors"]["menu"]["text"]}'
-        self.menu_color_bg = f'{gd["game"]["colors"]["menu"]["bg"]}'
-        self.menu_color_square = f'{gd["game"]["colors"]["menu"]["square"]}'
+        g_data = self.game_data.data
+        self.menu_color_choice = f'{g_data["game"]["colors"]["menu"]["choice"]}'
+        self.menu_color_title = f'{g_data["game"]["colors"]["menu"]["title"]}'
+        self.menu_color_text = f'{g_data["game"]["colors"]["menu"]["text"]}'
+        self.menu_color_bg = f'{g_data["game"]["colors"]["menu"]["bg"]}'
+        self.menu_color_square = f'{g_data["game"]["colors"]["menu"]["square"]}'
         self.term_color = f"{self.menu_color_text}_on_{self.menu_color_bg}"
 
     def render(self, term: blessed.Terminal) -> Union[Keystroke, str]:
