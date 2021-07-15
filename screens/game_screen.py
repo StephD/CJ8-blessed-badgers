@@ -83,15 +83,33 @@ class GameScreen:
             self.render_sidebar_content(term)
 
             # while not in esc menu and key different then 'q'
-            while key_input.lower() != "q":
+            while key_input.lower() != "esc":
                 key_input = term.inkey(timeout=3)
                 if not key_input:
                     continue
                 elif key_input.is_sequence:
-                    self.game.move_player(key_input.name)
-                    self.render_scene(term)
-                    self.render_messagebar_content(term)
+                    if key_input.name == "KEY_ESCAPE":
+                        self.render_messagebar_content(
+                            term, self.game_data.get_str_in_language("messages", "game", "actions", "esc")
+                        )
+                        while key_input.lower() not in ["q", "s", "c", "esc"]:
+                            key_input = term.inkey()
+                            if key_input == "s":
+                                self.game_data.save_game()
+                                self.render_messagebar_content(term, "saving in progress")
+                                sleep(1)
+                            elif key_input == "q":
+                                key_input = "esc"
+                                self.render_messagebar_content(term, "bye ..")
+                                sleep(1)
+
+                        self.render_messagebar_content(term, "")
+                    else:
+                        self.game.move_player(key_input.name)
+                        self.render_scene(term)
+                        self.render_messagebar_content(term)
                 elif key_input:
+                    log(key_input)
                     self.game.move_player(key_input)
                     self.render_scene(term)
                     self.render_messagebar_content(term)
@@ -178,7 +196,7 @@ class GameScreen:
         # Check if it can fit in first line using "chunk"?
         for letter in message:
             print(letter, end="", flush=True)
-            sleep(0.05)
+            sleep(0.04)
 
     @staticmethod
     def _make_border(bounds: Bounds, charset: tuple[str, str, str, str, str, str]) -> set[tuple[int, int, str]]:
