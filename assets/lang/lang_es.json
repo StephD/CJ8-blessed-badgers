@@ -21,8 +21,8 @@
             "de": "Deutsch"
         },
         "actions": {
-            "cancel": "Cancel [C]",
-            "return": "Return [R]"
+            "cancel": "Cancelar [C]",
+            "return": "Regresar [R]"
         }
     },
     "actions": {
