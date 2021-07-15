@@ -14,16 +14,8 @@ class MenuScreen:
         num_squares = 4
         self.game_data = game_data
         self.squares = [Square() for _ in range(num_squares)]
-        self.init_colors()
-
-    def init_colors(self):
-        g_data = self.game_data.data
-        self.menu_color_choice = f'{g_data["game"]["colors"]["menu"]["choice"]}'
-        self.menu_color_title = f'{g_data["game"]["colors"]["menu"]["title"]}'
-        self.menu_color_text = f'{g_data["game"]["colors"]["menu"]["text"]}'
-        self.menu_color_bg = f'{g_data["game"]["colors"]["menu"]["bg"]}'
-        self.menu_color_square = f'{g_data["game"]["colors"]["menu"]["square"]}'
-        self.term_color = f"{self.menu_color_text}_on_{self.menu_color_bg}"
+        self.colors = self.game_data.data["game"]["colors"]["menu"].copy()
+        self.term_color = f"{self.colors['text']}_on_{self.colors['bg']}"
 
     def render(self, term: blessed.Terminal) -> Union[Keystroke, str]:
         """Renders the start screen in the terminal."""
@@ -36,7 +28,7 @@ class MenuScreen:
         with term.cbreak(), term.hidden_cursor():
             print(term.home + getattr(term, self.term_color) + term.clear)
 
-            title_indices = print_title(term, rows, cols, self.menu_color_title, self.term_color)
+            title_indices = print_title(term, rows, cols, self.colors["title"], self.term_color)
             menu_indices = self.print_text(term, rows, cols)
 
             old_indices = set()
@@ -68,18 +60,27 @@ class MenuScreen:
         print(term.move_xy(menu_start_col, menu_row), end="")
 
         for menu_item in menu_items:
-            print(
-                f"{menu_item[:-3]}{getattr(term,self.menu_color_choice)}{menu_item[-3:]}"
-                f"{getattr(term,self.term_color)}"
-                f"{term.move_right(5)}",
-                end="",
-            )
+            if (
+                menu_item == self.get_language("menu", "options", "continue")
+                and not self.game_data.data["game"]["is_game_already_played"]
+            ):
+                print(
+                    f"{term.wheat4}{menu_item}" f"{getattr(term, self.term_color)}" f"{term.move_right(5)}",
+                    end="",
+                )
+            else:
+                print(
+                    f"{menu_item[:-3]}{getattr(term,self.colors['choice'])}{menu_item[-3:]}"
+                    f"{getattr(term,self.term_color)}"
+                    f"{term.move_right(5)}",
+                    end="",
+                )
 
         return {(menu_row, x + menu_start_col) for x in range(menu_width)}
 
     def render_flying_square(self, term, col, row, old_indices, title_indices, menu_indices) -> set:
         """It will render the flying square around the screen"""
-        print(getattr(term, self.menu_color_square))
+        print(getattr(term, self.colors["square"]))
 
         indices_to_be_painted = set()
         for square in self.squares:

@@ -6,6 +6,7 @@ import blessed
 
 from modules.game import Game
 from modules.game_data import GameData
+from modules.logger import log
 
 Bounds = tuple[int, int, int, int]
 RenderableCoordinate = tuple[int, int, str]
@@ -42,7 +43,8 @@ class GameScreen:
         self.game = Game(game_data)
         self.currently_rendered: set[RenderableCoordinate] = set()
         self.stories_id = 1
-        self.init_colors()
+        self.colors = self.game_data.data["game"]["colors"]["game"].copy()
+        self.term_color = f"{self.colors['text']}_on_{self.colors['bg']}"
         self.sidebar_bounds: Bounds = ...
         self.scene_bounds: Bounds = ...
         self.message_bar_bounds: Bounds = ...
@@ -60,16 +62,15 @@ class GameScreen:
         # Render the screen border
         self._render_dict(term, self._make_border((0, height - 1, 0, width - 1), tuple("╔╗╚╝║═")))
 
-    def init_colors(self):
-        self.colors = self.game.game_data.data["game"]["colors"]["game"].copy()
-        self.term_color = f"{self.colors['text']}_on_{self.colors['bg']}"
-
     def render(self, term: blessed.Terminal) -> None:
         """Renders the start screen in the terminal."""
         self.init_bound(term)
 
         key_input = ""
         with term.cbreak(), term.hidden_cursor():
+            self.render_layout(term)
+            # Render scene entities
+
             # Render layout
             self.render_layout(term)
             # Render scene
@@ -80,7 +81,7 @@ class GameScreen:
             while self.game.story[str(self.stories_id)] != "":
                 self.render_messagebar_content(term, self.game.story[str(self.stories_id)])
                 term.inkey(timeout=5)
-                if self.stories_id == 7:
+                if self.stories_id == 1:
                     break
                 self.stories_id += 1
 
@@ -96,8 +97,10 @@ class GameScreen:
                     key_input = term.inkey()
                     if key_input == "s":
                         self.game_data.save_game()
-                        self.render_messagebar_content(term, "saving in progress")
-                        sleep(1)
+                        self.render_messagebar_content(term, "Saving in progress")
+                        sleep(0.8)
+                        self.render_messagebar_content(term, "Saving is done")
+                        sleep(0.8)
                     elif key_input.lower() == "q":
                         self.render_messagebar_content(term, "bye ..")
                         # Break or return
@@ -106,7 +109,7 @@ class GameScreen:
                 else:
                     # msg from game.
                     msg = self.game.move_player(key_input)
-                    if msg == "D" and self.stories_id < 10:
+                    if msg == "D":
                         log(msg, "from msg")
                         # Why this is rendering two times ?
                         if self.game.key_found:
@@ -190,21 +193,23 @@ class GameScreen:
                     print(term.move_left(len(line)) + term.move_down, end="", flush=True)
                 print(term.move_down, end="", flush=True)
 
-    def render_messagebar_content(self, term: blessed.Terminal, message: str = ""):
+        print(term.move_yx(end_y - 1, start_x + 2), end="", flush=True)
+        print(getattr(term, self.colors["choice"]) + "Menu <ESC>" + getattr(term, self.term_color), end="", flush=True)
+
+    def render_messagebar_content(self, term: blessed.Terminal, message: str = "", writing_speed: float = 0.01):
         start_y, end_y, start_x, end_x = self.message_bar_bounds
         panel_height = end_y - start_y
         panel_width = end_x - start_x
 
         # Clear the box before rendering any new message.
         print(term.move_xy(start_x + 4, start_y + round(panel_height / 2)), end="")
-        print(" " * (panel_width - 6), end="", flush=True)
-        print(term.move_left(panel_width - 7), end="")
+        print(" " * (panel_width - 4), end="", flush=True)
+        print(term.move_left(panel_width - 4), end="")
 
         # Check if it can fit in first line using "chunk"?
         for letter in message:
             print(letter, end="", flush=True)
-            # Uncomment this
-            sleep(0.04)
+            sleep(writing_speed)
 
     @staticmethod
     def _make_border(bounds: Bounds, charset: tuple[str, str, str, str, str, str]) -> set[RenderableCoordinate]:

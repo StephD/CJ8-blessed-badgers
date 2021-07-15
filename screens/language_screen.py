@@ -22,7 +22,7 @@ class LanguageScreen(MenuScreen):
         with term.cbreak(), term.hidden_cursor():
             print(term.home + term.clear)
 
-            title_indices = print_title(term, rows, cols, self.menu_color_title, self.term_color)
+            title_indices = print_title(term, rows, cols, self.colors["title"], self.term_color)
             menu_indices = self.print_text(term, rows, cols)
 
             old_indices = set()
@@ -60,7 +60,7 @@ class LanguageScreen(MenuScreen):
             print(term.move_xy(menu_start_col, menu_row), end="")
             print(
                 f"{section[:-3]}"
-                f"{getattr(term,self.menu_color_choice)}{section[-3:]}"
+                f"{getattr(term,self.colors['choice'])}{section[-3:]}"
                 f"{getattr(term,self.term_color)}"
             )
 
