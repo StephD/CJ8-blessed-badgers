@@ -122,10 +122,8 @@ class GameScreen:
         panel_width = end_x - start_x
         sidebar_content = self.game.get_sidebar_content()
 
-        # What does it do?
-        # self._render_dict(
-        #     term, {(i, j): " " for i in range(*self.sidebar_bounds[:2]) for j in range(*self.sidebar_bounds[2:])}
-        # )
+        # Clean the content
+        self._render_dict(term, {(y, x): " " for y in range(start_y + 1, end_y) for x in range(start_x + 1, end_x)})
 
         print(term.move_yx(start_y + 2, start_x + 2), end="")
 
@@ -140,8 +138,12 @@ class GameScreen:
         panel_height = end_y - start_y
         panel_width = end_x - start_x
 
+        # Clean the content
         print(term.move_xy(start_x + 4, start_y + round(panel_height / 2)), end="")
-        print(message + " " * int(panel_width - (len(message) + 4)), end="", flush=True)
+        print(" " * (panel_width - 6), end="", flush=True)
+
+        print(term.move_left(panel_width - 7), end="")
+        print(message, end="", flush=True)
 
     @staticmethod
     def _make_border(bounds: Bounds, charset: tuple[str, str, str, str, str, str]) -> SubtractableDict:
