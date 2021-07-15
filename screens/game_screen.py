@@ -182,7 +182,7 @@ class GameScreen:
         for letter in message:
             print(letter, end="", flush=True)
             # Uncomment this
-            #sleep(0.04)
+            # sleep(0.04)
 
     @staticmethod
     def _make_border(bounds: Bounds, charset: tuple[str, str, str, str, str, str]) -> set[RenderableCoordinate]:

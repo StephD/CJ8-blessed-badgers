@@ -7,7 +7,7 @@ from scenes.entity import Entity
 # TODO
 # Get the actual location of the entities.
 # Generalize if for every level not for level 1.
-#  
+#
 
 
 class GameException(Exception):
