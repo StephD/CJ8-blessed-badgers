@@ -1,5 +1,7 @@
 from time import sleep
 
+from modules.logger import log
+
 import blessed
 
 from modules.game import Game
@@ -78,16 +80,16 @@ class GameScreen:
             while self.game.story[str(self.stories_id)] != "":
                 self.render_messagebar_content(term, self.game.story[str(self.stories_id)])
                 term.inkey(timeout=5)
-                if self.stories_id == 1:
+                if self.stories_id == 7:
                     break
                 self.stories_id += 1
 
             self.render_sidebar_content(term)
 
-            # Exit and player movement.
+            # player movement and exit or confirm exit.
             while 1:
-                key_input = term.inkey(timeout=3)
-                if key_input.name in ["KEY_ESCAPE"]:
+                key_input = term.inkey()
+                if key_input.name == "KEY_ESCAPE":
                     self.render_messagebar_content(
                         term, self.game_data.get_str_in_language("messages", "game", "actions", "esc")
                     )
@@ -102,9 +104,29 @@ class GameScreen:
                         return
                     self.render_messagebar_content(term, "")
                 else:
-                    self.game.move_player(key_input)
+                    # msg from game.
+                    msg = self.game.move_player(key_input)
+                    if msg == "D" and self.stories_id < 10:
+                        log(msg, "from msg")
+                        # Why this is rendering two times ?
+                        if self.game.key_found:
+                            self.render_messagebar_content(term, self.game.story["11"])
+                            self.render_messagebar_content(term, "Congrats you have solved the first level.")
+                            break 
+                        else:
+                            self.render_messagebar_content(term, "The door is locked.")
+                            sleep(1)
+                            self.render_messagebar_content(term, self.game.story["9"])
+                            sleep(1)
+
+                        self.render_messagebar_content(term, self.game.story[str(self.stories_id)])
+                        sleep(1)
+                    elif msg == "X":
+                        self.render_messagebar_content(term, self.game.story["10"])
+                        # Add Interaction.
+                        self.game.key_found = True
+                        self.render_messagebar_content(term, "You have found the key.")
                     self.render_scene(term)
-                    self.render_messagebar_content(term)
 
     def render_layout(self, term: blessed.Terminal) -> None:
         """Render the 3 frames"""
@@ -182,7 +204,7 @@ class GameScreen:
         for letter in message:
             print(letter, end="", flush=True)
             # Uncomment this
-            #sleep(0.04)
+            sleep(0.04)
 
     @staticmethod
     def _make_border(bounds: Bounds, charset: tuple[str, str, str, str, str, str]) -> set[RenderableCoordinate]:

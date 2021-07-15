@@ -53,7 +53,7 @@ def global_frame(term):
     """
     This will render global frame from gframe.txt
     """
-    with open("testing/gframe.txt", encoding="utf-8") as fd:
+    with open("gframe.txt", encoding="utf-8") as fd:
         data = fd.read()
     _print(data)
 
@@ -76,7 +76,7 @@ def game_layout(term, level=0, pos=(2, 1)):
     """
     Assuming level is int.
     """
-    with open(f"testing/{level}.txt", encoding="utf-8") as fd:
+    with open(f"{level}.txt", encoding="utf-8") as fd:
         data = fd.readlines()
     x, y = pos
     for i, line in enumerate(data):
