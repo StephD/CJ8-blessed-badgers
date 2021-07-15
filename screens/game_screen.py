@@ -84,31 +84,24 @@ class GameScreen:
 
             self.render_sidebar_content(term)
 
-            # while not in esc menu and key different then 'q'
-            while key_input.lower() != "esc":
+            # Exit and player movement.
+            while 1:
                 key_input = term.inkey(timeout=3)
-                if key_input.is_sequence:
-                    if key_input.name == "KEY_ESCAPE":
-                        self.render_messagebar_content(
-                            term, self.game_data.get_str_in_language("messages", "game", "actions", "esc")
-                        )
-                        while key_input.lower() not in ["q", "s", "c", "esc"]:
-                            key_input = term.inkey()
-                            if key_input == "s":
-                                self.game_data.save_game()
-                                self.render_messagebar_content(term, "saving in progress")
-                                sleep(1)
-                            elif key_input == "q":
-                                key_input = "esc"
-                                self.render_messagebar_content(term, "bye ..")
-                                sleep(1)
-
-                        self.render_messagebar_content(term, "")
-                    else:
-                        self.game.move_player(key_input.name)
-                        self.render_scene(term)
-                        self.render_messagebar_content(term)
-                elif key_input:
+                if key_input.name in ["KEY_ESCAPE"]:
+                    self.render_messagebar_content(
+                        term, self.game_data.get_str_in_language("messages", "game", "actions", "esc")
+                    )
+                    key_input = term.inkey()
+                    if key_input == "s":
+                        self.game_data.save_game()
+                        self.render_messagebar_content(term, "saving in progress")
+                        sleep(1)
+                    elif key_input.lower() == "q":
+                        self.render_messagebar_content(term, "bye ..")
+                        # Break or return
+                        return
+                    self.render_messagebar_content(term, "")
+                else:
                     self.game.move_player(key_input)
                     self.render_scene(term)
                     self.render_messagebar_content(term)
@@ -180,7 +173,7 @@ class GameScreen:
         panel_height = end_y - start_y
         panel_width = end_x - start_x
 
-        # Clean the content
+        # Clear the box before rendering any new message.
         print(term.move_xy(start_x + 4, start_y + round(panel_height / 2)), end="")
         print(" " * (panel_width - 6), end="", flush=True)
         print(term.move_left(panel_width - 7), end="")
@@ -188,7 +181,8 @@ class GameScreen:
         # Check if it can fit in first line using "chunk"?
         for letter in message:
             print(letter, end="", flush=True)
-            sleep(0.04)
+            # Uncomment this
+            #sleep(0.04)
 
     @staticmethod
     def _make_border(bounds: Bounds, charset: tuple[str, str, str, str, str, str]) -> set[RenderableCoordinate]:

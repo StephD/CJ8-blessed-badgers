@@ -4,6 +4,11 @@ from modules.game_data import GameData
 from modules.logger import log
 from scenes.entity import Entity
 
+# TODO
+# Get the actual location of the entities.
+# Generalize if for every level not for level 1.
+#  
+
 
 class GameException(Exception):
     """Base class for exceptions in this module."""
@@ -27,10 +32,11 @@ class Game:
         self.game_data = game_data
         self.story = self.game_data.get_str_in_language("messages", "story", "room_1")
 
-        self.message_pos = set()
+        self.entity_pos = set()
         self.obstacles: set[tuple[int, int]] = set()
         self.entities: set[Optional[Entity]] = set()
         self.player = Player((10, 11))
+        self.map_size: tuple[int, int] = (0, 0)
         self.entities.add(self.player)
         self.load_map()
 
@@ -66,7 +72,7 @@ class Game:
                 if char == " ":
                     continue
                 if char in "XD":
-                    self.message_pos.update(self.get_neighbours(i, j))
+                    self.entity_pos.update(self.get_neighbours(i, j))
                 self.entities.add(Obstacle((i, j), [char]))
                 self.obstacles.add((i, j))
 
@@ -86,7 +92,7 @@ class Game:
             pos_x += 1
 
         # Check the orientation what is x and y ?
-        if (pos_y, pos_x) in self.message_pos:
+        if (pos_y, pos_x) in self.entity_pos:
             log("entities touched")
             pass
         # move the player
