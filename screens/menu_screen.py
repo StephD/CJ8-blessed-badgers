@@ -60,12 +60,21 @@ class MenuScreen:
         print(term.move_xy(menu_start_col, menu_row), end="")
 
         for menu_item in menu_items:
-            print(
-                f"{menu_item[:-3]}{getattr(term,self.colors['choice'])}{menu_item[-3:]}"
-                f"{getattr(term,self.term_color)}"
-                f"{term.move_right(5)}",
-                end="",
-            )
+            if (
+                menu_item == self.get_language("menu", "options", "continue")
+                and not self.game_data.data["game"]["is_game_already_played"]
+            ):
+                print(
+                    f"{term.wheat4}{menu_item}" f"{getattr(term, self.term_color)}" f"{term.move_right(5)}",
+                    end="",
+                )
+            else:
+                print(
+                    f"{menu_item[:-3]}{getattr(term,self.colors['choice'])}{menu_item[-3:]}"
+                    f"{getattr(term,self.term_color)}"
+                    f"{term.move_right(5)}",
+                    end="",
+                )
 
         return {(menu_row, x + menu_start_col) for x in range(menu_width)}
 
