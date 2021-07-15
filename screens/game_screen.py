@@ -1,3 +1,6 @@
+import sys
+from time import sleep
+
 import blessed
 
 from modules.game import Game
@@ -136,12 +139,12 @@ class GameScreen:
         for data_key, data_obj in sidebar_content.items():
             if data_key == "game_data":
                 print(
-                    term.orangered
-                    + "Game data"
+                    # term.orangered
+                    "Game data"
                     + " " * (panel_width - len("Game data : "))
                     + term.move_left(panel_width - 3)
-                    + term.move_down
-                    + term.normal,
+                    + term.move_down,
+                    # + term.normal,
                     end="",
                 )
             elif data_key == "player_data":
@@ -157,8 +160,14 @@ class GameScreen:
         panel_height = end_y - start_y
         panel_width = end_x - start_x
 
-        print(term.move_xy(start_x + 4, start_y + round(panel_height / 2)), end="", flush=True)
-        print(message + " " * int(panel_width - (len(message) + 4)), end="", flush=True)
+        # Clean the content
+        print(term.move_xy(start_x + 4, start_y + round(panel_height / 2)), end="")
+        print(" " * (panel_width - 6), end="", flush=True)
+
+        print(term.move_left(panel_width - 7), end="")
+        for letter in message:
+            print(letter, end="", flush=True)
+            sleep(0.05)
 
     @staticmethod
     def _make_border(bounds: Bounds, charset: tuple[str, str, str, str, str, str]) -> set[tuple[int, int, str]]:
