@@ -9,7 +9,7 @@
             "quit": "Quitter [Q]"
         },
         "about": {
-            "who": "Made by young developers: Blessed badgers",
+            "who": "Réalisé par de jeunes développeurs: Blessed badgers",
             "about": "",
             "what": "This is a gamefied learning experience for young developers"
         },
@@ -21,47 +21,47 @@
             "de": "Deutsch"
         },
         "actions": {
-            "cancel": "Cancel [C]",
-            "return": "Return [R]"
+            "cancel": "Annuler [C]",
+            "return": "Retour [R]"
         }
     },
     "actions": {
         "cancel": "Annuler",
         "confirm": "Confirmer",
-        "return": "Return"
+        "return": "Retour"
     },
     "messages": {
         "game": {
             "actions": {
-                "esc": "Do you want to leave? quit [Q] - save [S] - cancel [C]"
+                "esc": "Voulez-vous partir ? quitter [Q] - enregistrer [S] - annuler [C]"
             }
         },
         "story": {
             "room_1": {
-                "1": "Hey ... Wake up",
-                "2": "I think that you felt down from there, above",
-                "3": "Did you ask where you were?",
-                "4": "Look around you ;-) .. It's a box ahah",
-                "5": "May be have a look around with your arrow-keys.",
-                "6": "How to get out, you said? You seem stuck here",
-                "7": "Hey, what's there? A door. May be have a look?",
-                "8": "But may be there is a way.. can you think?",
-                "9": "Or you can also use your inTUItion, who knows",
-                "10": "Hey what's there",
-                "11": "It look like a big rock. Do you want to see under it?",
-                "12": "Bravo, you could be out of this one :-)"
+                "1": "Hé... réveille-toi",
+                "2": "Je pense que tu te sentais en bas, en haut",
+                "3" : "Avez-vous demandé où vous étiez ?",
+                "4": "Regarde autour de toi ;-) .. C'est une boite ahah",
+                "5": "Peut-être regardez autour de vous avec vos touches fléchées.",
+                "6": "Comment sortir, tu as dit? Tu as l'air coincé ici",
+                "7": "Hé, qu'est-ce qu'il y a? Une porte. Peut-être jeter un oeil?",
+                "8": "Mais peut-être qu'il y a un moyen.. peux-tu penser?",
+                "9": "Ou vous pouvez aussi utiliser votre inTUItion, qui sait",
+                "10": "Hé qu'est-ce qu'il y a",
+                "11": "On dirait un gros rocher. Voulez-vous voir en dessous ?",
+                "12": "Bravo, vous pourriez être hors de celui-ci :-)"
             }
         }
 
     },
     "entities": {
         "door": {
-            "open": "The doors is open.",
-            "close": "The doors seem locked."
+            "open": "Les portes sont ouvertes.",
+            "close": "Les portes semblent verrouillées."
         },
         "key": {
-            "find": "You need to find the key",
-            "is_found": "You found a key"
+            "find": "Vous devez trouver la clé",
+            "is_found": "Vous avez trouvé une clé"
         }
     }
 }
