@@ -30,14 +30,16 @@ message = {
 # For Now
 found_key = False
 
-log_fd = open("log", "w")
+# log_fd = open("log", "w")
 
 
 def log(s):
     """
     Simple log function.
     """
+    log_fd = open("log", "w")
     log_fd.write(s)
+    log_fd.close()
 
 
 def _print(s):
@@ -209,9 +211,9 @@ def main():
             mov_player(term, inp.lower())
             # How to do message ? queue in async and then print ?
     print(term.clear + "BYE!")
-    # Fix this
-    global log_fd
-    log_fd.close()
+    # # Fix this
+    # global log_fd
+    # log_fd.close()
 
 
 if __name__ == "__main__":
