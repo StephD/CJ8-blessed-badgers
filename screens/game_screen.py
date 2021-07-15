@@ -1,4 +1,5 @@
 import sys
+from time import sleep
 from typing import Union
 
 import blessed
@@ -71,7 +72,7 @@ class GameScreen:
             while self.game.story[str(self.stories_id)] != "":
                 self.render_messagebar_content(term, self.game.story[str(self.stories_id)])
                 term.inkey(timeout=5)
-                if self.stories_id == 1:
+                if self.stories_id == 5:
                     break
                 self.stories_id += 1
 
@@ -143,7 +144,9 @@ class GameScreen:
         print(" " * (panel_width - 6), end="", flush=True)
 
         print(term.move_left(panel_width - 7), end="")
-        print(message, end="", flush=True)
+        for letter in message:
+            print(letter, end="", flush=True)
+            sleep(0.05)
 
     @staticmethod
     def _make_border(bounds: Bounds, charset: tuple[str, str, str, str, str, str]) -> SubtractableDict:
