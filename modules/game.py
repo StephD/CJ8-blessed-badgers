@@ -31,7 +31,7 @@ class Game:
 
     def __init__(self, game_data: GameData) -> None:
         self.game_data = game_data
-        if self.game_data.get_game_mode() == "normal":
+        if self.game_data.get_game_level() == "normal":
             self.story = self.game_data.get_str_in_language("messages", "story", "normal")
             # Render tutorial map
         else:

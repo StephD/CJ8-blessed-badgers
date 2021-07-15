@@ -37,23 +37,19 @@
             }
         },
         "story": {
-            "normal": {
+            "room_1": {
                 "1": "Hey ... Wake up",
                 "2": "I think that you felt down from there, above",
                 "3": "Did you ask where you were?",
                 "4": "Look around you ;-) .. It's a box ahah",
-                "5": "How to get out, you said? I are kind of stuck here",
-                "6": "But may be there is a way.. can you think?",
-                "7": "Or you can also use your inTUItion, who knows"
-            },
-            "tutorial": {
-                "1": "Hey ... Wake up.",
-                "2": "Welcome to the tuitorial, we need to find a way to get out, now ...",
-                "3": "May be have a look around with your arrow-keys.",
-                "4": "Hey, what's there? A door. May be have a look?",
-                "5": "Hey what's there",
-                "6": "It look like a big rock. Do you want to see under it?",
-                "7": "Bravo, you could be out of this one :-)"
+                "5": "May be have a look around with your arrow-keys.",
+                "6": "How to get out, you said? You seem stuck here",
+                "7": "Hey, what's there? A door. May be have a look?",
+                "8": "But may be there is a way.. can you think?",
+                "9": "Or you can also use your inTUItion, who knows",
+                "10": "Hey what's there",
+                "11": "It look like a big rock. Do you want to see under it?",
+                "12": "Bravo, you could be out of this one :-)"
             }
         }
 

@@ -53,12 +53,12 @@ class GameData:
             data_tmp["game"] = self.data["game"]
             self.data = data_tmp
 
-    def get_game_mode(self) -> str:
-        return self.data["game"]["mode"]
+    def get_game_level(self) -> str:
+        return self.data["game"]["level"]
 
     @update_file_game_data_decorator
-    def update_game_mode(self, game_mode):
-        self.data["game"]["mode"] = game_mode
+    def update_game_level(self, game_level):
+        self.data["game"]["level"] = game_level
 
     def get_language(self) -> None:
         return self.data["game"]["language"]

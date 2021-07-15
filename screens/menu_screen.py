@@ -38,7 +38,7 @@ class MenuScreen:
 
             old_indices = set()
             key_input = ""
-            while key_input.lower() not in ["n", "c", "t", "a", "q", "l"]:
+            while key_input.lower() not in ["n", "c", "a", "q", "l"]:
                 key_input = term.inkey(timeout=0.02)
 
                 old_indices = self.render_flying_square(term, col, row, old_indices, title_indices, menu_indices)
@@ -52,7 +52,7 @@ class MenuScreen:
         """Draws the menu in the terminal, returning the coordinates where it printed."""
         menu_items = [
             self.get_language("menu", "options", "new_game"),
-            self.get_language("menu", "options", "tutorial"),
+            # self.get_language("menu", "options", "tutorial"),
             self.get_language("menu", "options", "continue"),
             self.get_language("menu", "options", "about"),
             self.get_language("menu", "options", "language"),

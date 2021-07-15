@@ -24,15 +24,11 @@ def main() -> None:
             if keypressed == "n":  # New game
                 print(term.clear)
                 # game_data.load_game("new")
-                game_data.update_game_mode("normal")
+                game_data.update_game_level(1)
                 game_screen = GameScreen(game_data=game_data)
-                game_screen.render(term)
-            elif keypressed == "t":
-                game_data.update_game_mode("tutorial")
                 game_screen.render(term)
             elif keypressed == "c":
                 # game_data.load_game("saved")
-                game_data.update_game_mode("normal")
                 game_screen.render(term)
             elif keypressed == "a":
                 about_screen.render(term)

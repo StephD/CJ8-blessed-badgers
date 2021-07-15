@@ -44,6 +44,7 @@ class GameScreen:
         # self.message_bar_bounds: Bounds = ...
 
     def init_bound(self, term: blessed.Terminal):
+        """Initialize the layout side and frame size+position"""
         width, height = term.width, term.height
 
         # The layout have to be fixed and the size of the scene
@@ -79,20 +80,22 @@ class GameScreen:
                 elif key_input:
                     self.game.move_player(key_input)
                     self.render_scene(term)
-        # Remove all
         """
         self.currently_rendered = self.currently_rendered
                                     - self.currently_rendered
         """
+        # Remove all
         # self.currently_rendered = SubtractableDict()
 
     def render_layout(self, term: blessed.Terminal) -> None:
-        self._render_dict(term, self._make_border(self.sidebar_bounds, tuple("┌┐└┘│─")))
+        """Render the 3 frames"""
         self._render_dict(term, self._make_border(self.scene_bounds, tuple("┌┐└┘│─")))
+        self._render_dict(term, self._make_border(self.sidebar_bounds, tuple("┌┐└┘│─")))
         self._render_dict(term, self._make_border(self.message_bar_bounds, tuple("┌┐└┘│─")))
 
     # Render scene need to be pickup from a file
     def render_scene(self, term: blessed.Terminal):
+        """Render the scene area. Design the level"""
         to_be_rendered = self._make_scene(self.scene_bounds, self.game.get_to_be_rendered())
 
         self._render_dict(term, to_be_rendered - self.currently_rendered)
@@ -102,6 +105,7 @@ class GameScreen:
         self.currently_rendered = to_be_rendered
 
     def render_sidebar_content(self, term: blessed.Terminal):
+        """Render the content of the sidebar. Will display all the game data"""
         start_y, end_y, start_x, end_x = self.sidebar_bounds
 
         # Look like it avoid the cursor to be in a random pos

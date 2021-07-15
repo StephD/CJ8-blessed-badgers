@@ -1,24 +1,45 @@
 {
     "game": {
-        "is_game_already_played": false,
-        "mode": "new"
+        "is_game_already_played": true,
+        "level": "1",
+        "language": "en",
+        "last_saved": "12/07/2021 23:14:48",
+        "colors": {
+            "menu": {
+                "bg": "gray20",
+                "text": "lightskyblue",
+                "title": "turquoise3",
+                "choice": "green3",
+                "square": "lightskyblue",
+                "term_color": "lightskyblue_on_gray20"
+            },
+            "game": {
+                "bg": "grey20",
+                "text": "lightskyblue",
+                "choice": "green3",
+                "layout": "",
+                "door": "",
+                "key": ""
+            }
+        }
+    },
+    "room": {
+        "1": {
+            "is_door_locked": true,
+            "is_key_found": false,
+            "interacted": {
+                "stone": false
+            }
+        }
     },
     "player": {
-        "lifes_left": 3,
         "current_room": 1,
         "last_position": [
-            1,
-            1
+            0,
+            0
         ],
         "inventory": {
-            "potion_1": {
-                "origin": 1,
-                "quantity": 1
-            },
-            "key_1": {
-                "origin:": 1,
-                "quantity": 1
-            }
+            "keys": 1
         }
     }
 }
