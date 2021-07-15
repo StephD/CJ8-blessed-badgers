@@ -35,6 +35,7 @@ def chunk(string: str, width: int) -> list[str]:
 
 class GameScreen:
     def __init__(self, game_data: GameData):
+        self.game_data = game_data
         self.game = Game(game_data)
         self.currently_rendered = set()
         self.stories_id = 1
@@ -82,9 +83,7 @@ class GameScreen:
             # while not in esc menu and key different then 'q'
             while key_input.lower() != "esc":
                 key_input = term.inkey(timeout=3)
-                if not key_input:
-                    continue
-                elif key_input.is_sequence:
+                if key_input.is_sequence:
                     if key_input.name == "KEY_ESCAPE":
                         self.render_messagebar_content(
                             term, self.game_data.get_str_in_language("messages", "game", "actions", "esc")
@@ -106,7 +105,6 @@ class GameScreen:
                         self.render_scene(term)
                         self.render_messagebar_content(term)
                 elif key_input:
-                    log(key_input)
                     self.game.move_player(key_input)
                     self.render_scene(term)
                     self.render_messagebar_content(term)
