@@ -28,8 +28,10 @@ def chunk(string: str, width: int) -> list[str]:
         if any(len(word) >= width for word in words):
             raise ValueError("Insufficient width")
         for word in words:
+            # If adding the current word to the current line would cause overflow, add a fresh string to the list.
             if len(f"{chunked[-1]} {word}") >= width:
                 chunked.append("")
+            # Add the current word to the current line, with a space.
             chunked[-1] += word + " "
     return [line.strip() for line in chunked]
 
@@ -54,6 +56,7 @@ class GameScreen:
         self.scene_bounds = (1, int(3 / 4 * height), 2, int(3 / 4 * width) - 1)
         self.message_bar_bounds = (int(3 / 4 * height) + 1, height - 2, 2, int(3 / 4 * width) - 1)
 
+        # Render the screen border
         self._render_dict(term, self._make_border((0, height - 1, 0, width - 1), tuple("╔╗╚╝║═")))
 
     def render(self, term: blessed.Terminal) -> None:
@@ -108,10 +111,14 @@ class GameScreen:
     # Render scene need to be pickup from a file
     def render_scene(self, term: blessed.Terminal):
         """Render the scene area. Design the level"""
+
+        # Get the coordinates to be rendered in the scene panel.
         to_be_rendered = self._make_scene(self.scene_bounds, self.game.get_to_be_rendered())
 
+        # Render the coordinates that have been added since the last frame
         self._render_dict(term, to_be_rendered - self.currently_rendered)
-        # What is this?
+
+        # Clear the coordinates that have been removed since the last frame
         self._render_dict(term, {(i, j): " " for i, j in self.currently_rendered - to_be_rendered})
 
         self.currently_rendered = to_be_rendered
@@ -122,11 +129,12 @@ class GameScreen:
         panel_width = end_x - start_x
         sidebar_content = self.game.get_sidebar_content()
 
-        # What does it do?
-        # self._render_dict(
-        #     term, {(i, j): " " for i in range(*self.sidebar_bounds[:2]) for j in range(*self.sidebar_bounds[2:])}
-        # )
+        # Clear the previous content in the side bar
+        self._render_dict(
+            term, {(i, j): " " for i in range(*self.sidebar_bounds[:2]) for j in range(*self.sidebar_bounds[2:])}
+        )
 
+        # Move the cursor to the top left of the sidebar
         print(term.move_yx(start_y + 2, start_x + 2), end="")
 
         for key, value in sidebar_content.items():
