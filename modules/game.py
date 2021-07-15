@@ -21,12 +21,6 @@ class Obstacle(Entity):
     pass
 
 
-class Message(Entity):
-    def __init__(self, message: str, *args):
-        super().__init__(*args)
-        self.message = message
-
-
 class Game:
     """Game class that will handle the game screen and render the necessary scene"""
 
@@ -34,10 +28,10 @@ class Game:
         self.game_data = game_data
         self.story = self.game_data.get_str_in_language("messages", "story", "room_1")
 
-        self.obstacles: set[tuple[int, int]] = set()
         self.message_pos = set()
+        self.obstacles: set[tuple[int, int]] = set()
         self.entities: set[Optional[Entity]] = set()
-        self.player = Player((2, 2))
+        self.player = Player((10, 11))
         self.entities.add(self.player)
         self.load_map()
 
@@ -72,7 +66,7 @@ class Game:
             for j, char in enumerate(line):
                 if char == " ":
                     continue
-                elif char in "MAX":
+                elif char in "XD":
                     self.message_pos.update(self.get_neighbours(i, j))
                 self.entities.add(Obstacle((i, j), [char]))
                 self.obstacles.add((i, j))
@@ -93,9 +87,10 @@ class Game:
             pos_x += 1
 
         # Check the orientation what is x and y ?
-        # if (pos_y, pos_x) in self.message_pos:
-        #     # log(repr(self.entities))
-        #     pass
+        if (pos_y, pos_x) in self.message_pos:
+            log("entities touched")
+            pass
+        # move the player
         if (pos_y, pos_x) not in self.obstacles:
             self.player.position = pos_y, pos_x
 
