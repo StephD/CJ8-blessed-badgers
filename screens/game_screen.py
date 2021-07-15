@@ -69,7 +69,10 @@ class GameScreen:
             # Render sidebar content
             # self.render_sidebar_content(term)
             # Render message in the bottom bar
-            self.render_messagebar_content(term)
+            stories = self.game.story
+            for m in stories.values():
+                self.render_messagebar_content(term, m)
+                term.inkey(timeout=5)
             # while not in esc menu and key different then 'q'
             while key_input.lower() != "q":
                 key_input = term.inkey(timeout=3)
@@ -116,7 +119,7 @@ class GameScreen:
 
         log(str(start_x), "x_side")
         log(str(start_y), "y_side")
-        print(term.move_yx(start_y, start_x))
+        print(term.move_yx(start_y, start_x), end="")
 
         sidebar_content = self.game.get_sidebar_content()
         panel_width = end_x - start_x
@@ -127,15 +130,10 @@ class GameScreen:
 
     def render_messagebar_content(self, term: blessed.Terminal, message: str = ""):
         start_y, end_y, start_x, end_x = self.message_bar_bounds
-        # messages = self.game.story
-        # for m in messages.values():
-        #     log(m, "msg")
 
-        log(str(start_x), "x_message")
-        log(str(start_y), "y_message")
-        # print(term.home)
-        print(term.move_xy(start_x + 2, start_y + 5), end="")
-        print("Hey.... Wake up..", end="", flush=True)
+        panel_height = end_y - start_y
+        print(term.move_xy(start_x + 4, start_y + round(panel_height / 2)), end="")
+        print(message, end="", flush=True)
 
     @staticmethod
     def _make_border(bounds: Bounds, charset: tuple[str, str, str, str, str, str]) -> SubtractableDict:
