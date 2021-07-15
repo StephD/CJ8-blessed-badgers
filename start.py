@@ -29,7 +29,8 @@ def main() -> None:
                 game_screen.render(term)
             elif keypressed == "c":
                 # game_data.load_game("saved")
-                game_screen.render(term)
+                if game_data.data["game"]["is_game_already_played"]:
+                    game_screen.render(term)
             elif keypressed == "a":
                 about_screen.render(term)
             elif keypressed == "l":
