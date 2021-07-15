@@ -37,7 +37,7 @@ def main() -> None:
                 if lang_selected:
                     game_data.update_language(lang_selected)
 
-    print(f"BYE!{term.normal}")
+    print(term.normal)
     sys.exit(0)
 
 

@@ -14,8 +14,7 @@ class MenuScreen:
         num_squares = 4
         self.game_data = game_data
         self.squares = [Square() for _ in range(num_squares)]
-        g_data = self.game_data.data
-        self.colors = f'{g_data["game"]["colors"]["menu"]}'
+        self.colors = self.game_data.data["game"]["colors"]["menu"].copy()
         self.term_color = f"{self.colors['text']}_on_{self.colors['bg']}"
 
     def render(self, term: blessed.Terminal) -> Union[Keystroke, str]:
