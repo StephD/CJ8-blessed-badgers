@@ -52,7 +52,7 @@ class Game:
                     continue
                 neighbours.add((i, j))
         return neighbours
-    
+
     def entity_detect(self, y, x) -> chr:
         """
         Helper function to return if it player is in the entity neighbour.
@@ -80,7 +80,7 @@ class Game:
                 if char == " ":
                     continue
                 if char in "XD":
-                    self.entity_pos[char]  = self.get_neighbours(i, j)
+                    self.entity_pos[char] = self.get_neighbours(i, j)
                 self.entities.add(Obstacle((i, j), [char]))
                 self.obstacles.add((i, j))
 
@@ -104,7 +104,7 @@ class Game:
             self.player.position = pos_y, pos_x
 
         # Check the orientation what is x and y ?
-        # How is this working ? 
+        # How is this working ?
         char = self.entity_detect(pos_y, pos_x)
         return char
 

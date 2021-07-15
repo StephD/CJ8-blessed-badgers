@@ -115,7 +115,7 @@ class GameScreen:
                         if self.game.key_found:
                             self.render_messagebar_content(term, self.game.story["11"])
                             self.render_messagebar_content(term, "Congrats you have solved the first level.")
-                            break 
+                            break
                         else:
                             self.render_messagebar_content(term, "The door is locked.")
                             sleep(1)
