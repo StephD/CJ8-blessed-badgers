@@ -48,11 +48,11 @@ class Game:
         for i in range(x - 1, x + 2):
             for j in range(y - 1, y + 2):
                 # From Sachin
-                # if (i == x and j == y) or not (1 < i < 25 and 1 < j < 57):
-                #     continue
+                if (i == x and j == y) or not (1 < i < 25 and 1 < j < 57):
+                    continue
                 # Specify max width and max height
-                if i != j and (0 < j < 21 and 0 < i < 21):
-                    neighbours.add((i, j))
+                # if i != j and (0 < j < 21 and 0 < i < 21):
+                neighbours.add((i, j))
         return neighbours
 
     def load_map(self, level=0) -> None:
@@ -93,9 +93,9 @@ class Game:
             pos_x += 1
 
         # Check the orientation what is x and y ?
-        if (pos_y, pos_x) in self.message_pos:
-            # log(repr(self.entities))
-            pass
+        # if (pos_y, pos_x) in self.message_pos:
+        #     # log(repr(self.entities))
+        #     pass
         if (pos_y, pos_x) not in self.obstacles:
             self.player.position = pos_y, pos_x
 
