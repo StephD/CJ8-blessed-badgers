@@ -99,13 +99,13 @@ class Game:
         if (pos_y, pos_x) not in self.obstacles:
             self.player.position = pos_y, pos_x
 
-    def get_to_be_rendered(self) -> SubtractableDict:
+    def get_to_be_rendered(self) -> set[tuple[int, int, str]]:
         """
         Get the coordinates where entities are to be rendered, and the characters at those coordinates.
 
         :return: dict subclass in the form of {(i, j): character}, where (i, j) is the coordinate.
         """
-        to_be_rendered = SubtractableDict()
+        to_be_rendered = set()
         for entity in self.entities:
             to_be_rendered |= entity.get_to_be_rendered()
         return to_be_rendered

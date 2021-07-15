@@ -1,13 +1,8 @@
-import sys
-from time import sleep
-from typing import Union
-
 import blessed
 
 from modules.game import Game
 from modules.game_data import GameData
 from modules.logger import log
-from scenes.entity import SubtractableDict
 
 Bounds = tuple[int, int, int, int]
 
@@ -29,8 +24,10 @@ def chunk(string: str, width: int) -> list[str]:
         if any(len(word) >= width for word in words):
             raise ValueError("Insufficient width")
         for word in words:
+            # If adding the current word to the current line would cause overflow, add a fresh string to the list.
             if len(f"{chunked[-1]} {word}") >= width:
                 chunked.append("")
+            # Add the current word to the current line, with a space.
             chunked[-1] += word + " "
     return [line.strip() for line in chunked]
 
@@ -39,7 +36,7 @@ class GameScreen:
     def __init__(self, game_data: GameData, *args, **kwargs):
         self.game_data = game_data
         self.game = Game(game_data)
-        self.currently_rendered = SubtractableDict()
+        self.currently_rendered = set()
         self.stories_id = 1
         # self.scene_bounds: Bounds = ...
         # self.sidebar_bounds: Bounds = ...
@@ -55,6 +52,7 @@ class GameScreen:
         self.scene_bounds = (1, int(3 / 4 * height), 2, int(3 / 4 * width) - 1)
         self.message_bar_bounds = (int(3 / 4 * height) + 1, height - 2, 2, int(3 / 4 * width) - 1)
 
+        # Render the screen border
         self._render_dict(term, self._make_border((0, height - 1, 0, width - 1), tuple("╔╗╚╝║═")))
 
     def render(self, term: blessed.Terminal) -> None:
@@ -110,12 +108,14 @@ class GameScreen:
     # Render scene need to be pickup from a file
     def render_scene(self, term: blessed.Terminal):
         """Render the scene area. Design the level"""
+        # Get the coordinates to be rendered in the scene panel.
         to_be_rendered = self._make_scene(self.scene_bounds, self.game.get_to_be_rendered())
 
+        # Render the coordinates that have been added since the last frame
         self._render_dict(term, to_be_rendered - self.currently_rendered)
 
-        # Clean the content around what need to be rendered
-        self._render_dict(term, {(i, j): " " for i, j in self.currently_rendered - to_be_rendered})
+        # Clear the coordinates that have been removed since the last frame
+        self._render_dict(term, {(i, j, " ") for i, j, _ in self.currently_rendered - to_be_rendered})
 
         self.currently_rendered = to_be_rendered
 
@@ -125,10 +125,13 @@ class GameScreen:
         panel_width = end_x - start_x
         sidebar_content = self.game.get_sidebar_content()
 
-        # Clean the content of the sidebar
-        self._render_dict(term, {(y, x): " " for y in range(start_y + 1, end_y) for x in range(start_x + 1, end_x)})
+        # Clear the previous content in the side bar
+        self._render_dict(
+            term, {(i, j, " ") for i in range(start_y + 1, end_y - 1) for j in range(start_x + 1, end_x - 1)}
+        )
 
-        print(term.move_yx(start_y + 2, start_x + 2), end="")
+        # Move the cursor to the top left of the sidebar
+        print(term.move_yx(start_y + 2, start_x + 2), end="", flush=True)
 
         for data_key, data_obj in sidebar_content.items():
             if data_key == "game_data":
@@ -154,37 +157,31 @@ class GameScreen:
         panel_height = end_y - start_y
         panel_width = end_x - start_x
 
-        # Clean the content
-        print(term.move_xy(start_x + 4, start_y + round(panel_height / 2)), end="")
-        print(" " * (panel_width - 6), end="", flush=True)
-
-        print(term.move_left(panel_width - 7), end="")
-        for letter in message:
-            print(letter, end="", flush=True)
-            sleep(0.05)
+        print(term.move_xy(start_x + 4, start_y + round(panel_height / 2)), end="", flush=True)
+        print(message + " " * int(panel_width - (len(message) + 4)), end="", flush=True)
 
     @staticmethod
-    def _make_border(bounds: Bounds, charset: tuple[str, str, str, str, str, str]) -> SubtractableDict:
+    def _make_border(bounds: Bounds, charset: tuple[str, str, str, str, str, str]) -> set[tuple[int, int, str]]:
         start_i, end_i, start_j, end_j = bounds
         top_left, top_right, bottom_left, bottom_right, vertical, horizontal = charset
-        return SubtractableDict(
+        return (
             {
-                (start_i, start_j): top_left,
-                (start_i, end_j): top_right,
-                (end_i, start_j): bottom_left,
-                (end_i, end_j): bottom_right,
+                (start_i, start_j, top_left),
+                (start_i, end_j, top_right),
+                (end_i, start_j, bottom_left),
+                (end_i, end_j, bottom_right),
             }
-            | {(i, j): vertical for i in range(start_i + 1, end_i) for j in (start_j, end_j)}
-            | {(i, j): horizontal for i in (start_i, end_i) for j in range(start_j + 1, end_j)}
+            | {(i, j, vertical) for i in range(start_i + 1, end_i) for j in (start_j, end_j)}
+            | {(i, j, horizontal) for i in (start_i, end_i) for j in range(start_j + 1, end_j)}
         )
 
     @staticmethod
-    def _make_scene(bounds: Bounds, game_map: SubtractableDict) -> SubtractableDict:
+    def _make_scene(bounds: Bounds, game_map: set[tuple[int, int, str]]) -> set[tuple[int, int, str]]:
 
         start_i, end_i, start_j, end_j = bounds
         scene_panel_width = end_j - start_j
         scene_panel_height = end_i - start_i
-        clipped_map = SubtractableDict()
+        clipped_map = set()
 
         scene_start_i = min(coordinate[0] for coordinate in game_map)
         scene_end_i = max(coordinate[0] for coordinate in game_map)
@@ -196,15 +193,15 @@ class GameScreen:
 
         central_i, central_j = (scene_height // 2, scene_width // 2)
 
-        for (i, j), char in game_map.items():
+        for i, j, char in game_map:
             new_i = i - central_i + scene_panel_height // 2
             new_j = j - central_j + scene_panel_width // 2
             if _lies_within_bounds(bounds, (new_i, new_j)):
-                clipped_map[new_i, new_j] = char
+                clipped_map.add((new_i, new_j, char))
 
         return clipped_map
 
     @staticmethod
-    def _render_dict(term: blessed.Terminal, data: Union[dict, SubtractableDict]) -> None:
-        for (i, j), char in data.items():
+    def _render_dict(term: blessed.Terminal, data: set[tuple[int, int, str]]) -> None:
+        for i, j, char in data:
             print(term.move_yx(i, j) + char, end="", flush=True)
