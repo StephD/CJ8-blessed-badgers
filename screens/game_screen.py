@@ -81,7 +81,7 @@ class GameScreen:
             while self.game.story[str(self.stories_id)] != "":
                 self.render_messagebar_content(term, self.game.story[str(self.stories_id)])
                 term.inkey(timeout=5)
-                if self.stories_id == 1:
+                if self.stories_id == 7:
                     break
                 self.stories_id += 1
 
@@ -129,6 +129,7 @@ class GameScreen:
                         # Add Interaction.
                         self.game.key_found = True
                         self.render_messagebar_content(term, "You have found the key.")
+                        sleep(1)
                     self.render_scene(term)
 
     def render_layout(self, term: blessed.Terminal) -> None:
