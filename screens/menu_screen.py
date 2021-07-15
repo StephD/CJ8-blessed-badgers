@@ -14,6 +14,9 @@ class MenuScreen:
         num_squares = 4
         self.game_data = game_data
         self.squares = [Square() for _ in range(num_squares)]
+        self.init_colors()
+
+    def init_colors(self):
         g_data = self.game_data.data
         self.menu_color_choice = f'{g_data["game"]["colors"]["menu"]["choice"]}'
         self.menu_color_title = f'{g_data["game"]["colors"]["menu"]["title"]}'
