@@ -1,11 +1,9 @@
-import sys
 from time import sleep
 
 import blessed
 
 from modules.game import Game
 from modules.game_data import GameData
-from modules.logger import log
 
 Bounds = tuple[int, int, int, int]
 
@@ -36,8 +34,7 @@ def chunk(string: str, width: int) -> list[str]:
 
 
 class GameScreen:
-    def __init__(self, game_data: GameData, *args, **kwargs):
-        self.game_data = game_data
+    def __init__(self, game_data: GameData):
         self.game = Game(game_data)
         self.currently_rendered = set()
         self.stories_id = 1
@@ -57,7 +54,7 @@ class GameScreen:
         self._render_dict(term, self._make_border((0, height - 1, 0, width - 1), tuple("╔╗╚╝║═")))
 
     def init_colors(self):
-        self.colors = self.game_data.data["game"]["colors"]["game"].copy()
+        self.colors = self.game.game_data.data["game"]["colors"]["game"].copy()
         self.term_color = f"{self.colors['text']}_on_{self.colors['bg']}"
 
     def render(self, term: blessed.Terminal) -> None:
@@ -113,13 +110,6 @@ class GameScreen:
                     self.game.move_player(key_input)
                     self.render_scene(term)
                     self.render_messagebar_content(term)
-
-        # """
-        # self.currently_rendered = self.currently_rendered
-        #                             - self.currently_rendered
-        # """
-        # Remove all
-        # self.currently_rendered = SubtractableDict()
 
     def render_layout(self, term: blessed.Terminal) -> None:
         """Render the 3 frames"""
@@ -203,37 +193,39 @@ class GameScreen:
         start_i, end_i, start_j, end_j = bounds
         top_left, top_right, bottom_left, bottom_right, vertical, horizontal = charset
         return (
+            # the corners:
             {
                 (start_i, start_j, top_left),
                 (start_i, end_j, top_right),
                 (end_i, start_j, bottom_left),
                 (end_i, end_j, bottom_right),
             }
+            # the left and right vertical bars:
             | {(i, j, vertical) for i in range(start_i + 1, end_i) for j in (start_j, end_j)}
+            # the top and bottom horizontal bars:
             | {(i, j, horizontal) for i in (start_i, end_i) for j in range(start_j + 1, end_j)}
         )
 
     @staticmethod
     def _make_scene(bounds: Bounds, game_map: set[tuple[int, int, str]]) -> set[tuple[int, int, str]]:
 
-        start_i, end_i, start_j, end_j = bounds
-        scene_panel_width = end_j - start_j
-        scene_panel_height = end_i - start_i
+        scene_panel_height = bounds[1] - bounds[0]  # uppermost row - lowermost row
+        scene_panel_width = bounds[3] - bounds[2]  # rightmost column - leftmost column
+
         clipped_map = set()
 
-        scene_start_i = min(coordinate[0] for coordinate in game_map)
-        scene_end_i = max(coordinate[0] for coordinate in game_map)
-        scene_start_j = min(coordinate[1] for coordinate in game_map)
-        scene_end_j = max(coordinate[1] for coordinate in game_map)
+        i_coordinates = [coordinate[0] for coordinate in game_map]
+        j_coordinates = [coordinate[1] for coordinate in game_map]
 
-        scene_height = scene_end_i - scene_start_i
-        scene_width = scene_end_j - scene_start_j
-
-        central_i, central_j = (scene_height // 2, scene_width // 2)
+        scene_height = max(i_coordinates) - min(i_coordinates)
+        scene_width = max(j_coordinates) - min(j_coordinates)
 
         for i, j, char in game_map:
-            new_i = i - central_i + scene_panel_height // 2
-            new_j = j - central_j + scene_panel_width // 2
+            # translate from in-game coordinates to main screen coordinates
+            new_i = i - scene_height // 2 + scene_panel_height // 2
+            new_j = j - scene_width // 2 + scene_panel_width // 2
+
+            # filter the coordinates which lie outside the scene panel bounds
             if _lies_within_bounds(bounds, (new_i, new_j)):
                 clipped_map.add((new_i, new_j, char))
 
