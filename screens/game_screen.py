@@ -39,6 +39,7 @@ class GameScreen:
         self.game_data = game_data
         self.game = Game(game_data)
         self.currently_rendered = SubtractableDict()
+        self.stories_id = 1
         # self.scene_bounds: Bounds = ...
         # self.sidebar_bounds: Bounds = ...
         # self.message_bar_bounds: Bounds = ...
@@ -69,10 +70,13 @@ class GameScreen:
             # Render sidebar content
             # self.render_sidebar_content(term)
             # Render message in the bottom bar
-            stories = self.game.story
-            for m in stories.values():
-                self.render_messagebar_content(term, m)
+            while self.game.story[str(self.stories_id)] != "":
+                self.render_messagebar_content(term, self.game.story[str(self.stories_id)])
                 term.inkey(timeout=5)
+                if self.stories_id == 5:
+                    break
+                self.stories_id += 1
+
             # while not in esc menu and key different then 'q'
             while key_input.lower() != "q":
                 key_input = term.inkey(timeout=3)
@@ -81,9 +85,11 @@ class GameScreen:
                 elif key_input.is_sequence:
                     self.game.move_player(key_input.name)
                     self.render_scene(term)
+                    self.render_messagebar_content(term)
                 elif key_input:
                     self.game.move_player(key_input)
                     self.render_scene(term)
+                    self.render_messagebar_content(term)
         """
         self.currently_rendered = self.currently_rendered
                                     - self.currently_rendered
@@ -132,8 +138,9 @@ class GameScreen:
         start_y, end_y, start_x, end_x = self.message_bar_bounds
 
         panel_height = end_y - start_y
+        panel_width = end_x - start_x
         print(term.move_xy(start_x + 4, start_y + round(panel_height / 2)), end="")
-        print(message, end="", flush=True)
+        print(message + " " * int(panel_width - (len(message) + 4)), end="", flush=True)
 
     @staticmethod
     def _make_border(bounds: Bounds, charset: tuple[str, str, str, str, str, str]) -> SubtractableDict:

@@ -87,7 +87,7 @@ class Game:
         if mov == "k" or mov == "KEY_UP":
             pos_y -= 1
         if mov == "h" or mov == "KEY_LEFT":
-            pos_x -= 1
+            pos_x -= 1  # 2 for more smoothness
         if mov == "l" or mov == "KEY_RIGHT":
             pos_x += 1
 
