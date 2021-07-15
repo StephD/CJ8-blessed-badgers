@@ -25,18 +25,43 @@
             "return": "Return [R]"
         }
     },
-    "action": {
+    "actions": {
         "cancel": "Cancelar",
-        "confirm": "Confirmar"
+        "confirm": "Confirmar",
+        "return": "Regresar"
     },
-    "story": {
-        "intro": {
-            "1": "¡Oye!... Despierta"
+    "messages": {
+        "game": {
+            "actions": {
+                "esc": "¿Quieres irte? Salir [Q] - guardar [S] - cancelar [C]"
+            }
+        },
+        "story": {
+            "room_1": {
+                "1": "Oye ... despierta",
+                "2": "Creo que te sentiste abajo desde allí, arriba",
+                "3": "¿Preguntaste dónde estabas?",
+                "4": "Mira a tu alrededor ;-) .. Es una caja ahah",
+                "5": "Puede echar un vistazo con las teclas de flecha.",
+                "6": "¿Cómo salir, dijiste? Pareces atrapado aquí",
+                "7": "Oye, ¿qué hay? Una puerta. ¿Puedes echar un vistazo?",
+                "8": "Pero puede que haya una manera ... ¿puedes pensar?",
+                "9": "O también puede usar su inTUIción, quién sabe",
+                "10": "Oye, ¿qué hay ahí?",
+                "11": "Parece una gran roca. ¿Quieres ver debajo?",
+                "12": "Bravo, podrías quedarte fuera de este :-)"
+            }
         }
+
     },
-    "entity": {
-        "door_locked": "La puerta está cerrada",
-        "key_find": "Encuentra una llave",
-        "key_is_found": "Encontraste una llave"
+    "entities": {
+        "door": {
+            "open": "Las puertas están abiertas.",
+            "close": "Las puertas parecen cerradas"
+        },
+        "key": {
+            "found": "Necesitas encontrar la clave",
+            "is_found": "Encontraste una clave"
+        }
     }
 }
