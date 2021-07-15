@@ -39,50 +39,54 @@ class GameScreen:
         self.game_data = game_data
         self.game = Game(game_data)
         self.currently_rendered = SubtractableDict()
-        self.scene_bounds: Bounds = ...
-        self.sidebar_bounds: Bounds = ...
-        self.action_bar_bounds: Bounds = ...
+        # self.scene_bounds: Bounds = ...
+        # self.sidebar_bounds: Bounds = ...
+        # self.action_bar_bounds: Bounds = ...
 
     def render(self, term: blessed.Terminal) -> None:
         """Renders the start screen in the terminal."""
+        key_input = ""
         with term.cbreak(), term.hidden_cursor():
             # Render layout
-            # Render scene
-            # Render entities
-            # Render message
-            # Render gamedata
             self.render_layout(term)
-            val = ""
-            while val.lower() != "q":
-                self.render_layout(term)
-                self.render_scene(term)
-                # self.render_sidebar(term)
-                val = term.inkey(timeout=3)
-                if not val:
+            # Render scene
+            self.render_scene(term)
+            # Render sidebar content
+            # self.render_sidebar(term)
+            # Render gamedata in the sidebar
+            # Render scene entities
+            # Render message in the bottom bar
+            # while not in esc menu and key different then 'q'
+            while key_input.lower() != "q":
+                key_input = term.inkey(timeout=1)
+                if not key_input:
                     continue
-                elif val.is_sequence:
-                    self.game.move_player(val.name)
-                elif val:
-                    self.game.move_player(val)
+                elif key_input.is_sequence:
+                    self.game.move_player(key_input.name)
+                elif key_input:
+                    self.game.move_player(key_input)
         # Remove all
         """
         self.currently_rendered = self.currently_rendered
                                     - self.currently_rendered
         """
-        self.currently_rendered = SubtractableDict()
+        # self.currently_rendered = SubtractableDict()
 
     def render_layout(self, term: blessed.Terminal) -> None:
         width, height = term.width, term.height
 
-        self.sidebar_bounds = (1, height - 2, int(3 / 4 * width), width - 2)
-        self.scene_bounds = (1, int(3 / 4 * height), 1, int(3 / 4 * width) - 1)
-        self.action_bar_bounds = (int(3 / 4 * height) + 1, height - 2, 1, int(3 / 4 * width) - 1)
+        # The layout have to be fixed and the size of the scene
+        # Top - Bottom - Left - Right
+        self.sidebar_bounds = (1, height - 2, int(3 / 4 * width) + 1, width - 3)
+        self.scene_bounds = (1, int(3 / 4 * height), 2, int(3 / 4 * width) - 1)
+        self.action_bar_bounds = (int(3 / 4 * height) + 1, height - 2, 2, int(3 / 4 * width) - 1)
 
         self._render_dict(term, self._make_border((0, height - 1, 0, width - 1), tuple("╔╗╚╝║═")))
         self._render_dict(term, self._make_border(self.sidebar_bounds, tuple("┌┐└┘│─")))
         self._render_dict(term, self._make_border(self.scene_bounds, tuple("┌┐└┘│─")))
         self._render_dict(term, self._make_border(self.action_bar_bounds, tuple("┌┐└┘│─")))
 
+    # Render scene need to be pickup from a file
     def render_scene(self, term: blessed.Terminal):
         to_be_rendered = self._make_scene(self.scene_bounds, self.game.get_to_be_rendered())
         self._render_dict(term, to_be_rendered - self.currently_rendered)
