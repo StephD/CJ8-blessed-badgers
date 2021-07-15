@@ -9,7 +9,7 @@
             "quit": "Verlassen [Q]"
         },
         "about": {
-            "who": "Made by young developers: Blessed badgers",
+            "who": "Von jungen Entwicklern erstellt: Blessed badgers",
             "about": "",
             "what": "This is a gamefied learning experience for young developers"
         },
@@ -21,22 +21,47 @@
             "de": "Deutsch"
         },
         "actions": {
-            "cancel": "Cancel [C]",
-            "return": "Return [R]"
+            "cancel": "Aufheben [C]",
+            "return": "Rückkehr [R]"
         }
     },
-    "action": {
+    "actions": {
         "cancel": "Aufheben",
-        "confirm": "Bestätigen"
+        "confirm": "Bestätigen",
+        "return": "Rückkehr"
     },
-    "story": {
-        "intro": {
-            "1": "Hallo!... Aufwachen"
+    "messages": {
+        "game": {
+            "actions": {
+                "esc": "Möchtest Du gehen? Beenden [Q] - Speichern [S] - Abbrechen [C]"
+            }
+        },
+        "story": {
+            "room_1": {
+                "1": "Hey ... wach auf",
+                "2": "Ich glaube, du hast dich von dort unten gefühlt, von oben",
+                "3": "Hast du gefragt, wo du warst?",
+                "4": "Schau dich um ;-) .. Es ist eine Kiste ahah",
+                "5": "Vielleicht schau dich mal mit deinen Pfeiltasten um.",
+                "6": "Wie kommt man raus, sagtest du? Du scheinst hier festzustecken",
+                "7": "Hey, was ist da? Eine Tür. Vielleicht mal schauen?",
+                "8": "Aber vielleicht gibt es einen Weg.. kannst du denken?",
+                "9": "Oder Sie können auch Ihre InTUItion verwenden, wer weiß",
+                "10": "Hey was ist da",
+                "11": "Es sieht aus wie ein großer Stein. Willst du darunter sehen?",
+                "12": "Bravo, du könntest hier raus sein :-)"
+            }
         }
+
     },
-    "entity": {
-        "door_locked": "Diese Tür ist verschlossen",
-        "key_find": "Du musst den schlüssel finden",
-        "key_is_found": "Du hast einen Schlüssel gefunden"
+    "entities": {
+        "door": {
+            "open": "Die Türen sind offen.",
+            "close": "Die Türen scheinen verschlossen zu sein."
+        },
+        "key": {
+            "find": "Du musst den Schlüssel finden",
+            "is_found": "Du hast einen Schlüssel gefunden"
+        }
     }
 }
