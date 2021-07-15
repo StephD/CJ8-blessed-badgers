@@ -26,10 +26,6 @@ class Message(Entity):
         self.message = message
 
 
-# This will load from somewhere.
-Messages = []
-
-
 class Game:
     """Game class that will handle the game screen and render the necessary scene"""
 
@@ -49,15 +45,18 @@ class Game:
         self.load_map()
 
     @staticmethod
-    def get_neighbours(i, j) -> set[tuple[int, int]]:
-        """Helper function to return the coordinates surrounding (i, j)."""
-        pos = set()
-        for i in range(i - 1, i + 2):
-            for j in range(j - 1, j + 2):
+    def get_neighbours(x, y) -> set[tuple[int, int]]:
+        """Helper function to return the coordinates surrounding (x,y)."""
+        neighbours = set()
+        for i in range(x - 1, x + 2):
+            for j in range(y - 1, y + 2):
+                # From Sachin
+                # if (i == x and j == y) or not (1 < i < 25 and 1 < j < 57):
+                #     continue
                 # Specify max width and max height
                 if i != j and (0 < j < 21 and 0 < i < 21):
-                    pos.add((i, j))
-        return pos
+                    neighbours.add((i, j))
+        return neighbours
 
     def load_map(self, level=0) -> None:
         """
@@ -114,5 +113,5 @@ class Game:
         return to_be_rendered
 
     def get_sidebar_content(self) -> str:
-        """Get the text to be rendered on the sidebar."""
+        return "test"
         pass

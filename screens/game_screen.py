@@ -71,13 +71,15 @@ class GameScreen:
             # Render message in the bottom bar
             # while not in esc menu and key different then 'q'
             while key_input.lower() != "q":
-                key_input = term.inkey(timeout=1)
+                key_input = term.inkey(timeout=3)
                 if not key_input:
                     continue
                 elif key_input.is_sequence:
                     self.game.move_player(key_input.name)
+                    self.render_scene(term)
                 elif key_input:
                     self.game.move_player(key_input)
+                    self.render_scene(term)
         # Remove all
         """
         self.currently_rendered = self.currently_rendered
@@ -114,6 +116,12 @@ class GameScreen:
         for line in chunk(sidebar_content, panel_width):
             print(line, end="", flush=True)
             print(term.move_left(len(line)) + term.move_down, end="", flush=True)
+
+    def write_message(self, term: blessed.Terminal, message):
+        pass
+
+    def update_sidebar(self, term: blessed.Terminal):
+        pass
 
     @staticmethod
     def _make_border(bounds: Bounds, charset: tuple[str, str, str, str, str, str]) -> SubtractableDict:
