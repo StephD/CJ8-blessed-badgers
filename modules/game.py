@@ -1,5 +1,6 @@
 from typing import Optional
 
+from modules.game_data import GameData
 from modules.logger import log
 from scenes.entity import Entity, SubtractableDict
 
