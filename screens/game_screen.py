@@ -68,15 +68,16 @@ class GameScreen:
             # Render scene
             self.render_scene(term)
             # Render scene entities
+
             # Render message in the bottom bar
             while self.game.story[str(self.stories_id)] != "":
                 self.render_messagebar_content(term, self.game.story[str(self.stories_id)])
                 term.inkey(timeout=5)
-                if self.stories_id == 5:
+                if self.stories_id == 1:
                     break
                 self.stories_id += 1
 
-            # Render sidebar content
+            # Clean the message bar
             self.render_sidebar_content(term)
 
             # while not in esc menu and key different then 'q'
@@ -112,7 +113,8 @@ class GameScreen:
         to_be_rendered = self._make_scene(self.scene_bounds, self.game.get_to_be_rendered())
 
         self._render_dict(term, to_be_rendered - self.currently_rendered)
-        # What is this?
+
+        # Clean the content around what need to be rendered
         self._render_dict(term, {(i, j): " " for i, j in self.currently_rendered - to_be_rendered})
 
         self.currently_rendered = to_be_rendered
@@ -123,16 +125,29 @@ class GameScreen:
         panel_width = end_x - start_x
         sidebar_content = self.game.get_sidebar_content()
 
-        # Clean the content
+        # Clean the content of the sidebar
         self._render_dict(term, {(y, x): " " for y in range(start_y + 1, end_y) for x in range(start_x + 1, end_x)})
 
         print(term.move_yx(start_y + 2, start_x + 2), end="")
 
-        for key, value in sidebar_content.items():
-            for line in chunk(f"{key} : {value}", panel_width):
-                print(line, end="", flush=True)
-                print(term.move_left(len(line)) + term.move_down, end="", flush=True)
-            print(term.move_down, end="", flush=True)
+        for data_key, data_obj in sidebar_content.items():
+            if data_key == "game_data":
+                print(
+                    term.orangered
+                    + "Game data"
+                    + " " * (panel_width - len("Game data : "))
+                    + term.move_left(panel_width - 3)
+                    + term.move_down
+                    + term.normal,
+                    end="",
+                )
+            elif data_key == "player_data":
+                print("Game data : ", end="")
+            for key, value in data_obj.items():
+                for line in chunk(f"{key} : {value}", panel_width):
+                    print(line, end="", flush=True)
+                    print(term.move_left(len(line)) + term.move_down, end="", flush=True)
+                print(term.move_down, end="", flush=True)
 
     def render_messagebar_content(self, term: blessed.Terminal, message: str = ""):
         start_y, end_y, start_x, end_x = self.message_bar_bounds

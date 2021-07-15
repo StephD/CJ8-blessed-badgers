@@ -3,6 +3,7 @@ from typing import Optional
 from modules.game_data import GameData
 from modules.logger import log
 from scenes.entity import Entity, SubtractableDict
+from testing.test import game_layout
 
 
 class GameException(Exception):
@@ -110,8 +111,16 @@ class Game:
         return to_be_rendered
 
     def get_sidebar_content(self) -> str:
-        data = {}
-        data.update(self.game_data.data["game"])
-        data.pop("colors")
-        data.pop("last_saved")
+        data = {"game_data": {}}
+
+        game_data = self.game_data.data["game"]
+        game_data.pop("colors")
+        game_data.pop("last_saved")
+        game_data.pop("is_game_already_played")
+        data["game_data"] = game_data
+
+        data.update({"player_data": {}})
+        player_data = self.game_data.data["player"]["inventory"]
+        data["player_data"] = player_data
+
         return data
