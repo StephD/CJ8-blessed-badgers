@@ -1,4 +1,3 @@
-
 import blessed
 
 from modules.game import Game
@@ -108,7 +107,6 @@ class GameScreen:
     # Render scene need to be pickup from a file
     def render_scene(self, term: blessed.Terminal):
         """Render the scene area. Design the level"""
-
         # Get the coordinates to be rendered in the scene panel.
         to_be_rendered = self._make_scene(self.scene_bounds, self.game.get_to_be_rendered())
 
