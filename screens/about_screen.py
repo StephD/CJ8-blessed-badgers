@@ -35,7 +35,7 @@ class AboutScreen(MenuScreen):
         sections = []
         sections.append(self.get_language("menu", "about", "about"))
         sections.append(self.get_language("menu", "about", "who"))
-        sections.append("Version : 0.1")
+        sections.append(self.game_data.data["game"]["version"])
 
         sections.append("")
         sections.append(self.get_language("menu", "actions", "return"))
