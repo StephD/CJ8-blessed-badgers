@@ -36,6 +36,8 @@ def chunk(string: str, width: int) -> list[str]:
 
 
 class GameScreen:
+    """The class of the game screen"""
+
     def __init__(self, game_data: GameData):
         self.game_data = game_data
         self.game = Game(game_data)

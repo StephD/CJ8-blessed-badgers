@@ -12,11 +12,15 @@ class GameException(Exception):
 
 
 class Player(Entity):
+    """The declaration of a player entity"""
+
     def __init__(self, position: tuple[int, int], sprite: Optional[str] = None):
         super().__init__(position, sprite or ["@"])
 
 
 class Obstacle(Entity):
+    """The declaration of an obstacle entity"""
+
     pass
 
 
@@ -36,7 +40,7 @@ class Game:
         self.load_map()
 
     @staticmethod
-    def get_neighbours(x, y) -> set[tuple[int, int]]:
+    def get_neighbours(x: int, y: int) -> set[tuple[int, int]]:
         """Helper function to return the coordinates surrounding (x,y)."""
         neighbours = set()
         for i in range(x - 1, x + 2):
@@ -47,14 +51,14 @@ class Game:
                 neighbours.add((i, j))
         return neighbours
 
-    def entity_detect(self, y, x) -> chr:
+    def entity_detect(self, y: int, x: int) -> chr:
         """Helper function to return if it player is in the entity neighbour."""
         for entity_char in self.entity_pos:
             if (y, x) in self.entity_pos[entity_char]:
                 return entity_char
         return ""
 
-    def load_map(self, room=1) -> None:
+    def load_map(self, room: int = 1) -> None:
         """
         Load map from the directory according to the specified level.
 
