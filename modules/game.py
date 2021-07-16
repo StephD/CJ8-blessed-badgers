@@ -37,8 +37,6 @@ class Game:
         self.player = Player((10, 11))
         self.map_size: tuple[int, int] = (0, 0)
         self.entities.add(self.player)
-        # FOR NOW.
-        self.key_found: bool = False
         self.load_map()
 
     @staticmethod
@@ -78,9 +76,15 @@ class Game:
                 if char == " ":
                     continue
                 if char in "XD":
-                    self.entity_pos[char] = self.get_neighbours(i, j)
+                    log(repr((i, j)))
+                    # Improvise this.
+                    if char in self.entity_pos:
+                        self.entity_pos[char].update(self.get_neighbours(i, j))
+                    else:
+                        self.entity_pos[char] = self.get_neighbours(i, j)
                 self.entities.add(Obstacle((i, j), [char]))
                 self.obstacles.add((i, j))
+        log(repr(self.entity_pos))
 
     def move_player(self, mov: str) -> chr:
         """Move player."""
@@ -122,7 +126,7 @@ class Game:
 
         game_data = self.game_data.data["game"].copy()
         game_data.pop("colors")
-        game_data.pop("last_saved")
+        game_data.pop("dt_saved")
         game_data.pop("is_game_already_played")
         data["game_data"] = game_data
 

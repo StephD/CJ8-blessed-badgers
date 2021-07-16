@@ -2,7 +2,6 @@
     "menu": {
         "options": {
             "new_game": "New game [N]",
-            "tutorial": "Tutorial [T]",
             "continue": "Continue [C]",
             "about": "About [A]",
             "language": "Language [L]",
@@ -47,7 +46,8 @@
                 "8": "But may be there is a way to open it, think?",
                 "9": "Or you can also use your inTUItion, who knows",
                 "10": "It look like a big rock over there.",
-                "11": "Bravo, you could get out of here :-) We will see in the next box"
+                "11": "Bravo, you could get out of here :-)",
+                "12": "See you in the next box"
             }
         }
     },
@@ -58,7 +58,8 @@
         },
         "key": {
             "find": "You need to find the key.",
-            "is_found": "You found a key."
+            "is_found": "You found a key.",
+            "already": "You already found this key."
         }
     },
     "keys": {
@@ -66,6 +67,7 @@
         "inventory": "In your bag",
         "level": "Level",
         "language": "Language",
-        "menu": "Menu"
+        "menu": "Menu",
+        "keys": "Keys"
     }
 }

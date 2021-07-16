@@ -70,6 +70,7 @@ class GameScreen:
 
             # Render story messages in the bottom bar
             if not self.game_data.is_game_already_played():
+                self.game.load_map(1)
                 while self.game.story[str(self.stories_id)] != "":
                     self.render_messagebar_content(term, self.game.story[str(self.stories_id)] + "  [ENTER]", 0.03)
 
@@ -98,6 +99,7 @@ class GameScreen:
             else:
                 # Make all the render
                 self.stories_id = 5
+                self.game.load_map(self.game_data.data["player"]["current_room"])
                 self.render_scene(term)
 
             self.render_sidebar_content(term)
@@ -123,10 +125,9 @@ class GameScreen:
                                 self.render_messagebar_content(term, "Saving is done")
                                 sleep(0.8)
                             elif key_input.lower() == "q":
-                                # self.game_data.save_game()
+                                self.game_data.save_game()
                                 self.render_messagebar_content(term, "bye ..")
                                 sleep(0.8)
-                                # It's not strong to return like this?
                                 return
                         self.render_messagebar_content(term, "")
                     elif key_input.name in ["KEY_DOWN", "KEY_UP", "KEY_LEFT", "KEY_RIGHT"]:
@@ -136,40 +137,58 @@ class GameScreen:
                     player_will_move = True
 
                 if player_will_move:
-                    # msg from game.
                     entity_meeted = self.game.move_player(key_input)
                     self.render_scene(term)
                     self.render_messagebar_content(term)
                     if entity_meeted:
                         log(entity_meeted, "entity_meeted")
                     if entity_meeted == "D":
-                        # Why this is rendering two times ?
+                        if self.game_data.data["room"]["1"]["is_door_unlocked"]:
+                            self.render_messagebar_content(
+                                term, self.game_data.get_str_in_language("entities", "door", "open")
+                            )
+                            sleep(0.8)
+                            self.render_messagebar_content(term, "bye ..")
+                            sleep(0.8)
+                            self.game_data.save_game()
+                            return
+
                         if self.game_data.get_inventory_item_by_key("keys") > 0:
-                            # get room id
                             self.game_data.unlock_door(self.game_data.data["player"]["current_room"])
                             self.game_data.dec_inventory_item_by_key("keys")
                             self.render_sidebar_content(term)
-                            # self.render_messagebar_content(term, self.game.story["11"])
+
                             if self.game_data.data["room"]["1"]["is_door_unlocked"]:
-                                self.render_messagebar_content(term, "Congrats you have solved the first level.")
-                                sleep(1)
+                                self.render_messagebar_content(
+                                    term, self.game_data.get_str_in_language("messages", "story", "room_1", "11")
+                                )
+                                sleep(0.8)
+                                self.render_messagebar_content(
+                                    term, self.game_data.get_str_in_language("messages", "story", "room_1", "12")
+                                )
+                                self.game_data.save_game()
+                                sleep(0.8)
                                 return
                         else:
                             self.render_messagebar_content(
                                 term, self.game_data.get_str_in_language("entities", "door", "close")
                             )
-                            # self.render_messagebar_content(term, self.game.story["9"])
-
-                        # self.render_messagebar_content(term, self.game.story[str(self.stories_id)])
                     elif entity_meeted == "X":
-                        # self.render_messagebar_content(term, self.game.story["10"])
-                        # Add Interaction.
-                        self.game.key_found = True
-                        self.game_data.inc_inventory_item_by_key("keys")
-                        self.render_sidebar_content(term)
-                        self.render_messagebar_content(
-                            term, self.game_data.get_str_in_language("entities", "key", "is_found")
-                        )
+                        if not self.game_data.data["room"][str(self.game_data.data["player"]["current_room"])][
+                            "is_key_found"
+                        ]:
+                            self.game_data.inc_inventory_item_by_key("keys")
+                            self.game_data.data["room"][str(self.game_data.data["player"]["current_room"])][
+                                "is_key_found"
+                            ] = True
+                            self.render_sidebar_content(term)
+                            self.render_messagebar_content(
+                                term, self.game_data.get_str_in_language("entities", "key", "is_found")
+                            )
+                        else:
+                            self.render_messagebar_content(
+                                term, self.game_data.get_str_in_language("entities", "key", "already")
+                            )
 
     def render_layout(self, term: blessed.Terminal) -> None:
         """Render the 3 frames"""
@@ -209,27 +228,30 @@ class GameScreen:
 
         for data_key, data_obj in sidebar_content.items():
             if data_key == "game_data":
+                text = self.game_data.get_str_in_language("keys", "game_data")
                 print(
                     term.move_xy(x, y)
                     + getattr(term, self.colors["choice"])
-                    + "Game data"
-                    + " " * (panel_width - (len("Game data") + 2))
+                    + text
+                    + " " * (panel_width - (len(text) + 2))
                     + getattr(term, self.term_color),
                     end="",
                 )
             elif data_key == "player_data":
+                text = self.game_data.get_str_in_language("keys", "inventory")
                 # New line.
                 y += 1
                 print(
                     term.move_xy(x, y)
                     + getattr(term, self.colors["choice"])
-                    + "In your box"
-                    + " " * (panel_width - (len("In your box") + 2))
+                    + text
+                    + " " * (panel_width - (len(text) + 2))
                     + getattr(term, self.term_color),
                     end="",
                 )
             for key, value in data_obj.items():
-                for line in chunk(f"{key} : {value}", panel_width):
+                translated_key = self.game_data.get_str_in_language("keys", key)
+                for line in chunk(f"{translated_key} : {value}", panel_width):
                     y += 1
                     print(term.move_xy(x, y) + line, end="", flush=True)
             y += 1

@@ -1,9 +1,9 @@
 {
     "game": {
-        "is_game_already_played": false,
-        "version": "v0.2",
-        "language": "en",
-        "last_saved": "12/07/2021 23:14:48",
+        "is_game_already_played": true,
+        "version": "v0.3",
+        "language": "fr",
+        "dt_saved": "12/07/2021 23:14:48",
         "colors": {
             "menu": {
                 "bg": "gray20",
@@ -27,8 +27,8 @@
     },
     "room": {
         "1": {
-            "is_door_unlocked": false,
-            "is_key_found": false,
+            "is_door_unlocked": true,
+            "is_key_found": true,
             "interacted": {
                 "stone": false
             }

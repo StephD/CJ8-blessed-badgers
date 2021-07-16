@@ -2,7 +2,6 @@
     "menu": {
         "options": {
             "new_game": "Nouvelle partie [N]",
-            "tutorial": "Tutoriel [T]",
             "continue": "Continuer [C]",
             "about": "A propos [A]",
             "language": "Langue [L]",
@@ -46,8 +45,9 @@
                 "7": "Hé, c'est quoi la bas? Une porte. Peut-être aller y jeter un oeil?",
                 "8": "Mais peut-être qu'il y a un moyen de l'ouvrir, refléchis ?",
                 "9": "Ou tu peux aussi utiliser ton inTUItion, qui sait",
-                "11": "On dirait un gros rocher là-bas.",
-                "12": "Bravo, Tu as pu sortir hors d'ici :-) On verra la boite suivante"
+                "10": "On dirait un gros rocher là-bas.",
+                "11": "Bravo, Tu as pu sortir hors d'ici :-)",
+                "12": "On verra dans la boite suivante"
             }
         }
     },
@@ -58,7 +58,8 @@
         },
         "key": {
             "find": "Vous devez trouver la clé.",
-            "is_found": "Vous avez trouvé une clé."
+            "is_found": "Vous avez trouvé une clé.",
+            "already": "Tu as déjà trouvé cette clé."
         }
     },
     "keys": {
@@ -66,6 +67,7 @@
         "inventory": "Dans ton sac",
         "level": "Niveau",
         "language": "Langue",
-        "menu": "Menu"
+        "menu": "Menu",
+        "keys": "Clées"
     }
 }
