@@ -53,7 +53,7 @@ class Game:
 
     def entity_detect(self, row: int, col: int) -> chr:
         """Helper function to return if it player is in the entity neighbour."""
-        for entity_char in self.entity_pos.items():
+        for entity_char in self.entity_pos:
             if (row, col) in self.entity_pos[entity_char]:
                 return entity_char
         return ""
