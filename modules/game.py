@@ -78,9 +78,15 @@ class Game:
                 if char == " ":
                     continue
                 if char in "XD":
-                    self.entity_pos[char] = self.get_neighbours(i, j)
+                    log(repr((i, j)))
+                    # Improvise this.
+                    if char in self.entity_pos:
+                        self.entity_pos[char].update(self.get_neighbours(i, j))
+                    else:
+                        self.entity_pos[char] = self.get_neighbours(i, j)
                 self.entities.add(Obstacle((i, j), [char]))
                 self.obstacles.add((i, j))
+        log(repr(self.entity_pos))
 
     def move_player(self, mov: str) -> chr:
         """Move player."""
