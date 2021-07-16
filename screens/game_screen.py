@@ -137,7 +137,6 @@ class GameScreen:
                     player_will_move = True
 
                 if player_will_move:
-                    # msg from game.
                     entity_meeted = self.game.move_player(key_input)
                     self.render_scene(term)
                     self.render_messagebar_content(term)
@@ -155,11 +154,10 @@ class GameScreen:
                             return
 
                         if self.game_data.get_inventory_item_by_key("keys") > 0:
-                            # get room id
                             self.game_data.unlock_door(self.game_data.data["player"]["current_room"])
                             self.game_data.dec_inventory_item_by_key("keys")
                             self.render_sidebar_content(term)
-                            # self.render_messagebar_content(term, self.game.story["11"])
+
                             if self.game_data.data["room"]["1"]["is_door_unlocked"]:
                                 self.render_messagebar_content(
                                     term, self.game_data.get_str_in_language("messages", "story", "room_1", "11")
