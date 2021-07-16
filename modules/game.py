@@ -31,9 +31,9 @@ class Game:
         self.game_data = game_data
         self.story = self.game_data.get_str_in_language("messages", "story", "room_1")
 
-        self.entity_pos: dict[chr, set[tuple[int, int]]] = dict()
-        self.obstacles: set[tuple[int, int]] = set()
-        self.entities: set[Optional[Entity]] = set()
+        self.entity_pos: dict[chr, set[tuple[int, int]]] = {}
+        self.obstacles: set[tuple[int, int]] = {}
+        self.entities: set[Optional[Entity]] = {}
         self.player = Player((10, 11))
         self.map_size: tuple[int, int] = (0, 0)
         self.entities.add(self.player)
