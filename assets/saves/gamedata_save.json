@@ -1,8 +1,8 @@
 {
     "game": {
-        "is_game_already_played": false,
+        "is_game_already_played": true,
         "version": "v0.3",
-        "language": "fr",
+        "language": "en",
         "dt_saved": "12/07/2021 23:14:48",
         "colors": {
             "menu": {

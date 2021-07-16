@@ -40,21 +40,21 @@ class Game:
         self.load_map()
 
     @staticmethod
-    def get_neighbours(x: int, y: int) -> set[tuple[int, int]]:
+    def get_neighbours(col: int, row: int) -> set[tuple[int, int]]:
         """Helper function to return the coordinates surrounding (x,y)."""
         neighbours = set()
-        for i in range(x - 1, x + 2):
-            for j in range(y - 1, y + 2):
+        for i in range(col - 1, col + 2):
+            for j in range(row - 1, row + 2):
                 # Specify max width and max height
-                if (i == x and j == y) or not (1 < i < 25 and 1 < j < 57):
+                if (i == col and j == row) or not (1 < i < 25 and 1 < j < 57):
                     continue
                 neighbours.add((i, j))
         return neighbours
 
-    def entity_detect(self, y: int, x: int) -> chr:
+    def entity_detect(self, row: int, col: int) -> chr:
         """Helper function to return if it player is in the entity neighbour."""
-        for entity_char in self.entity_pos:
-            if (y, x) in self.entity_pos[entity_char]:
+        for entity_char in self.entity_pos.items():
+            if (row, col) in self.entity_pos[entity_char]:
                 return entity_char
         return ""
 
