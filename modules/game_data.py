@@ -1,6 +1,5 @@
 import json
 
-# import os
 # from datetime import datetime
 
 ASSETS_PATH = "assets"
@@ -8,12 +7,6 @@ LANGUAGE_PATH = f"{ASSETS_PATH}/lang/"
 GAMEDATA_PATH = f"{ASSETS_PATH}/gamedata.json"
 GAMESAVE_NEW = f"{ASSETS_PATH}/saves/gamedata_new.json"
 GAMESAVE_SAVE = f"{ASSETS_PATH}/saves/gamedata_save.json"
-
-
-# class GameException(Exception):
-#     """Base class for exceptions in this module."""
-
-#     pass
 
 
 class GameData:

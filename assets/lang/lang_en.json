@@ -2,7 +2,6 @@
     "menu": {
         "options": {
             "new_game": "New game [N]",
-            "tutorial": "Tutorial [T]",
             "continue": "Continue [C]",
             "about": "About [A]",
             "language": "Language [L]",
@@ -59,7 +58,8 @@
         },
         "key": {
             "find": "You need to find the key.",
-            "is_found": "You found a key."
+            "is_found": "You found a key.",
+            "already": "You already found this key."
         }
     },
     "keys": {
@@ -67,6 +67,7 @@
         "inventory": "In your bag",
         "level": "Level",
         "language": "Language",
-        "menu": "Menu"
+        "menu": "Menu",
+        "keys": "Keys"
     }
 }

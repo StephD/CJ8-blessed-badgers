@@ -52,7 +52,6 @@ class MenuScreen:
         """Draws the menu in the terminal, returning the coordinates where it printed."""
         menu_items = [
             self.get_language("menu", "options", "new_game"),
-            # self.get_language("menu", "options", "tutorial"),
             self.get_language("menu", "options", "continue"),
             self.get_language("menu", "options", "about"),
             self.get_language("menu", "options", "language"),
