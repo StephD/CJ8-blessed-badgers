@@ -156,7 +156,7 @@ class GameScreen:
                                 return
                         else:
                             self.render_messagebar_content(
-                                term, self.game_data.get_str_in_language("entities", "key", "close")
+                                term, self.game_data.get_str_in_language("entities", "door", "close")
                             )
                             # self.render_messagebar_content(term, self.game.story["9"])
 

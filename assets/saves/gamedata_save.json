@@ -1,6 +1,6 @@
 {
     "game": {
-        "is_game_already_played": true,
+        "is_game_already_played": false,
         "version": "v0.2",
         "language": "en",
         "last_saved": "12/07/2021 23:14:48",
@@ -22,7 +22,8 @@
                 "key": "gold",
                 "scene_wall": "lightskyblue4"
             }
-        }
+        },
+        "level": 1
     },
     "room": {
         "1": {
