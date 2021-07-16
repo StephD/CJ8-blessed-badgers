@@ -127,3 +127,7 @@ class GameData:
 
     # def get_inventory_items(self) -> list:
     #     return list(self.data["player"]["inventory"].keys())
+
+    @update_file_game_data_decorator
+    def unlock_door(self, room_id) -> None:
+        self.data["room"][str(room_id)]["is_door_unlocked"] = True

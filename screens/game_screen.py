@@ -145,21 +145,22 @@ class GameScreen:
                     if entity_meeted == "D":
                         # Why this is rendering two times ?
                         if self.game_data.get_inventory_item_by_key("keys") > 0:
+                            # get room id
+                            self.game_data.unlock_door(self.game_data.data["player"]["current_room"])
                             self.game_data.dec_inventory_item_by_key("keys")
                             self.render_sidebar_content(term)
                             # self.render_messagebar_content(term, self.game.story["11"])
-                            self.render_messagebar_content(term, "Congrats you have solved the first level.")
-                            sleep(1)
+                            if self.game_data.data["room"]["1"]["is_door_unlocked"]:
+                                self.render_messagebar_content(term, "Congrats you have solved the first level.")
+                                sleep(1)
+                                return
                         else:
                             self.render_messagebar_content(
                                 term, self.game_data.get_str_in_language("entities", "key", "close")
                             )
-                            # sleep(1)
                             # self.render_messagebar_content(term, self.game.story["9"])
-                            # sleep(1)
 
                         # self.render_messagebar_content(term, self.game.story[str(self.stories_id)])
-                        # sleep(1)
                     elif entity_meeted == "X":
                         # self.render_messagebar_content(term, self.game.story["10"])
                         # Add Interaction.
