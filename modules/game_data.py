@@ -22,7 +22,8 @@ class GameData:
     def update_file_game_data_decorator(function) -> None:
         """Decorator used to save the game_data into a file when it's updated"""
 
-        def inner(self: GameData, *args) -> None:
+        # I CHANGED GameData to GAMEDATA_PATH for further development.
+        def inner(self: GAMEDATA_PATH, *args) -> None:
             function(self, *args)
             with open(GAMEDATA_PATH, "w") as file:
                 json.dump(self.data, file, indent=4)
