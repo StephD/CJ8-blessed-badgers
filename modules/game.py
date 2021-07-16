@@ -4,10 +4,6 @@ from modules.game_data import GameData
 from modules.logger import log
 from scenes.entity import Entity
 
-# TODO
-# Get the actual location of the entities.
-# Generalize if for every level not for level 1.
-
 
 class GameException(Exception):
     """Base class for exceptions in this module."""

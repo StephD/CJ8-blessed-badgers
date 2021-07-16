@@ -224,13 +224,13 @@ class GameScreen:
         # Move the cursor to the top left of the sidebar
         # print(term.move_yx(start_y + 2, start_x + 2), end="", flush=True)
 
-        x, y = start_x + 2, start_y + 2
+        col, row = start_x + 2, start_y + 2
 
         for data_key, data_obj in sidebar_content.items():
             if data_key == "game_data":
                 text = self.game_data.get_str_in_language("keys", "game_data")
                 print(
-                    term.move_xy(x, y)
+                    term.move_xy(col, row)
                     + getattr(term, self.colors["choice"])
                     + text
                     + " " * (panel_width - (len(text) + 2))
@@ -240,9 +240,9 @@ class GameScreen:
             elif data_key == "player_data":
                 text = self.game_data.get_str_in_language("keys", "inventory")
                 # New line.
-                y += 1
+                row += 1
                 print(
-                    term.move_xy(x, y)
+                    term.move_xy(col, row)
                     + getattr(term, self.colors["choice"])
                     + text
                     + " " * (panel_width - (len(text) + 2))
@@ -252,9 +252,9 @@ class GameScreen:
             for key, value in data_obj.items():
                 translated_key = self.game_data.get_str_in_language("keys", key)
                 for line in chunk(f"{translated_key} : {value}", panel_width):
-                    y += 1
-                    print(term.move_xy(x, y) + line, end="", flush=True)
-            y += 1
+                    row += 1
+                    print(term.move_xy(col, row) + line, end="", flush=True)
+            row += 1
 
         print(term.move_yx(end_y - 1, start_x + 2), end="", flush=True)
         print(getattr(term, self.colors["choice"]) + "Menu <ESC>" + getattr(term, self.term_color), end="", flush=True)
