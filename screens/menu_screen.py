@@ -85,7 +85,13 @@ class MenuScreen:
         return {(menu_row, x + menu_start_col) for x in range(menu_width)}
 
     def render_flying_square(
-        self, term: blessed.Terminal, col, row, old_indices: set(), title_indices: set(), menu_indices
+        self,
+        term: blessed.Terminal,
+        col: np.array,
+        row: np.array,
+        old_indices: set(),
+        title_indices: set(),
+        menu_indices: set(),
     ) -> set:
         """It will render the flying square around the screen"""
         print(getattr(term, self.colors["square"]))
