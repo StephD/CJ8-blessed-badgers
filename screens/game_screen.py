@@ -143,7 +143,16 @@ class GameScreen:
                     if entity_meeted:
                         log(entity_meeted, "entity_meeted")
                     if entity_meeted == "D":
-                        # Why this is rendering two times ?
+                        if self.game_data.data["room"]["1"]["is_door_unlocked"]:
+                            self.render_messagebar_content(
+                                term, self.game_data.get_str_in_language("entities", "door", "open")
+                            )
+                            sleep(0.8)
+                            self.render_messagebar_content(term, "bye ..")
+                            sleep(0.8)
+                            self.game_data.save_game()
+                            return
+
                         if self.game_data.get_inventory_item_by_key("keys") > 0:
                             # get room id
                             self.game_data.unlock_door(self.game_data.data["player"]["current_room"])
@@ -151,7 +160,9 @@ class GameScreen:
                             self.render_sidebar_content(term)
                             # self.render_messagebar_content(term, self.game.story["11"])
                             if self.game_data.data["room"]["1"]["is_door_unlocked"]:
+                                # TODO
                                 self.render_messagebar_content(term, "Congrats you have solved the first level.")
+                                self.game_data.save_game()
                                 sleep(1)
                                 return
                         else:
