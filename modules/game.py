@@ -122,6 +122,7 @@ class Game:
         return to_be_rendered
 
     def get_sidebar_content(self) -> dict:
+        """Get the content of the sidebar from the game_data."""
         data = {"game_data": {}}
 
         game_data = self.game_data.data["game"].copy()
