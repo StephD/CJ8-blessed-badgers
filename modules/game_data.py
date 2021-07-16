@@ -36,48 +36,12 @@ class GameData:
 
         return inner
 
-    @update_file_game_data_decorator
-    def save_game(self) -> None:
-        with open(GAMESAVE_SAVE, "w") as file:
-            json.dump(self.data, file, indent=4)
-
-    @update_file_game_data_decorator
-    def load_game(self, game_type: str = "new") -> None:
-        if game_type == "new":
-            path = GAMESAVE_NEW
-        elif game_type == "saved":
-            path = GAMESAVE_SAVE
-
-        with open(path, "r") as file:
-            data_tmp = json.load(file)
-            data_tmp["game"] = self.data["game"]
-            self.data = data_tmp
-
-    def is_game_already_played(self) -> bool:
-        return self.data["game"]["is_game_already_played"]
-
-    @update_file_game_data_decorator
-    def update_game_already_played(self, value: bool) -> None:
-        if not isinstance(value, bool):
-            raise Exception("Incorrect value type")
-
-        self.data["game"]["is_game_already_played"] = value
-
-    def get_game_level(self) -> str:
-        return self.data["game"]["level"]
-
-    @update_file_game_data_decorator
-    def update_game_level(self, game_level) -> None:
-        self.data["game"]["level"] = game_level
-
-    def get_language(self) -> str:
-        return self.data["game"]["language"]
-
-    @update_file_game_data_decorator
-    def update_language(self, language) -> None:
-        self.data["game"]["language"] = language
-
     def get_str_in_language(self, *args) -> str:
+        """
+        Read the args from the language file
+
+        It allow the translation of the game
+        """
         selections = [*args]
 
         try:
@@ -97,19 +61,55 @@ class GameData:
 
         return lang_dict
 
-    def get_game_key(self, key) -> tuple[bool, str]:
-        return self.data["game"][key]
+    @update_file_game_data_decorator
+    def save_game(self) -> None:
+        with open(GAMESAVE_SAVE, "w") as file:
+            json.dump(self.data, file, indent=4)
 
     @update_file_game_data_decorator
-    def update_game_by_key(self, key, value) -> None:
-        self.data["game"][key] = value
+    def load_game(self, game_type: str = "new") -> None:
+        if game_type == "new":
+            path = GAMESAVE_NEW
+        elif game_type == "saved":
+            path = GAMESAVE_SAVE
 
-    def get_inventory_items(self) -> list:
-        return list(self.data["player"]["inventory"].keys())
+        with open(path, "r") as file:
+            data_tmp = json.load(file)
+            data_tmp["game"] = self.data["game"]
+            self.data = data_tmp
 
-    def get_inventory_item(self, key) -> dict:
-        return self.data["player"]["inventory"][key]
+    # Game already played
+    def is_game_already_played(self) -> bool:
+        return self.data["game"]["is_game_already_played"]
 
     @update_file_game_data_decorator
-    def update_inventory_item_by_key(self, key, value) -> None:
-        self.data["player"]["inventory"][key] = value
+    def set_game_already_played(self, value: bool) -> None:
+        if not isinstance(value, bool):
+            raise Exception("Incorrect value type")
+
+        self.data["game"]["is_game_already_played"] = value
+
+    # Game_level
+    def get_game_level(self) -> str:
+        return self.data["game"]["level"]
+
+    @update_file_game_data_decorator
+    def set_game_level(self, game_level) -> None:
+        self.data["game"]["level"] = game_level
+
+    def get_language(self) -> str:
+        return self.data["game"]["language"]
+
+    @update_file_game_data_decorator
+    def set_language(self, language) -> None:
+        self.data["game"]["language"] = language
+
+    # def get_inventory_item(self, key) -> dict:
+    #     return self.data["player"]["inventory"][key]
+
+    # def get_inventory_items(self) -> list:
+    #     return list(self.data["player"]["inventory"].keys())
+
+    # @update_file_game_data_decorator
+    # def set_inventory_item_by_key(self, key, value) -> None:
+    #     self.data["player"]["inventory"][key] = value

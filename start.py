@@ -24,8 +24,8 @@ def main() -> None:
             print(term.clear)
             if keypressed == "n":  # New game
                 # game_data.load_game("new")
-                game_data.update_game_level(1)
-                game_data.update_game_already_played(False)
+                game_data.set_game_level(1)
+                game_data.set_game_already_played(False)
                 game_screen = GameScreen(game_data=game_data)
                 game_screen.render(term)
             elif keypressed == "c":
@@ -37,7 +37,7 @@ def main() -> None:
             elif keypressed == "l":
                 lang_selected = language_screen.render(term)
                 if lang_selected:
-                    game_data.update_language(lang_selected)
+                    game_data.set_language(lang_selected)
 
     print(term.normal)
     sys.exit(0)

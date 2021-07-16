@@ -94,9 +94,10 @@ class GameScreen:
                         break
 
                     self.stories_id += 1
-                    self.game_data.update_game_already_played(True)
+                    self.game_data.set_game_already_played(True)
             else:
                 # Make all the render
+                self.stories_id = 5
                 self.render_scene(term)
 
             self.render_sidebar_content(term)
@@ -108,9 +109,10 @@ class GameScreen:
                 player_will_move = False
                 key_input = term.inkey()
                 if key_input.is_sequence:
+                    # Esc menu
                     if key_input.name in ["KEY_ESCAPE"]:
                         self.render_messagebar_content(
-                            term, self.game_data.get_str_in_language("messages", "game", "actions", "esc"), 0.01
+                            term, self.game_data.get_str_in_language("messages", "game", "actions", "esc"), 0
                         )
                         while key_input.lower() not in ["q", "s", "c", "esc"]:
                             key_input = term.inkey()
@@ -136,7 +138,8 @@ class GameScreen:
                 if player_will_move:
                     # msg from game.
                     entity_meeted = self.game.move_player(key_input)
-                    log(entity_meeted, "entity_meeted")
+                    if entity_meeted:
+                        log(entity_meeted, "entity_meeted")
                     if entity_meeted == "D":
                         # Why this is rendering two times ?
                         if self.game.key_found:
@@ -149,7 +152,7 @@ class GameScreen:
                             self.render_messagebar_content(term, self.game.story["9"])
                             sleep(1)
 
-                        self.render_messagebar_content(term, self.game.story[str(self.stories_id)])
+                        # self.render_messagebar_content(term, self.game.story[str(self.stories_id)])
                         sleep(1)
                     elif entity_meeted == "X":
                         self.render_messagebar_content(term, self.game.story["10"])
