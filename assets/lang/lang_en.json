@@ -66,6 +66,7 @@
         "inventory": "In your bag",
         "level": "Level",
         "language": "Language",
-        "menu": "Menu"
+        "menu": "Menu",
+        "keys": "Keys"
     }
 }

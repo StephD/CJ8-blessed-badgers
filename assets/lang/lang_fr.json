@@ -66,6 +66,7 @@
         "inventory": "Dans ton sac",
         "level": "Niveau",
         "language": "Langue",
-        "menu": "Menu"
+        "menu": "Menu",
+        "keys": "Clées"
     }
 }
