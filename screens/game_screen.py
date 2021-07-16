@@ -94,12 +94,13 @@ class GameScreen:
                         break
 
                     self.stories_id += 1
+                    self.game_data.update_game_already_played(True)
             else:
                 # Make all the render
                 self.render_scene(term)
 
-            self.game_data.update_game_already_played(True)
             self.render_sidebar_content(term)
+            # Clean message bar
             self.render_messagebar_content(term)
 
             # player movement and exit or confirm exit.

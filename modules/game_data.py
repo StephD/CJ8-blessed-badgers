@@ -60,8 +60,8 @@ class GameData:
     def update_game_already_played(self, value: bool) -> None:
         if type(value) is not bool:
             raise Exception("Incorrect value type")
-        else:
-            self.data["game"]["is_game_already_played"] = value
+
+        self.data["game"]["is_game_already_played"] = value
 
     def get_game_level(self) -> str:
         return self.data["game"]["level"]
