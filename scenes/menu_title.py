@@ -10,7 +10,7 @@ def print_title(term: blessed.Terminal, rows: int, cols: int, color: str, term_c
     title_height = len(title_lines)
     title_start_col = (cols - title_width) // 2
     title_start_row = (rows - title_height) // 4
-    '''
+    """
     print(term.move_xy(title_start_col, title_start_row), end="")
 
     for title_line in title_lines:
@@ -20,7 +20,7 @@ def print_title(term: blessed.Terminal, rows: int, cols: int, color: str, term_c
             f"{term.move_down + term.move_left(len(title_line))}",
             end="",
         )
-    '''
+    """
     x, y = title_start_col, title_start_row
     for title_line in title_lines:
         print(f"{term.move_xy(x, y)}{getattr(term, color)}{title_line}", end="")
