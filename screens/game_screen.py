@@ -102,31 +102,39 @@ class GameScreen:
 
             # player movement and exit or confirm exit.
             while 1:
+                player_will_move = False
                 key_input = term.inkey()
-                if key_input.name in ["KEY_ESCAPE"]:
-                    self.render_messagebar_content(
-                        term, self.game_data.get_str_in_language("messages", "game", "actions", "esc"), 0.01
-                    )
-                    while key_input.lower() not in ["q", "s", "c", "esc"]:
-                        key_input = term.inkey()
-                        if key_input == "s":
-                            self.game_data.save_game()
-                            self.render_messagebar_content(term, "Saving in progress")
-                            sleep(0.8)
-                            self.render_messagebar_content(term, "Saving is done")
-                            sleep(0.8)
-                        elif key_input.lower() == "q":
-                            # key_input = "esc"
-                            self.game_data.save_game()
-                            self.render_messagebar_content(term, "bye ..")
-                            sleep(0.8)
-                            return
-                    self.render_messagebar_content(term, "")
-                else:
+                if key_input.is_sequence:
+                    if key_input.name in ["KEY_ESCAPE"]:
+                        self.render_messagebar_content(
+                            term, self.game_data.get_str_in_language("messages", "game", "actions", "esc"), 0.01
+                        )
+                        while key_input.lower() not in ["q", "s", "c", "esc"]:
+                            key_input = term.inkey()
+                            if key_input == "s":
+                                self.game_data.save_game()
+                                self.render_messagebar_content(term, "Saving in progress")
+                                sleep(0.8)
+                                self.render_messagebar_content(term, "Saving is done")
+                                sleep(0.8)
+                            elif key_input.lower() == "q":
+                                # key_input = "esc"
+                                self.game_data.save_game()
+                                self.render_messagebar_content(term, "bye ..")
+                                sleep(0.8)
+                                return
+                        self.render_messagebar_content(term, "")
+                    elif key_input.name in ["KEY_DOWN", "KEY_UP", "KEY_LEFT", "KEY_RIGHT"]:
+                        key_input = key_input.name
+                        player_will_move = True
+                elif key_input in ["j", "k", "h", "l"]:
+                    player_will_move = True
+
+                if player_will_move:
                     # msg from game.
-                    msg = self.game.move_player(key_input)
-                    if msg == "D":
-                        log(msg, "from msg")
+                    entity_meeted = self.game.move_player(key_input)
+                    log(entity_meeted, "entity_meeted")
+                    if entity_meeted == "D":
                         # Why this is rendering two times ?
                         if self.game.key_found:
                             self.render_messagebar_content(term, self.game.story["11"])
@@ -140,11 +148,12 @@ class GameScreen:
 
                         self.render_messagebar_content(term, self.game.story[str(self.stories_id)])
                         sleep(1)
-                    elif msg == "X":
+                    elif entity_meeted == "X":
                         self.render_messagebar_content(term, self.game.story["10"])
                         # Add Interaction.
                         self.game.key_found = True
                         self.render_messagebar_content(term, "You have found the key.")
+
                     self.render_scene(term)
                     self.render_messagebar_content(term)
 
