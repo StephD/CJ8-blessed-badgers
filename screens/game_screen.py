@@ -82,25 +82,16 @@ class GameScreen:
                         if key_input.is_sequence and key_input.name == "KEY_ENTER":
                             key_input = "enter"
 
-                    # Still have to adjust the story display
-                    if self.stories_id == 1:
-                        # render the player
-                        pass
-                    elif self.stories_id == 2:
-                        # don't know yet
-                        self.render_scene(term)
-                    elif self.stories_id == 3:
+                    if self.stories_id == 2:
                         self.render_scene(term)
                     elif self.stories_id == 4:
-                        self.render_scene(term)
-                    elif self.stories_id == 5:
                         break
 
                     self.stories_id += 1
                     self.game_data.set_game_already_played(True)
             else:
                 # Make all the render
-                self.stories_id = 5
+                self.stories_id = 4
                 self.game.load_map(self.game_data.data["player"]["current_room"])
                 self.render_scene(term)
 
@@ -145,36 +136,54 @@ class GameScreen:
                     if entity_meeted:
                         log(entity_meeted, "entity_meeted")
                     if entity_meeted == "D":
-                        if self.game_data.data["room"]["1"]["is_door_unlocked"]:
-                            self.render_messagebar_content(
-                                term, self.game_data.get_str_in_language("entities", "door", "open")
-                            )
-                            sleep(0.8)
+                        if not self.game_data.data["room"][str(self.game_data.data["player"]["current_room"])][
+                            "is_door_unlocked"
+                        ]:
+                            if self.game_data.get_inventory_item_by_key("keys") > 0:
+                                # Unlocking the door
+                                self.game_data.unlock_door(self.game_data.data["player"]["current_room"])
+                                self.game_data.dec_inventory_item_by_key("keys")
+                                self.render_sidebar_content(term)
+                            else:
+                                if self.game_data.data["player"]["current_room"] == 1:
+                                    # TODO Render the key
+                                    self.render_messagebar_content(
+                                        term,
+                                        self.game_data.get_str_in_language("messages", "story", "room_1", "5"),
+                                    )
+                                else:
+                                    self.render_messagebar_content(
+                                        term, self.game_data.get_str_in_language("entities", "door", "close")
+                                    )
+
+                        if self.game_data.data["room"][str(self.game_data.data["player"]["current_room"])][
+                            "is_door_unlocked"
+                        ]:
+                            if self.game_data.data["player"]["current_room"] == 1:
+                                self.stories_id = 6
+                                while self.stories_id <= 8:
+                                    self.render_messagebar_content(
+                                        term,
+                                        self.game_data.get_str_in_language(
+                                            "messages", "story", "room_1", str(self.stories_id)
+                                        )
+                                        + "  [ENTER]",
+                                    )
+                                    key_input = ""
+                                    while key_input != "enter":
+                                        key_input = term.inkey()
+                                        if key_input.is_sequence and key_input.name == "KEY_ENTER":
+                                            key_input = "enter"
+                                    self.stories_id += 1
+                            else:
+                                self.render_messagebar_content(
+                                    term, self.game_data.get_str_in_language("entities", "door", "open")
+                                )
+
                             self.render_messagebar_content(term, "bye ..")
                             sleep(0.8)
                             self.game_data.save_game()
                             return
-
-                        if self.game_data.get_inventory_item_by_key("keys") > 0:
-                            self.game_data.unlock_door(self.game_data.data["player"]["current_room"])
-                            self.game_data.dec_inventory_item_by_key("keys")
-                            self.render_sidebar_content(term)
-
-                            if self.game_data.data["room"]["1"]["is_door_unlocked"]:
-                                self.render_messagebar_content(
-                                    term, self.game_data.get_str_in_language("messages", "story", "room_1", "11")
-                                )
-                                sleep(0.8)
-                                self.render_messagebar_content(
-                                    term, self.game_data.get_str_in_language("messages", "story", "room_1", "12")
-                                )
-                                self.game_data.save_game()
-                                sleep(0.8)
-                                return
-                        else:
-                            self.render_messagebar_content(
-                                term, self.game_data.get_str_in_language("entities", "door", "close")
-                            )
                     elif entity_meeted == "X":
                         if not self.game_data.data["room"][str(self.game_data.data["player"]["current_room"])][
                             "is_key_found"
