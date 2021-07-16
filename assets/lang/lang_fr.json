@@ -58,7 +58,8 @@
         },
         "key": {
             "find": "Vous devez trouver la clé.",
-            "is_found": "Vous avez trouvé une clé."
+            "is_found": "Vous avez trouvé une clé.",
+            "already": "Tu as déjà trouvé cette clé."
         }
     },
     "keys": {

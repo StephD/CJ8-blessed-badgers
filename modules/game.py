@@ -37,8 +37,6 @@ class Game:
         self.player = Player((10, 11))
         self.map_size: tuple[int, int] = (0, 0)
         self.entities.add(self.player)
-        # FOR NOW.
-        self.key_found: bool = False
         self.load_map()
 
     @staticmethod

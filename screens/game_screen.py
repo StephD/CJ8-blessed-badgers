@@ -70,6 +70,7 @@ class GameScreen:
 
             # Render story messages in the bottom bar
             if not self.game_data.is_game_already_played():
+                self.game.load_map(1)
                 while self.game.story[str(self.stories_id)] != "":
                     self.render_messagebar_content(term, self.game.story[str(self.stories_id)] + "  [ENTER]", 0.03)
 
@@ -98,6 +99,7 @@ class GameScreen:
             else:
                 # Make all the render
                 self.stories_id = 5
+                self.game.load_map(self.game_data.data["player"]["current_room"])
                 self.render_scene(term)
 
             self.render_sidebar_content(term)
@@ -123,10 +125,9 @@ class GameScreen:
                                 self.render_messagebar_content(term, "Saving is done")
                                 sleep(0.8)
                             elif key_input.lower() == "q":
-                                # self.game_data.save_game()
+                                self.game_data.save_game()
                                 self.render_messagebar_content(term, "bye ..")
                                 sleep(0.8)
-                                # It's not strong to return like this?
                                 return
                         self.render_messagebar_content(term, "")
                     elif key_input.name in ["KEY_DOWN", "KEY_UP", "KEY_LEFT", "KEY_RIGHT"]:
@@ -175,12 +176,21 @@ class GameScreen:
                                 term, self.game_data.get_str_in_language("entities", "door", "close")
                             )
                     elif entity_meeted == "X":
-                        self.game.key_found = True
-                        self.game_data.inc_inventory_item_by_key("keys")
-                        self.render_sidebar_content(term)
-                        self.render_messagebar_content(
-                            term, self.game_data.get_str_in_language("entities", "key", "is_found")
-                        )
+                        if not self.game_data.data["room"][str(self.game_data.data["player"]["current_room"])][
+                            "is_key_found"
+                        ]:
+                            self.game_data.inc_inventory_item_by_key("keys")
+                            self.game_data.data["room"][str(self.game_data.data["player"]["current_room"])][
+                                "is_key_found"
+                            ] = True
+                            self.render_sidebar_content(term)
+                            self.render_messagebar_content(
+                                term, self.game_data.get_str_in_language("entities", "key", "is_found")
+                            )
+                        else:
+                            self.render_messagebar_content(
+                                term, self.game_data.get_str_in_language("entities", "key", "already")
+                            )
 
     def render_layout(self, term: blessed.Terminal) -> None:
         """Render the 3 frames"""
