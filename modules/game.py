@@ -1,7 +1,6 @@
 from typing import Optional
 
 from modules.game_data import GameData
-from modules.logger import log
 from scenes.entity import Entity
 
 
@@ -76,7 +75,6 @@ class Game:
                 if char == " ":
                     continue
                 if char in "XD":
-                    log(repr((i, j)))
                     # Improvise this.
                     if char in self.entity_pos:
                         self.entity_pos[char].update(self.get_neighbours(i, j))
@@ -84,7 +82,6 @@ class Game:
                         self.entity_pos[char] = self.get_neighbours(i, j)
                 self.entities.add(Obstacle((i, j), [char]))
                 self.obstacles.add((i, j))
-        log(repr(self.entity_pos))
 
     def move_player(self, mov: str) -> chr:
         """Move player."""

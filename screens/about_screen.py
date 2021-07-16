@@ -46,7 +46,7 @@ class AboutScreen(MenuScreen):
         for i, section in enumerate(sections):
             menu_width = len(section + " " * 2)
             menu_start_col = (cols - menu_width) // 2
-            menu_row = rows - 5 + i
+            menu_row = rows - (2 + len(sections)) + i
 
             print(term.move_xy(menu_start_col, menu_row), end="")
             print(
