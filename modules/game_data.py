@@ -58,7 +58,7 @@ class GameData:
 
     @update_file_game_data_decorator
     def update_game_already_played(self, value: bool) -> None:
-        if type(value) is not bool:
+        if not isinstance(value, bool):
             raise Exception("Incorrect value type")
 
         self.data["game"]["is_game_already_played"] = value
