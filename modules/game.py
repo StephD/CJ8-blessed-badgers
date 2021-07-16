@@ -60,13 +60,13 @@ class Game:
                 return entity_char
         return ""
 
-    def load_map(self, level=0) -> None:
+    def load_map(self, room=1) -> None:
         """
         Load map from the directory according to the specified level.
 
         Note: Assuming level is safe and has the type integer.
         """
-        with open(f"assets/maps/{level}.txt", encoding="utf-8") as map_fd:
+        with open(f"assets/maps/{room}.txt", encoding="utf-8") as map_fd:
             map_data = map_fd.read().splitlines()
 
         if len(map_data) == 0:

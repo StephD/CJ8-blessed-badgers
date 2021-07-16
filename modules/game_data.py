@@ -78,6 +78,8 @@ class GameData:
             data_tmp["game"] = self.data["game"]
             self.data = data_tmp
 
+        self.save_game()
+
     # Game already played
     def is_game_already_played(self) -> bool:
         return self.data["game"]["is_game_already_played"]
@@ -88,6 +90,7 @@ class GameData:
             raise TypeError("Incorrect value type")
 
         self.data["game"]["is_game_already_played"] = value
+        self.save_game()
 
     # Game_level
     def get_game_level(self) -> str:

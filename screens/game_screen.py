@@ -203,7 +203,7 @@ class GameScreen:
         )
 
         # Move the cursor to the top left of the sidebar
-        #print(term.move_yx(start_y + 2, start_x + 2), end="", flush=True)
+        # print(term.move_yx(start_y + 2, start_x + 2), end="", flush=True)
 
         x, y = start_x + 2, start_y + 2
 
