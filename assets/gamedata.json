@@ -26,7 +26,7 @@
     },
     "room": {
         "1": {
-            "is_door_unlocked": true,
+            "is_door_unlocked": false,
             "is_key_found": false,
             "interacted": {
                 "stone": false
