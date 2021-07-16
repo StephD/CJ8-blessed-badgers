@@ -7,7 +7,6 @@ from scenes.entity import Entity
 # TODO
 # Get the actual location of the entities.
 # Generalize if for every level not for level 1.
-#
 
 
 class GameException(Exception):
@@ -32,12 +31,14 @@ class Game:
         self.game_data = game_data
         self.story = self.game_data.get_str_in_language("messages", "story", "room_1")
 
-        self.entity_pos = set()
+        self.entity_pos: dict[chr, set[tuple[int, int]]] = dict()
         self.obstacles: set[tuple[int, int]] = set()
         self.entities: set[Optional[Entity]] = set()
         self.player = Player((10, 11))
         self.map_size: tuple[int, int] = (0, 0)
         self.entities.add(self.player)
+        # FOR NOW.
+        self.key_found: bool = False
         self.load_map()
 
     @staticmethod
@@ -46,13 +47,20 @@ class Game:
         neighbours = set()
         for i in range(x - 1, x + 2):
             for j in range(y - 1, y + 2):
-                # From Sachin
+                # Specify max width and max height
                 if (i == x and j == y) or not (1 < i < 25 and 1 < j < 57):
                     continue
-                # Specify max width and max height
-                # if i != j and (0 < j < 21 and 0 < i < 21):
                 neighbours.add((i, j))
         return neighbours
+
+    def entity_detect(self, y, x) -> chr:
+        """
+        Helper function to return if it player is in the entity neighbour.
+        """
+        for entity_char in self.entity_pos:
+            if (y, x) in self.entity_pos[entity_char]:
+                return entity_char
+        return ""
 
     def load_map(self, level=0) -> None:
         """
@@ -72,11 +80,11 @@ class Game:
                 if char == " ":
                     continue
                 if char in "XD":
-                    self.entity_pos.update(self.get_neighbours(i, j))
+                    self.entity_pos[char] = self.get_neighbours(i, j)
                 self.entities.add(Obstacle((i, j), [char]))
                 self.obstacles.add((i, j))
 
-    def move_player(self, mov: str) -> None:
+    def move_player(self, mov: str) -> chr:
         """Move player."""
         # Make a copy of the position of the player.
         pos_y, pos_x = self.player.position
@@ -91,13 +99,14 @@ class Game:
         if mov in ("l", "KEY_RIGHT"):
             pos_x += 1
 
-        # Check the orientation what is x and y ?
-        if (pos_y, pos_x) in self.entity_pos:
-            log("entities touched")
-            pass
         # move the player
         if (pos_y, pos_x) not in self.obstacles:
             self.player.position = pos_y, pos_x
+
+        # Check the orientation what is x and y ?
+        # How is this working ?
+        char = self.entity_detect(pos_y, pos_x)
+        return char
 
     def get_to_be_rendered(self) -> set[tuple[int, int, str]]:
         """
