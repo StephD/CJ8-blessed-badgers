@@ -2,7 +2,6 @@
     "menu": {
         "options": {
             "new_game": "Nouvelle partie [N]",
-            "tutorial": "Tutoriel [T]",
             "continue": "Continuer [C]",
             "about": "A propos [A]",
             "language": "Langue [L]",
@@ -59,7 +58,8 @@
         },
         "key": {
             "find": "Vous devez trouver la clé.",
-            "is_found": "Vous avez trouvé une clé."
+            "is_found": "Vous avez trouvé une clé.",
+            "already": "Tu as déjà trouvé cette clé."
         }
     },
     "keys": {
@@ -67,6 +67,7 @@
         "inventory": "Dans ton sac",
         "level": "Niveau",
         "language": "Langue",
-        "menu": "Menu"
+        "menu": "Menu",
+        "keys": "Clées"
     }
 }

@@ -31,14 +31,12 @@ class Game:
         self.game_data = game_data
         self.story = self.game_data.get_str_in_language("messages", "story", "room_1")
 
-        self.entity_pos: dict[chr, set[tuple[int, int]]] = dict()
-        self.obstacles: set[tuple[int, int]] = set()
-        self.entities: set[Optional[Entity]] = set()
+        self.entity_pos: dict[chr, set[tuple[int, int]]] = {}
+        self.obstacles: set[tuple[int, int]] = {}
+        self.entities: set[Optional[Entity]] = {}
         self.player = Player((10, 11))
         self.map_size: tuple[int, int] = (0, 0)
         self.entities.add(self.player)
-        # FOR NOW.
-        self.key_found: bool = False
         self.load_map()
 
     @staticmethod
@@ -129,7 +127,7 @@ class Game:
 
         game_data = self.game_data.data["game"].copy()
         game_data.pop("colors")
-        game_data.pop("last_saved")
+        game_data.pop("dt_saved")
         game_data.pop("is_game_already_played")
         data["game_data"] = game_data
 
