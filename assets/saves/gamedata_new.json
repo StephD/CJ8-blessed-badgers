@@ -1,6 +1,6 @@
 {
     "game": {
-        "is_game_already_played": true,
+        "is_game_already_played": false,
         "version": "v0.3",
         "language": "en",
         "dt_saved": "",

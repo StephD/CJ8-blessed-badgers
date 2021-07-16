@@ -10,6 +10,8 @@ from scenes.menu_title import print_title
 
 
 class MenuScreen:
+    """The class of the menu screen"""
+
     def __init__(self, game_data: GameData):
         num_squares = 4
         self.game_data = game_data
@@ -44,7 +46,8 @@ class MenuScreen:
 
             return key_input.lower()
 
-    def get_language(self, *args):
+    def get_language(self, *args) -> str:
+        """Returns the language in the 'game_data' variable."""
         return self.game_data.get_str_in_language(*args)
 
     def print_text(self, term: blessed.Terminal, rows: int, cols: int) -> set[tuple[int, int]]:
@@ -81,7 +84,15 @@ class MenuScreen:
 
         return {(menu_row, x + menu_start_col) for x in range(menu_width)}
 
-    def render_flying_square(self, term, col, row, old_indices, title_indices, menu_indices) -> set:
+    def render_flying_square(
+        self,
+        term: blessed.Terminal,
+        col: np.array,
+        row: np.array,
+        old_indices: set(),
+        title_indices: set(),
+        menu_indices: set(),
+    ) -> set:
         """It will render the flying square around the screen"""
         print(getattr(term, self.colors["square"]))
 

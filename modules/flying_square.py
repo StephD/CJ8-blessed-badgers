@@ -12,6 +12,7 @@ class Square:
     angular_velocity: float
 
     def __init__(self, vertices: np.array = None, velocity: np.array = None, angular_velocity: float = None):
+        """Initialize the square and all of its properties."""
         if vertices is None:
             self.vertices = np.array(
                 [
@@ -48,6 +49,7 @@ class Square:
         self.rotation = 0
 
     def rotate(self, delta_theta: float) -> None:
+        """Rotate the square"""
         self.rotation = (self.rotation + delta_theta) % (2 * pi)
         rotation_matrix = np.array(
             [
@@ -59,11 +61,16 @@ class Square:
         self.vertices = (rotation_matrix @ local_positions.T).T + self.center
 
     def translate(self, delta_pos: np.array) -> None:
+        """Translate the positions of the center and vertices of the square"""
         self.center += delta_pos
         self.vertices += delta_pos
 
     def contains(self, points: np.array) -> np.array:
-        """https://math.stackexchange.com/a/190373"""
+        """
+        To ensure that a point is present within the array that represents the square
+
+        https://math.stackexchange.com/a/190373
+        """
         a_coordinates, b_coordinates, _, d_coordinates = self.vertices
         ab_vector = a_coordinates - b_coordinates
         ad_vector = a_coordinates - d_coordinates
@@ -76,6 +83,7 @@ class Square:
         ).T
 
     def update(self, screen_dimensions: tuple[tuple[float, float], tuple[float, float]]) -> None:
+        """Updates square with new properties"""
         (lower_x, lower_y), (upper_x, upper_y) = screen_dimensions
         self.translate(self.velocity)
         self.rotate(self.angular_velocity)
@@ -90,4 +98,5 @@ class Square:
                 self.velocity[0] = -abs(self.velocity[0])
 
     def to_be_painted(self, row: np.array, col: np.array) -> set[tuple[int, int]]:
+        """Indicate the area to be represented to show the squares."""
         return {(int(x), int(y)) for x, y in np.transpose(self.contains(np.array([row, col])).nonzero())}

@@ -4,10 +4,6 @@ from modules.game_data import GameData
 from modules.logger import log
 from scenes.entity import Entity
 
-# TODO
-# Get the actual location of the entities.
-# Generalize if for every level not for level 1.
-
 
 class GameException(Exception):
     """Base class for exceptions in this module."""
@@ -16,11 +12,15 @@ class GameException(Exception):
 
 
 class Player(Entity):
+    """The declaration of a player entity"""
+
     def __init__(self, position: tuple[int, int], sprite: Optional[str] = None):
         super().__init__(position, sprite or ["@"])
 
 
 class Obstacle(Entity):
+    """The declaration of an obstacle entity"""
+
     pass
 
 
@@ -31,7 +31,7 @@ class Game:
         self.game_data = game_data
         self.story = self.game_data.get_str_in_language("messages", "story", "room_1")
 
-        self.entity_pos: dict[chr, set[tuple[int, int]]] = dict()
+        self.entity_pos: dict[chr, set[tuple[int, int]]] = {}
         self.obstacles: set[tuple[int, int]] = set()
         self.entities: set[Optional[Entity]] = set()
         self.player = Player((10, 11))
@@ -40,25 +40,25 @@ class Game:
         self.load_map()
 
     @staticmethod
-    def get_neighbours(x, y) -> set[tuple[int, int]]:
+    def get_neighbours(col: int, row: int) -> set[tuple[int, int]]:
         """Helper function to return the coordinates surrounding (x,y)."""
         neighbours = set()
-        for i in range(x - 1, x + 2):
-            for j in range(y - 1, y + 2):
+        for i in range(col - 1, col + 2):
+            for j in range(row - 1, row + 2):
                 # Specify max width and max height
-                if (i == x and j == y) or not (1 < i < 25 and 1 < j < 57):
+                if (i == col and j == row) or not (1 < i < 25 and 1 < j < 57):
                     continue
                 neighbours.add((i, j))
         return neighbours
 
-    def entity_detect(self, y, x) -> chr:
+    def entity_detect(self, row: int, col: int) -> chr:
         """Helper function to return if it player is in the entity neighbour."""
         for entity_char in self.entity_pos:
-            if (y, x) in self.entity_pos[entity_char]:
+            if (row, col) in self.entity_pos[entity_char]:
                 return entity_char
         return ""
 
-    def load_map(self, room=1) -> None:
+    def load_map(self, room: int = 1) -> None:
         """
         Load map from the directory according to the specified level.
 
@@ -122,6 +122,7 @@ class Game:
         return to_be_rendered
 
     def get_sidebar_content(self) -> dict:
+        """Get the content that will be render in the sidebar"""
         data = {"game_data": {}}
 
         game_data = self.game_data.data["game"].copy()

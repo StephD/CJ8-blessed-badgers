@@ -7,6 +7,8 @@ from .menu_screen import MenuScreen
 
 
 class LanguageScreen(MenuScreen):
+    """The class of the language screen"""
+
     def __init__(self, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
         self.languages = self.get_language("menu", "languages")

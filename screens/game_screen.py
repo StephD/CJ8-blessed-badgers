@@ -36,6 +36,8 @@ def chunk(string: str, width: int) -> list[str]:
 
 
 class GameScreen:
+    """The class of the game screen"""
+
     def __init__(self, game_data: GameData):
         self.game_data = game_data
         self.game = Game(game_data)
@@ -47,7 +49,7 @@ class GameScreen:
         self.scene_bounds: Bounds = ...
         self.message_bar_bounds: Bounds = ...
 
-    def init_bound(self, term: blessed.Terminal):
+    def init_bound(self, term: blessed.Terminal) -> None:
         """Initialize the layout side and frame size+position"""
         width, height = term.width, term.height
 
@@ -197,7 +199,7 @@ class GameScreen:
         self._render_dict(term, self._make_border(self.message_bar_bounds, tuple("┌┐└┘│─")))
 
     # Render scene need to be pickup from a file
-    def render_scene(self, term: blessed.Terminal):
+    def render_scene(self, term: blessed.Terminal) -> None:
         """Render the scene area. Design the level"""
         # Get the coordinates to be rendered in the scene panel.
         to_be_rendered = self._make_scene(self.scene_bounds, self.game.get_to_be_rendered())
@@ -210,7 +212,7 @@ class GameScreen:
 
         self.currently_rendered = to_be_rendered
 
-    def render_sidebar_content(self, term: blessed.Terminal):
+    def render_sidebar_content(self, term: blessed.Terminal) -> None:
         """Render the content of the sidebar. Will display all the game data"""
         start_y, end_y, start_x, end_x = self.sidebar_bounds
         panel_width = end_x - start_x
@@ -224,13 +226,13 @@ class GameScreen:
         # Move the cursor to the top left of the sidebar
         # print(term.move_yx(start_y + 2, start_x + 2), end="", flush=True)
 
-        x, y = start_x + 2, start_y + 2
+        col, row = start_x + 2, start_y + 2
 
         for data_key, data_obj in sidebar_content.items():
             if data_key == "game_data":
                 text = self.game_data.get_str_in_language("keys", "game_data")
                 print(
-                    term.move_xy(x, y)
+                    term.move_xy(col, row)
                     + getattr(term, self.colors["choice"])
                     + text
                     + " " * (panel_width - (len(text) + 2))
@@ -240,9 +242,9 @@ class GameScreen:
             elif data_key == "player_data":
                 text = self.game_data.get_str_in_language("keys", "inventory")
                 # New line.
-                y += 1
+                row += 1
                 print(
-                    term.move_xy(x, y)
+                    term.move_xy(col, row)
                     + getattr(term, self.colors["choice"])
                     + text
                     + " " * (panel_width - (len(text) + 2))
@@ -252,14 +254,17 @@ class GameScreen:
             for key, value in data_obj.items():
                 translated_key = self.game_data.get_str_in_language("keys", key)
                 for line in chunk(f"{translated_key} : {value}", panel_width):
-                    y += 1
-                    print(term.move_xy(x, y) + line, end="", flush=True)
-            y += 1
+                    row += 1
+                    print(term.move_xy(col, row) + line, end="", flush=True)
+            row += 1
 
         print(term.move_yx(end_y - 1, start_x + 2), end="", flush=True)
         print(getattr(term, self.colors["choice"]) + "Menu <ESC>" + getattr(term, self.term_color), end="", flush=True)
 
-    def render_messagebar_content(self, term: blessed.Terminal, message: str = "", writing_speed: float = 0.01):
+    def render_messagebar_content(
+        self, term: blessed.Terminal, message: str = "", writing_speed: float = 0.01
+    ) -> None:
+        """Render the message bar content in a fixed position at a specified speed."""
         start_y, end_y, start_x, end_x = self.message_bar_bounds
         panel_height = end_y - start_y
         panel_width = end_x - start_x
@@ -276,6 +281,7 @@ class GameScreen:
 
     @staticmethod
     def _make_border(bounds: Bounds, charset: tuple[str, str, str, str, str, str]) -> set[RenderableCoordinate]:
+        """Create the border of the frame"""
         start_i, end_i, start_j, end_j = bounds
         top_left, top_right, bottom_left, bottom_right, vertical, horizontal = charset
         return (
@@ -294,7 +300,7 @@ class GameScreen:
 
     @staticmethod
     def _make_scene(bounds: Bounds, game_map: set[RenderableCoordinate]) -> set[RenderableCoordinate]:
-
+        """Create a scene frame"""
         scene_panel_height = bounds[1] - bounds[0]  # uppermost row - lowermost row
         scene_panel_width = bounds[3] - bounds[2]  # rightmost column - leftmost column
 
@@ -319,5 +325,6 @@ class GameScreen:
 
     @staticmethod
     def _render_dict(term: blessed.Terminal, data: set[RenderableCoordinate]) -> None:
+        """I will render the dict to the terminal"""
         for i, j, char in data:
             print(term.move_yx(i, j) + char, end="", flush=True)
