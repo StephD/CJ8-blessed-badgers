@@ -249,6 +249,7 @@ class GameScreen:
         print(getattr(term, self.colors["choice"]) + "Menu <ESC>" + getattr(term, self.term_color), end="", flush=True)
 
     def render_messagebar_content(self, term: blessed.Terminal, message: str = "", writing_speed: float = 0.01):
+        """Render the message bar content in a fixed position at a specified speed."""
         start_y, end_y, start_x, end_x = self.message_bar_bounds
         panel_height = end_y - start_y
         panel_width = end_x - start_x

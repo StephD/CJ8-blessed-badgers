@@ -63,11 +63,13 @@ class GameData:
 
     @update_file_game_data_decorator
     def save_game(self) -> None:
+        """Save the game."""
         with open(GAMESAVE_SAVE, "w") as file:
             json.dump(self.data, file, indent=4)
 
     @update_file_game_data_decorator
     def load_game(self, game_type: str = "new") -> None:
+        """Load a new game or a saved game based on the specified Game Type."""
         if game_type == "new":
             path = GAMESAVE_NEW
         elif game_type == "saved":
@@ -82,10 +84,12 @@ class GameData:
 
     # Game already played
     def is_game_already_played(self) -> bool:
+        """Return the Boolean value for if the game has been already played."""
         return self.data["game"]["is_game_already_played"]
 
     @update_file_game_data_decorator
     def set_game_already_played(self, value: bool) -> None:
+        """Set the 'is_game_already_played' variable to a specified Boolean."""
         if not isinstance(value, bool):
             raise TypeError("Incorrect value type")
 
@@ -94,34 +98,42 @@ class GameData:
 
     # Game_level
     def get_game_level(self) -> str:
+        """Return the game level"""
         return self.data["game"]["level"]
 
     @update_file_game_data_decorator
     def set_game_level(self, game_level) -> None:
+        """Set the game level to a specified value."""
         self.data["game"]["level"] = game_level
 
     def get_language(self) -> str:
+        """Get the game language."""
         return self.data["game"]["language"]
 
     @update_file_game_data_decorator
     def set_language(self, language) -> None:
+        """Set the game language to a specified language."""
         self.data["game"]["language"] = language
 
     def get_inventory_item_by_key(self, key) -> dict:
+        """Get the inventory item by key."""
         return self.data["player"]["inventory"][key]
 
     @update_file_game_data_decorator
     def set_inventory_item_by_key(self, key, value) -> None:
+        """Set the inventory item by key."""
         self.data["player"]["inventory"][key] = value
 
     @update_file_game_data_decorator
     def inc_inventory_item_by_key(self, key) -> None:
+        """Increments the value of an inventory item by 1"""
         inventory = self.data["player"]["inventory"]
         if isinstance(inventory[key], int):
             inventory[key] += 1
 
     @update_file_game_data_decorator
     def dec_inventory_item_by_key(self, key) -> None:
+        """Decrements the value of an inventory item by 1 or 0 if its value is 0."""
         inventory = self.data["player"]["inventory"]
         if isinstance(inventory[key], int):
             inventory[key] -= 1
@@ -133,4 +145,5 @@ class GameData:
 
     @update_file_game_data_decorator
     def unlock_door(self, room_id) -> None:
+        """Sets the 'is_door_unlocked' parameter to True."""
         self.data["room"][str(room_id)]["is_door_unlocked"] = True
