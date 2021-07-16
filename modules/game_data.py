@@ -53,7 +53,7 @@ class GameData:
             data_tmp["game"] = self.data["game"]
             self.data = data_tmp
 
-    def get_is_game_already_played(self) -> bool:
+    def is_game_already_played(self) -> bool:
         return self.data["game"]["is_game_already_played"]
 
     @update_file_game_data_decorator

@@ -33,7 +33,11 @@ class MenuScreen:
 
             old_indices = set()
             key_input = ""
-            while key_input.lower() not in ["n", "c", "a", "q", "l"]:
+
+            is_game_played = self.game_data.is_game_already_played()
+            key_set = ["n", "c", "a", "q", "l"] if is_game_played else ["n", "a", "q", "l"]
+
+            while key_input.lower() not in key_set:
                 key_input = term.inkey(timeout=0.02)
 
                 old_indices = self.render_flying_square(term, col, row, old_indices, title_indices, menu_indices)

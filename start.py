@@ -15,22 +15,22 @@ def main() -> None:
     menu_screen = MenuScreen(game_data=game_data)
     about_screen = AboutScreen(game_data=game_data)
     language_screen = LanguageScreen(game_data=game_data)
-    game_screen = GameScreen(game_data=game_data)
+    # game_screen = GameScreen(game_data=game_data)
 
     keypressed = None
     with term.fullscreen(), term.cbreak():
         while keypressed != "q":
             keypressed = menu_screen.render(term)
+            print(term.clear)
             if keypressed == "n":  # New game
-                print(term.clear)
                 # game_data.load_game("new")
                 game_data.update_game_level(1)
                 game_screen = GameScreen(game_data=game_data)
                 game_screen.render(term)
             elif keypressed == "c":
                 # game_data.load_game("saved")
-                if game_data.data["game"]["is_game_already_played"]:
-                    game_screen.render(term)
+                game_screen = GameScreen(game_data=game_data)
+                game_screen.render(term)
             elif keypressed == "a":
                 about_screen.render(term)
             elif keypressed == "l":
