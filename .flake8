@@ -22,9 +22,6 @@ ignore=
     E266,
     # Type Annotations
     ANN002,ANN003,ANN101,ANN102,ANN204,ANN206,
-    # Got a false-positive in the decorator cannot fix
-    # See modules/game_data:25
-    ANN001
     # Because it's annoying sorry :'(
     ;D101,D102,ANN001,ANN201; F401,S307
 
