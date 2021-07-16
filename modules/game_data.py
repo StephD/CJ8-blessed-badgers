@@ -23,6 +23,7 @@ class GameData:
         """Decorator used to save the game_data into a file when it's updated"""
 
         def inner(self: GameData, *args) -> None:
+            """That's what the decorator will do"""
             function(self, *args)
             with open(GAMEDATA_PATH, "w") as file:
                 json.dump(self.data, file, indent=4)

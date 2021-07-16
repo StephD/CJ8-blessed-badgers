@@ -281,6 +281,7 @@ class GameScreen:
 
     @staticmethod
     def _make_border(bounds: Bounds, charset: tuple[str, str, str, str, str, str]) -> set[RenderableCoordinate]:
+        """Create the border of the frame"""
         start_i, end_i, start_j, end_j = bounds
         top_left, top_right, bottom_left, bottom_right, vertical, horizontal = charset
         return (
@@ -299,7 +300,7 @@ class GameScreen:
 
     @staticmethod
     def _make_scene(bounds: Bounds, game_map: set[RenderableCoordinate]) -> set[RenderableCoordinate]:
-
+        """Create a scene frame"""
         scene_panel_height = bounds[1] - bounds[0]  # uppermost row - lowermost row
         scene_panel_width = bounds[3] - bounds[2]  # rightmost column - leftmost column
 
@@ -324,5 +325,6 @@ class GameScreen:
 
     @staticmethod
     def _render_dict(term: blessed.Terminal, data: set[RenderableCoordinate]) -> None:
+        """I will render the dict to the terminal"""
         for i, j, char in data:
             print(term.move_yx(i, j) + char, end="", flush=True)
