@@ -138,30 +138,37 @@ class GameScreen:
                 if player_will_move:
                     # msg from game.
                     entity_meeted = self.game.move_player(key_input)
+                    self.render_scene(term)
+                    self.render_messagebar_content(term)
                     if entity_meeted:
                         log(entity_meeted, "entity_meeted")
                     if entity_meeted == "D":
                         # Why this is rendering two times ?
-                        if self.game.key_found:
-                            self.render_messagebar_content(term, self.game.story["11"])
+                        if self.game_data.get_inventory_item_by_key("keys") > 0:
+                            self.game_data.dec_inventory_item_by_key("keys")
+                            self.render_sidebar_content(term)
+                            # self.render_messagebar_content(term, self.game.story["11"])
                             self.render_messagebar_content(term, "Congrats you have solved the first level.")
-                            break
+                            sleep(1)
                         else:
-                            self.render_messagebar_content(term, "The door is locked.")
-                            sleep(1)
-                            self.render_messagebar_content(term, self.game.story["9"])
-                            sleep(1)
+                            self.render_messagebar_content(
+                                term, self.game_data.get_str_in_language("entities", "key", "close")
+                            )
+                            # sleep(1)
+                            # self.render_messagebar_content(term, self.game.story["9"])
+                            # sleep(1)
 
                         # self.render_messagebar_content(term, self.game.story[str(self.stories_id)])
-                        sleep(1)
+                        # sleep(1)
                     elif entity_meeted == "X":
-                        self.render_messagebar_content(term, self.game.story["10"])
+                        # self.render_messagebar_content(term, self.game.story["10"])
                         # Add Interaction.
                         self.game.key_found = True
-                        self.render_messagebar_content(term, "You have found the key.")
-
-                    self.render_scene(term)
-                    self.render_messagebar_content(term)
+                        self.game_data.inc_inventory_item_by_key("keys")
+                        self.render_sidebar_content(term)
+                        self.render_messagebar_content(
+                            term, self.game_data.get_str_in_language("entities", "key", "is_found")
+                        )
 
     def render_layout(self, term: blessed.Terminal) -> None:
         """Render the 3 frames"""
