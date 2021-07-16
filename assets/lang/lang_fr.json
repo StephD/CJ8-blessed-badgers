@@ -10,8 +10,7 @@
         },
         "about": {
             "who": "Réalisé par de jeunes développeurs: Blessed badgers",
-            "about": "",
-            "what": "This is a gamefied learning experience for young developers"
+            "about": ""
         },
         "languages": {
             "en": "English",
@@ -33,35 +32,40 @@
     "messages": {
         "game": {
             "actions": {
-                "esc": "Voulez-vous partir ? quitter [Q] - enregistrer [S] - annuler [C]"
+                "esc": "Voulez-vous quitter ? quitter [Q] - enregistrer [S] - annuler [C]"
             }
         },
         "story": {
             "room_1": {
-                "1": "Hé... réveille-toi",
-                "2": "Je pense que tu te sentais en bas, en haut",
-                "3" : "Avez-vous demandé où vous étiez ?",
-                "4": "Regarde autour de toi ;-) .. C'est une boite ahah",
-                "5": "Peut-être regardez autour de vous avec vos touches fléchées.",
-                "6": "Comment sortir, tu as dit? Tu as l'air coincé ici",
-                "7": "Hé, qu'est-ce qu'il y a? Une porte. Peut-être jeter un oeil?",
-                "8": "Mais peut-être qu'il y a un moyen.. peux-tu penser?",
-                "9": "Ou vous pouvez aussi utiliser votre inTUItion, qui sait",
-                "10": "Hé qu'est-ce qu'il y a",
-                "11": "On dirait un gros rocher. Voulez-vous voir en dessous ?",
-                "12": "Bravo, vous pourriez être hors de celui-ci :-)"
+                "1": "Hé... réveille-toi.",
+                "2": "Je pense que tu es tombée ici, d'en haut.",
+                "3": "Tu te demande ce que tu fais ici ?",
+                "4": "Regarde autour de toi ;-) .. C'est une boite  ahah.",
+                "5": "Peut-être tu peux observer autour de toi avec vos 'touches fléchées'.",
+                "6": "Comment sortir, tu dis? Tu as l'air coincé ici",
+                "7": "Hé, c'est quoi la bas? Une porte. Peut-être aller y jeter un oeil?",
+                "8": "Mais peut-être qu'il y a un moyen de l'ouvrir, refléchis ?",
+                "9": "Ou tu peux aussi utiliser ton inTUItion, qui sait",
+                "11": "On dirait un gros rocher là-bas.",
+                "12": "Bravo, Tu as pu sortir hors d'ici :-) On verra la boite suivante"
             }
         }
-
     },
     "entities": {
         "door": {
-            "open": "Les portes sont ouvertes.",
-            "close": "Les portes semblent verrouillées."
+            "open": "La porte est ouverte.",
+            "close": "La porte semblent verrouillée."
         },
         "key": {
-            "find": "Vous devez trouver la clé",
-            "is_found": "Vous avez trouvé une clé"
+            "find": "Vous devez trouver la clé.",
+            "is_found": "Vous avez trouvé une clé."
         }
+    },
+    "keys": {
+        "game_data": "Donnée du jeu",
+        "inventory": "Dans ton sac",
+        "level": "Niveau",
+        "language": "Langue",
+        "menu": "Menu"
     }
 }

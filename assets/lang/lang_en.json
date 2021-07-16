@@ -10,8 +10,7 @@
         },
         "about": {
             "who": "Made by young developers: Blessed badgers",
-            "about": "",
-            "what": "This is a gamefied learning experience for young developers"
+            "about": ""
         },
         "languages": {
             "en": "English",
@@ -40,28 +39,33 @@
             "room_1": {
                 "1": "Hey ... Wake up",
                 "2": "I think that you felt down from there, above",
-                "3": "Did you ask where you were?",
-                "4": "Look around you ;-) .. It's a box ahah",
-                "5": "May be have a look around with your arrow-keys.",
+                "3": "Did you ask where you were ?",
+                "4": "Look around you ;-) .. It's a box  ahah",
+                "5": "May be have a look around with your 'arrow-keys'.",
                 "6": "How to get out, you said? You seem stuck here",
-                "7": "Hey, what's this? its a door. is it locked ?",
-
-                "8": "But may be there is a way.. can you think?",
+                "7": "Hey, what's that? A door. May be go have a look ?",
+                "8": "But may be there is a way to open it, think?",
                 "9": "Or you can also use your inTUItion, who knows",
-                "10": "It look like a big rock. Do you want to see under it?",
-                "11": "Bravo, you could be out of this one :-)"
+                "10": "It look like a big rock over there.",
+                "11": "Bravo, you could get out of here :-) We will see in the next box"
             }
         }
-
     },
     "entities": {
         "door": {
-            "open": "The doors is open.",
-            "close": "The doors seem locked."
+            "open": "The door is open.",
+            "close": "The door seem locked."
         },
         "key": {
-            "find": "You need to find the key",
-            "is_found": "You found a key"
+            "find": "You need to find the key.",
+            "is_found": "You found a key."
         }
+    },
+    "keys": {
+        "game_data": "Game data",
+        "inventory": "In your bag",
+        "level": "Level",
+        "language": "Language",
+        "menu": "Menu"
     }
 }
