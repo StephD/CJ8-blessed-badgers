@@ -104,12 +104,30 @@ class GameData:
     def set_language(self, language) -> None:
         self.data["game"]["language"] = language
 
-    # def get_inventory_item(self, key) -> dict:
-    #     return self.data["player"]["inventory"][key]
+    def get_inventory_item_by_key(self, key) -> dict:
+        return self.data["player"]["inventory"][key]
+
+    @update_file_game_data_decorator
+    def set_inventory_item_by_key(self, key, value) -> None:
+        self.data["player"]["inventory"][key] = value
+
+    @update_file_game_data_decorator
+    def inc_inventory_item_by_key(self, key) -> None:
+        inventory = self.data["player"]["inventory"]
+        if isinstance(inventory[key], int):
+            inventory[key] += 1
+
+    @update_file_game_data_decorator
+    def dec_inventory_item_by_key(self, key) -> None:
+        inventory = self.data["player"]["inventory"]
+        if isinstance(inventory[key], int):
+            inventory[key] -= 1
+        if inventory[key] < 0:
+            inventory[key] = 0
 
     # def get_inventory_items(self) -> list:
     #     return list(self.data["player"]["inventory"].keys())
 
-    # @update_file_game_data_decorator
-    # def set_inventory_item_by_key(self, key, value) -> None:
-    #     self.data["player"]["inventory"][key] = value
+    @update_file_game_data_decorator
+    def unlock_door(self, room_id) -> None:
+        self.data["room"][str(room_id)]["is_door_unlocked"] = True

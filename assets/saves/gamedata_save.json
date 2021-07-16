@@ -26,7 +26,7 @@
     },
     "room": {
         "1": {
-            "is_door_locked": true,
+            "is_door_unlocked": false,
             "is_key_found": false,
             "interacted": {
                 "stone": false
@@ -40,7 +40,7 @@
             0
         ],
         "inventory": {
-            "keys": 0
+            "keys": 1
         }
     }
 }
