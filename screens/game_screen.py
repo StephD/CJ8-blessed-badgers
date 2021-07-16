@@ -47,7 +47,7 @@ class GameScreen:
         self.scene_bounds: Bounds = ...
         self.message_bar_bounds: Bounds = ...
 
-    def init_bound(self, term: blessed.Terminal):
+    def init_bound(self, term: blessed.Terminal) -> None:
         """Initialize the layout side and frame size+position"""
         width, height = term.width, term.height
 
@@ -189,7 +189,7 @@ class GameScreen:
         self._render_dict(term, self._make_border(self.message_bar_bounds, tuple("┌┐└┘│─")))
 
     # Render scene need to be pickup from a file
-    def render_scene(self, term: blessed.Terminal):
+    def render_scene(self, term: blessed.Terminal) -> None:
         """Render the scene area. Design the level"""
         # Get the coordinates to be rendered in the scene panel.
         to_be_rendered = self._make_scene(self.scene_bounds, self.game.get_to_be_rendered())
@@ -202,7 +202,7 @@ class GameScreen:
 
         self.currently_rendered = to_be_rendered
 
-    def render_sidebar_content(self, term: blessed.Terminal):
+    def render_sidebar_content(self, term: blessed.Terminal) -> None:
         """Render the content of the sidebar. Will display all the game data"""
         start_y, end_y, start_x, end_x = self.sidebar_bounds
         panel_width = end_x - start_x
@@ -248,7 +248,9 @@ class GameScreen:
         print(term.move_yx(end_y - 1, start_x + 2), end="", flush=True)
         print(getattr(term, self.colors["choice"]) + "Menu <ESC>" + getattr(term, self.term_color), end="", flush=True)
 
-    def render_messagebar_content(self, term: blessed.Terminal, message: str = "", writing_speed: float = 0.01):
+    def render_messagebar_content(
+        self, term: blessed.Terminal, message: str = "", writing_speed: float = 0.01
+    ) -> None:
         """Render the message bar content in a fixed position at a specified speed."""
         start_y, end_y, start_x, end_x = self.message_bar_bounds
         panel_height = end_y - start_y

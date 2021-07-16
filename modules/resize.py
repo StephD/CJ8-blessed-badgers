@@ -17,11 +17,11 @@ import signal
 from blessed import Terminal
 
 
-def main():
+def main() -> None:
     """Program entry point."""
     term = Terminal()
 
-    def on_resize(*args):
+    def on_resize(*args) -> None:
         # pylint: disable=unused-argument
         #         Unused argument 'args'
 

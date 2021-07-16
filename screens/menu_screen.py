@@ -44,7 +44,7 @@ class MenuScreen:
 
             return key_input.lower()
 
-    def get_language(self, *args):
+    def get_language(self, *args) -> str:
         """Returns the language in the 'game_data' variable."""
         return self.game_data.get_str_in_language(*args)
 
