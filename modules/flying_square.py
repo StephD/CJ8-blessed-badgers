@@ -66,10 +66,10 @@ class Square:
         self.vertices += delta_pos
 
     def contains(self, points: np.array) -> np.array:
-        """https://math.stackexchange.com/a/190373"""
         """
-        To ensure that a point is present within the array
-        that represents the square
+        To ensure that a point is present within the array that represents the square
+
+        https://math.stackexchange.com/a/190373
         """
         a_coordinates, b_coordinates, _, d_coordinates = self.vertices
         ab_vector = a_coordinates - b_coordinates
