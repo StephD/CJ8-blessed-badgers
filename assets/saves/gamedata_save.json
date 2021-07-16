@@ -29,7 +29,6 @@
         "1": {
             "is_door_unlocked": true,
             "is_key_found": false,
-            "is_key_found": true,
             "interacted": {
                 "stone": false
             }
