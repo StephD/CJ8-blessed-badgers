@@ -2,7 +2,6 @@
     "menu": {
         "options": {
             "new_game": "New game [N]",
-            "tutorial": "Tutorial [T]",
             "continue": "Continue [C]",
             "about": "About [A]",
             "language": "Language [L]",

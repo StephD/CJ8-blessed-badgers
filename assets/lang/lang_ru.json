@@ -2,7 +2,6 @@
     "menu": {
         "options": {
             "new_game": "Начать новую игру [N]",
-            "tutorial": "демонстрация [T]",
             "continue": "Продолжать [C]",
             "about": "О [A]",
             "language": "Язык [L]",
