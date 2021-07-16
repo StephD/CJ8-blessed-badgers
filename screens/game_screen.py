@@ -69,32 +69,34 @@ class GameScreen:
             self.render_layout(term)
 
             # Render story messages in the bottom bar
-            while self.game.story[str(self.stories_id)] != "":
-                self.render_messagebar_content(term, self.game.story[str(self.stories_id)] + "  [ENTER]", 0.03)
+            if not self.game_data.is_game_already_played():
+                while self.game.story[str(self.stories_id)] != "":
+                    self.render_messagebar_content(term, self.game.story[str(self.stories_id)] + "  [ENTER]", 0.03)
 
-                key_input = ""
-                while key_input != "enter":
-                    key_input = term.inkey()
-                    if key_input.is_sequence and key_input.name == "KEY_ENTER":
-                        key_input = "enter"
+                    key_input = ""
+                    while key_input != "enter":
+                        key_input = term.inkey()
+                        if key_input.is_sequence and key_input.name == "KEY_ENTER":
+                            key_input = "enter"
 
-                # Still have to adjust the story display
-                if self.stories_id == 1:
-                    # render the player
-                    self.render_scene(term)
-                    break
-                    # pass
-                elif self.stories_id == 2:
-                    # don't know yet
-                    self.render_scene(term)
-                elif self.stories_id == 3:
-                    self.render_scene(term)
-                elif self.stories_id == 4:
-                    self.render_scene(term)
-                elif self.stories_id == 5:
-                    break
+                    # Still have to adjust the story display
+                    if self.stories_id == 1:
+                        # render the player
+                        pass
+                    elif self.stories_id == 2:
+                        # don't know yet
+                        self.render_scene(term)
+                    elif self.stories_id == 3:
+                        self.render_scene(term)
+                    elif self.stories_id == 4:
+                        self.render_scene(term)
+                    elif self.stories_id == 5:
+                        break
 
-                self.stories_id += 1
+                    self.stories_id += 1
+            else:
+                # Make all the render
+                self.render_scene(term)
 
             self.game_data.update_game_already_played(True)
             self.render_sidebar_content(term)
@@ -118,10 +120,10 @@ class GameScreen:
                                 self.render_messagebar_content(term, "Saving is done")
                                 sleep(0.8)
                             elif key_input.lower() == "q":
-                                # key_input = "esc"
-                                self.game_data.save_game()
+                                # self.game_data.save_game()
                                 self.render_messagebar_content(term, "bye ..")
                                 sleep(0.8)
+                                # It's not strong to return like this?
                                 return
                         self.render_messagebar_content(term, "")
                     elif key_input.name in ["KEY_DOWN", "KEY_UP", "KEY_LEFT", "KEY_RIGHT"]:
