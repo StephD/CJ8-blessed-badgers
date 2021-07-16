@@ -41,9 +41,8 @@
                 "3": "Here is the room, around you, look like a box no?",
                 "4": "On your right, there is a door. Use your 'arrow-keys' to move.",
                 "5": "See, it's locked. You need a key. Can you see it?",
-                "6": "Great, you go it. Let's get out of here.",
-                "7": "Bravo, let's see the real challenge now :-)",
-                "8": "See you in the next box"
+                "6": "Great. Let's get out of here.",
+                "7": "See you in the next box for the real challenge"
             },
             "room_2": {
                 "1": "Hey ... Wake up",
