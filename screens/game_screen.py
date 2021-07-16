@@ -160,21 +160,21 @@ class GameScreen:
                             self.render_sidebar_content(term)
                             # self.render_messagebar_content(term, self.game.story["11"])
                             if self.game_data.data["room"]["1"]["is_door_unlocked"]:
-                                # TODO
-                                self.render_messagebar_content(term, "Congrats you have solved the first level.")
+                                self.render_messagebar_content(
+                                    term, self.game_data.get_str_in_language("messages", "story", "room_1", "11")
+                                )
+                                sleep(0.8)
+                                self.render_messagebar_content(
+                                    term, self.game_data.get_str_in_language("messages", "story", "room_1", "12")
+                                )
                                 self.game_data.save_game()
-                                sleep(1)
+                                sleep(0.8)
                                 return
                         else:
                             self.render_messagebar_content(
                                 term, self.game_data.get_str_in_language("entities", "door", "close")
                             )
-                            # self.render_messagebar_content(term, self.game.story["9"])
-
-                        # self.render_messagebar_content(term, self.game.story[str(self.stories_id)])
                     elif entity_meeted == "X":
-                        # self.render_messagebar_content(term, self.game.story["10"])
-                        # Add Interaction.
                         self.game.key_found = True
                         self.game_data.inc_inventory_item_by_key("keys")
                         self.render_sidebar_content(term)
