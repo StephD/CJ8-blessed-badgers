@@ -203,35 +203,36 @@ class GameScreen:
         )
 
         # Move the cursor to the top left of the sidebar
-        print(term.move_yx(start_y + 2, start_x + 2), end="", flush=True)
+        #print(term.move_yx(start_y + 2, start_x + 2), end="", flush=True)
+
+        x, y = start_x + 2, start_y + 2
 
         for data_key, data_obj in sidebar_content.items():
             if data_key == "game_data":
                 print(
-                    getattr(term, self.colors["choice"])
+                    term.move_xy(x, y)
+                    + getattr(term, self.colors["choice"])
                     + "Game data"
                     + " " * (panel_width - (len("Game data") + 2))
-                    + term.move_left(panel_width - 2)
-                    + term.move_down
                     + getattr(term, self.term_color),
                     end="",
                 )
             elif data_key == "player_data":
+                # New line.
+                y += 1
                 print(
-                    term.move_down
+                    term.move_xy(x, y)
                     + getattr(term, self.colors["choice"])
                     + "In your box"
                     + " " * (panel_width - (len("In your box") + 2))
-                    + term.move_left(panel_width - 2)
-                    + term.move_down
                     + getattr(term, self.term_color),
                     end="",
                 )
             for key, value in data_obj.items():
                 for line in chunk(f"{key} : {value}", panel_width):
-                    print(line, end="", flush=True)
-                    print(term.move_left(len(line)) + term.move_down, end="", flush=True)
-                print(term.move_down, end="", flush=True)
+                    y += 1
+                    print(term.move_xy(x, y) + line, end="", flush=True)
+            y += 1
 
         print(term.move_yx(end_y - 1, start_x + 2), end="", flush=True)
         print(getattr(term, self.colors["choice"]) + "Menu <ESC>" + getattr(term, self.term_color), end="", flush=True)
