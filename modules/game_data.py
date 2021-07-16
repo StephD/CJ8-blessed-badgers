@@ -53,6 +53,16 @@ class GameData:
             data_tmp["game"] = self.data["game"]
             self.data = data_tmp
 
+    def get_is_game_already_played(self) -> bool:
+        return self.data["game"]["is_game_already_played"]
+
+    @update_file_game_data_decorator
+    def update_game_already_played(self, value: bool) -> None:
+        if type(value) is not bool:
+            raise Exception("Incorrect value type")
+        else:
+            self.data["game"]["is_game_already_played"] = value
+
     def get_game_level(self) -> str:
         return self.data["game"]["level"]
 

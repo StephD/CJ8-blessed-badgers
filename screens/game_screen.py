@@ -1,7 +1,5 @@
 from time import sleep
 
-from modules.logger import log
-
 import blessed
 
 from modules.game import Game
@@ -69,42 +67,60 @@ class GameScreen:
         key_input = ""
         with term.cbreak(), term.hidden_cursor():
             self.render_layout(term)
-            # Render scene entities
 
-            # Render layout
-            self.render_layout(term)
-            # Render scene
-            self.render_scene(term)
-            # Render scene entities
-
-            # Render message in the bottom bar
+            # Render story messages in the bottom bar
             while self.game.story[str(self.stories_id)] != "":
-                self.render_messagebar_content(term, self.game.story[str(self.stories_id)])
-                term.inkey(timeout=5)
+                self.render_messagebar_content(term, self.game.story[str(self.stories_id)] + "  [ENTER]", 0.03)
+
+                key_input = ""
+                while key_input != "enter":
+                    key_input = term.inkey()
+                    if key_input.is_sequence and key_input.name == "KEY_ENTER":
+                        key_input = "enter"
+
+                # Still have to adjust the story display
                 if self.stories_id == 1:
+                    # render the player
+                    self.render_scene(term)
                     break
+                    # pass
+                elif self.stories_id == 2:
+                    # don't know yet
+                    self.render_scene(term)
+                elif self.stories_id == 3:
+                    self.render_scene(term)
+                elif self.stories_id == 4:
+                    self.render_scene(term)
+                elif self.stories_id == 5:
+                    break
+
                 self.stories_id += 1
 
+            self.game_data.update_game_already_played(True)
             self.render_sidebar_content(term)
+            self.render_messagebar_content(term)
 
             # player movement and exit or confirm exit.
             while 1:
                 key_input = term.inkey()
-                if key_input.name == "KEY_ESCAPE":
+                if key_input.name in ["KEY_ESCAPE"]:
                     self.render_messagebar_content(
-                        term, self.game_data.get_str_in_language("messages", "game", "actions", "esc")
+                        term, self.game_data.get_str_in_language("messages", "game", "actions", "esc"), 0.01
                     )
-                    key_input = term.inkey()
-                    if key_input == "s":
-                        self.game_data.save_game()
-                        self.render_messagebar_content(term, "Saving in progress")
-                        sleep(0.8)
-                        self.render_messagebar_content(term, "Saving is done")
-                        sleep(0.8)
-                    elif key_input.lower() == "q":
-                        self.render_messagebar_content(term, "bye ..")
-                        # Break or return
-                        return
+                    while key_input.lower() not in ["q", "s", "c", "esc"]:
+                        key_input = term.inkey()
+                        if key_input == "s":
+                            self.game_data.save_game()
+                            self.render_messagebar_content(term, "Saving in progress")
+                            sleep(0.8)
+                            self.render_messagebar_content(term, "Saving is done")
+                            sleep(0.8)
+                        elif key_input.lower() == "q":
+                            # key_input = "esc"
+                            self.game_data.save_game()
+                            self.render_messagebar_content(term, "bye ..")
+                            sleep(0.8)
+                            return
                     self.render_messagebar_content(term, "")
                 else:
                     # msg from game.
@@ -130,6 +146,7 @@ class GameScreen:
                         self.game.key_found = True
                         self.render_messagebar_content(term, "You have found the key.")
                     self.render_scene(term)
+                    self.render_messagebar_content(term)
 
     def render_layout(self, term: blessed.Terminal) -> None:
         """Render the 3 frames"""
