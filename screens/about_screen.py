@@ -8,15 +8,9 @@ from .menu_screen import MenuScreen
 
 
 class AboutScreen(MenuScreen):
-    def __init__(self, *args, **kwargs) -> None:
-        super().__init__(*args, **kwargs)
-        self.languages = []
-
     def render(self, term: blessed.Terminal) -> None:
         """Renders the start screen in the terminal."""
-        cols, rows = term.width, term.height
-        rows -= 2
-        cols -= 2
+        cols, rows = term.width - 2, term.height - 2
         row, col = np.indices((rows, cols))
         row = row[::-1]
         row = (row - rows // 2) * 1 / 2
@@ -25,7 +19,7 @@ class AboutScreen(MenuScreen):
         with term.cbreak(), term.hidden_cursor():
             print(term.home + term.clear)
 
-            title_indices = print_title(term, rows, cols)
+            title_indices = print_title(term, rows, cols, self.colors["title"], self.term_color)
             menu_indices = self.print_text(term, rows, cols)
 
             old_indices = set()
@@ -41,11 +35,10 @@ class AboutScreen(MenuScreen):
         sections = []
         sections.append(self.get_language("menu", "about", "about"))
         sections.append(self.get_language("menu", "about", "who"))
-        sections.append("Version : 0.1")
+        sections.append(self.game_data.data["game"]["version"])
 
         sections.append("")
         sections.append(self.get_language("menu", "actions", "return"))
-        term_color = term.lightskyblue_on_gray20
 
         coordinates = set()
         for i, section in enumerate(sections):
@@ -54,7 +47,11 @@ class AboutScreen(MenuScreen):
             menu_row = rows - 5 + i
 
             print(term.move_xy(menu_start_col, menu_row), end="")
-            print(f"{section[:-3]}{term.green3 if i==len(sections)-1 else term_color}{section[-3:]}{term_color}")
+            print(
+                f"{section[:-3]}"
+                f"{getattr(term,self.colors['choice']) if i==len(sections)-1 else getattr(term,self.term_color)}"
+                f"{section[-3:]}{getattr(term,self.term_color)}"
+            )
 
             coordinates = coordinates.union({(menu_row, x + menu_start_col) for x in range(menu_width)})
 

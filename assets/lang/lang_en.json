@@ -10,8 +10,7 @@
         },
         "about": {
             "who": "Made by young developers: Blessed badgers",
-            "about": "",
-            "what": "This is a gamefied learning experience for young developers"
+            "about": ""
         },
         "languages": {
             "en": "English",
@@ -25,19 +24,48 @@
             "return": "Return [R]"
         }
     },
-    "action": {
+    "actions": {
         "cancel": "Cancel",
         "confirm": "Confirm",
         "return": "Return"
     },
-    "story": {
-        "intro": {
-            "1": "Hey ... Wake up"
+    "messages": {
+        "game": {
+            "actions": {
+                "esc": "Do you want to leave? quit [Q] - save [S] - cancel [C]"
+            }
+        },
+        "story": {
+            "room_1": {
+                "1": "Hey ... Wake up",
+                "2": "I think that you felt down from there, above",
+                "3": "Did you ask where you were ?",
+                "4": "Look around you ;-) .. It's a box  ahah",
+                "5": "May be have a look around with your 'arrow-keys'.",
+                "6": "How to get out, you said? You seem stuck here",
+                "7": "Hey, what's that? A door. May be go have a look ?",
+                "8": "But may be there is a way to open it, think?",
+                "9": "Or you can also use your inTUItion, who knows",
+                "10": "It look like a big rock over there.",
+                "11": "Bravo, you could get out of here :-) We will see in the next box"
+            }
         }
     },
-    "entity": {
-        "door_locked": "This door is locked",
-        "key_find": "You need to find a key",
-        "key_is_found": "You found a key"
+    "entities": {
+        "door": {
+            "open": "The door is open.",
+            "close": "The door seem locked."
+        },
+        "key": {
+            "find": "You need to find the key.",
+            "is_found": "You found a key."
+        }
+    },
+    "keys": {
+        "game_data": "Game data",
+        "inventory": "In your bag",
+        "level": "Level",
+        "language": "Language",
+        "menu": "Menu"
     }
 }

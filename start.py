@@ -20,32 +20,26 @@ def main() -> None:
     keypressed = None
     with term.fullscreen(), term.cbreak():
         while keypressed != "q":
-            menu_screen.game_data.data = game_data.data
             keypressed = menu_screen.render(term)
+            print(term.clear)
             if keypressed == "n":  # New game
-                print(term.clear)
                 game_data.load_game("new")
-                game_data.update_game_mode("normal")
-                game_screen.game_data.data = game_data.data
+                game_data.set_game_level(1)
+                game_data.set_game_already_played(False)
+                game_screen = GameScreen(game_data=game_data)
                 game_screen.render(term)
-            elif keypressed == "t":
-                pass
-                # game_data.update_game_mode("tutorial")
-                # game_screen.render(term)
-                pass
             elif keypressed == "c":
-                pass
-                # game_data.load_game("saved")
-                # game_data.update_game_mode("normal")
-                # game_screen.render(term)
+                game_data.load_game("saved")
+                game_screen = GameScreen(game_data=game_data)
+                game_screen.render(term)
             elif keypressed == "a":
                 about_screen.render(term)
             elif keypressed == "l":
                 lang_selected = language_screen.render(term)
                 if lang_selected:
-                    game_data.update_language(lang_selected)
+                    game_data.set_language(lang_selected)
 
-    print(f"BYE!{term.normal}")
+    print(term.normal)
     sys.exit(0)
 
 

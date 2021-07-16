@@ -9,9 +9,8 @@
             "quit": "Quitter [Q]"
         },
         "about": {
-            "who": "Made by young developers: Blessed badgers",
-            "about": "",
-            "what": "This is a gamefied learning experience for young developers"
+            "who": "Réalisé par de jeunes développeurs: Blessed badgers",
+            "about": ""
         },
         "languages": {
             "en": "English",
@@ -21,22 +20,52 @@
             "de": "Deutsch"
         },
         "actions": {
-            "cancel": "Cancel [C]",
-            "return": "Return [R]"
+            "cancel": "Annuler [C]",
+            "return": "Retour [R]"
         }
     },
     "actions": {
         "cancel": "Annuler",
-        "confirm": "Confirmer"
+        "confirm": "Confirmer",
+        "return": "Retour"
     },
-    "story": {
-        "intro": {
-            "1": "Hey! Tu dois te réveiller."
+    "messages": {
+        "game": {
+            "actions": {
+                "esc": "Voulez-vous quitter ? quitter [Q] - enregistrer [S] - annuler [C]"
+            }
+        },
+        "story": {
+            "room_1": {
+                "1": "Hé... réveille-toi.",
+                "2": "Je pense que tu es tombée ici, d'en haut.",
+                "3": "Tu te demande ce que tu fais ici ?",
+                "4": "Regarde autour de toi ;-) .. C'est une boite  ahah.",
+                "5": "Peut-être tu peux observer autour de toi avec vos 'touches fléchées'.",
+                "6": "Comment sortir, tu dis? Tu as l'air coincé ici",
+                "7": "Hé, c'est quoi la bas? Une porte. Peut-être aller y jeter un oeil?",
+                "8": "Mais peut-être qu'il y a un moyen de l'ouvrir, refléchis ?",
+                "9": "Ou tu peux aussi utiliser ton inTUItion, qui sait",
+                "11": "On dirait un gros rocher là-bas.",
+                "12": "Bravo, Tu as pu sortir hors d'ici :-) On verra la boite suivante"
+            }
         }
     },
-    "entity": {
-        "door_locked": "Cette porte est verrouillée",
-        "key_find": "Vous devez trouver une clé",
-        "key_is_found": "Vous avez trouvé une clé"
+    "entities": {
+        "door": {
+            "open": "La porte est ouverte.",
+            "close": "La porte semblent verrouillée."
+        },
+        "key": {
+            "find": "Vous devez trouver la clé.",
+            "is_found": "Vous avez trouvé une clé."
+        }
+    },
+    "keys": {
+        "game_data": "Donnée du jeu",
+        "inventory": "Dans ton sac",
+        "level": "Niveau",
+        "language": "Langue",
+        "menu": "Menu"
     }
 }

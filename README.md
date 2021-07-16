@@ -16,6 +16,8 @@ That's no entirely true, you might be able to get away. But can you ?!
 
 # How to play with me?
 
+It need python 3.9 to run
+
 1. `pip install -r dev-requirements.txt`
 2. `python run start`
 

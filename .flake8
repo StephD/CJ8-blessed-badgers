@@ -6,7 +6,7 @@
 # but this doesn't really apply anymore.
 max-line-length=119
 # Don't lint the venv or the CPython cache.
-exclude=.venv,__pycache__
+exclude=.venv,__pycache__,test.py
 # Ignore some of the most obnoxious linting errors.
 ignore=
     B311,W503,E226,S311,T000
@@ -23,7 +23,7 @@ ignore=
     # Type Annotations
     ANN002,ANN003,ANN101,ANN102,ANN204,ANN206,
     # Because it's annoying sorry :'(
-    D101,D102,ANN001,ANN201,F401
+    D101,D102,ANN001,ANN201,F401,S307
 
 [isort]
 # Select the 5th style (Hanging grid grouped) to handle longer import.

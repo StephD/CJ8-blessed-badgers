@@ -1,40 +1,46 @@
 {
     "game": {
         "is_game_already_played": true,
-        "game_mode": "normal",
+        "version": "v0.2",
         "language": "en",
-        "last_saved": "12/07/2021 23:14:48"
+        "last_saved": "12/07/2021 23:14:48",
+        "colors": {
+            "menu": {
+                "bg": "gray20",
+                "text": "lightskyblue",
+                "title": "turquoise3",
+                "choice": "green3",
+                "square": "lightskyblue",
+                "term_color": "lightskyblue_on_gray20"
+            },
+            "game": {
+                "bg": "grey20",
+                "text": "lightskyblue",
+                "choice": "green3",
+                "layout": "darkslategray",
+                "door": "sienna",
+                "key": "gold",
+                "scene_wall": "lightskyblue4"
+            }
+        }
     },
     "room": {
         "1": {
-            "is_door_unlock": true,
-            "is_key_is_found": false,
-            "is_secret_door_found": false,
-            "items": {
-                "Potion": {
-                    "last_pos": [
-                        1,
-                        6
-                    ]
-                }
-            },
-            "interactions": {
-                "Wizard": true
+            "is_door_unlocked": false,
+            "is_key_found": false,
+            "interacted": {
+                "stone": false
             }
         }
     },
     "player": {
-        "lifes_left": 2,
         "current_room": 1,
         "last_position": [
             0,
             0
         ],
         "inventory": {
-            "Poison": {
-                "origin": "1",
-                "quantity": "2"
-            }
+            "keys": 0
         }
     }
 }
