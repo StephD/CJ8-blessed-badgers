@@ -3,7 +3,7 @@
         "is_game_already_played": true,
         "version": "v0.2",
         "language": "en",
-        "last_saved": "",
+        "dt_saved": "",
         "colors": {
             "menu": {
                 "bg": "gray20",

@@ -128,7 +128,7 @@ class Game:
 
         game_data = self.game_data.data["game"].copy()
         game_data.pop("colors")
-        game_data.pop("last_saved")
+        game_data.pop("dt_saved")
         game_data.pop("is_game_already_played")
         data["game_data"] = game_data
 
