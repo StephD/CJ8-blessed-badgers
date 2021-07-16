@@ -32,8 +32,8 @@ class Game:
         self.story = self.game_data.get_str_in_language("messages", "story", "room_1")
 
         self.entity_pos: dict[chr, set[tuple[int, int]]] = {}
-        self.obstacles: set[tuple[int, int]] = {}
-        self.entities: set[Optional[Entity]] = {}
+        self.obstacles: set[tuple[int, int]] = set()
+        self.entities: set[Optional[Entity]] = set()
         self.player = Player((10, 11))
         self.map_size: tuple[int, int] = (0, 0)
         self.entities.add(self.player)
@@ -122,7 +122,7 @@ class Game:
         return to_be_rendered
 
     def get_sidebar_content(self) -> dict:
-        """Get the content of the sidebar from the game_data."""
+        """Get the content that will be render in the sidebar"""
         data = {"game_data": {}}
 
         game_data = self.game_data.data["game"].copy()
