@@ -192,25 +192,25 @@ class GameScreen:
                                         [
                                             f"{message['question']}",
                                             self._make_question_template(
-                                                term,
-                                                message['template'],
-                                                message['special index']
+                                                term, message["template"], message["special index"]
                                             ),
-                                            f"Press A to attempt or any other key to cancel."
+                                            f"Press A to attempt or any other key to cancel.",
                                         ]
-                                    )
+                                    ),
                                 )
                                 attempt = term.inkey(0.1)
-                                if attempt != 'A':
+                                if attempt != "A":
                                     break
                     else:
                         self.render_messagebar_content(term, "")
 
     def _make_question_template(self, term, template, special_index):
-        return f"{template[:special_index]}" \
-               f"{term.red(template[special_index])}" \
-               f"{getattr(term, self.term_color)}" \
-               f"{template[special_index+1:]}"
+        return (
+            f"{template[:special_index]}"
+            f"{term.red(template[special_index])}"
+            f"{getattr(term, self.term_color)}"
+            f"{template[special_index+1:]}"
+        )
 
     def get_message(self, *args) -> str:
         """Get the message translation from the file. It help to make the code shorter"""
