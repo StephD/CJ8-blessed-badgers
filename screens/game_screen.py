@@ -52,9 +52,8 @@ class GameScreen:
         self.scene_bounds: Bounds = ...
         self.message_bar_bounds: Bounds = ...
 
-        # player_current_room = 1
-        with open("assets/questions.json") as f:
-            self.room2_messages = json.load(f)
+        with open("assets/questions.json") as file:
+            self.room2_messages = json.load(file)
 
     def init_bound(self, term: blessed.Terminal) -> None:
         """Initialize the layout side and frame size+position"""
