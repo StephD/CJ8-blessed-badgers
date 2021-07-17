@@ -156,10 +156,10 @@ class GameScreen:
                                             key_input = "enter"
                                     self.stories_id += 1
 
-                                self.render_messagebar_content(term, "bye ..")
                                 sleep(0.8)
                                 self.render_messagebar_content(term, "")
                                 player_current_room = 2
+                                self.game_data.data["player"]["current_room"] = 2
                                 self.game_data.save_game()
                                 self.game.load_map(2)
                                 self.render_scene(term)
