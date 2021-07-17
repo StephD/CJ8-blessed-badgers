@@ -30,11 +30,11 @@
     },
     "room": {
         "1": {
-            "is_door_unlocked": true,
-            "is_key_found": true
+            "is_door_unlocked": false,
+            "is_key_found": false
         },
         "2": {
-            "is_door_unlocked": true,
+            "is_door_unlocked": false,
             "clue_found": 0
         }
     },
