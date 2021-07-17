@@ -280,9 +280,9 @@ class GameScreen:
 
     def render_layout(self, term: blessed.Terminal) -> None:
         """Render the 3 frames"""
-        self._render_dict(term, self._make_border(self.scene_bounds, tuple("┌┐└┘│─")))
-        self._render_dict(term, self._make_border(self.sidebar_bounds, tuple("┌┐└┘│─")))
-        self._render_dict(term, self._make_border(self.message_bar_bounds, tuple("┌┐└┘│─")))
+        self._render_dict(term, self._make_border(self.scene_bounds, tuple("╭╮╰╯│─")))
+        self._render_dict(term, self._make_border(self.sidebar_bounds, tuple("╭╮╰╯│─")))
+        self._render_dict(term, self._make_border(self.message_bar_bounds, tuple("╭╮╰╯│─")))
 
     # Render scene need to be pickup from a file
     def render_scene(self, term: blessed.Terminal) -> None:
