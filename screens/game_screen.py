@@ -196,13 +196,12 @@ class GameScreen:
                                         ),
                                         "Press [A] to attempt or any other key to cancel."
                                         if not message["solved"]
-                                        else "",
+                                        else "You already found this one.",
                                     ]
                                 )
                                 self.render_messagebar_content(term, question_prompt, 0)
                                 if message["solved"]:
-                                    self.render_messagebar_content(term, "You already found this one.")
-                                    sleep(1)
+                                    sleep(2)
                                     break
                                 if term.inkey().lower() != "a":
                                     break
