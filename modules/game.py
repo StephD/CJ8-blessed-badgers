@@ -77,22 +77,23 @@ class Game:
             raise GameException("map loading")
         self.obstacles = set()
 
-        # TODO
-        # self.entities = {self.player}
-        # self.entity_pos = {}
+        self.entities = {self.player}
+        self.entity_pos = {}
 
         for i, line in enumerate(map_data):
             for j, char in enumerate(line):
                 color = ""
                 if char == " ":
                     continue
-                if char in "KDS":
-                    if char == "K":
+                if char in "KDSX":
+                    if char in "K":
                         color = self.game_data.data["game"]["colors"]["game"]["key"]
                     elif char == "D":
                         color = self.game_data.data["game"]["colors"]["game"]["door"]
                     elif char == "S":
                         color = self.game_data.data["game"]["colors"]["game"]["stone"]
+                    elif char == "X":
+                        color = self.game_data.data["game"]["colors"]["game"]["clue"]
 
                     if char in self.entity_pos:
                         self.entity_pos[char].update(self.get_neighbours(i, j))
