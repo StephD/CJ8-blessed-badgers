@@ -14,7 +14,7 @@ class Player(Entity):
     """The declaration of a player entity"""
 
     def __init__(self, position: tuple[int, int], sprite: Optional[str] = None, color: str = ""):
-        super().__init__(position, sprite or ["O"], "")
+        super().__init__(position, sprite or ["O"], color)
 
 
 class Wall(Entity):

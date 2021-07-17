@@ -51,10 +51,6 @@ class GameScreen:
         self.scene_bounds: Bounds = ...
         self.message_bar_bounds: Bounds = ...
 
-        # Future
-        # with open("assets/questions.json") as f:
-        #     self.room2_messages = json.load(f)
-
     def init_bound(self, term: blessed.Terminal) -> None:
         """Initialize the layout side and frame size+position"""
         width, height = term.width, term.height
@@ -85,7 +81,6 @@ class GameScreen:
                 player_will_move = False
                 key_input = term.inkey()
                 if key_input.is_sequence:
-                    # Esc menu
                     if key_input.name in ["KEY_ESCAPE"]:
                         self.render_messagebar_content(
                             term,
