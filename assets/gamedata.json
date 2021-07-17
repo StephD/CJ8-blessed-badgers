@@ -1,6 +1,6 @@
 {
     "game": {
-        "is_game_already_played": true,
+        "is_game_already_played": false,
         "version": "v0.5",
         "language": "en",
         "dt_saved": "12/07/2021 23:14:48",
@@ -29,7 +29,7 @@
     "room": {
         "1": {
             "is_door_unlocked": false,
-            "is_key_found": true,
+            "is_key_found": false,
             "interacted": {
                 "stone": false
             }
@@ -38,11 +38,11 @@
     "player": {
         "current_room": 1,
         "position": {
-            "y": 16,
-            "x": 7
+            "y": 10,
+            "x": 25
         },
         "inventory": {
-            "keys": 1
+            "keys": 0
         }
     }
 }
