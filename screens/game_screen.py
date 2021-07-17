@@ -1,6 +1,7 @@
 from time import sleep
 
 import blessed
+import requests
 
 from modules.game import Game
 from modules.game_data import GameData
@@ -100,6 +101,14 @@ class GameScreen:
                         player_will_move = True
                 elif key_input in ["j", "k", "h", "l"]:
                     player_will_move = True
+
+                elif key_input == "e":
+                    joke = requests.get(
+                        "https://official-joke-api.appspot.com/jokes/programming/random", timeout=2
+                    ).json()[0]
+                    setup, punchline = joke["setup"], joke["punchline"]
+
+                    self.render_messagebar_content(term, f"{setup}\n{punchline}")
 
                 if player_will_move:
                     entity_meeted = self.game.move_player(key_input)
