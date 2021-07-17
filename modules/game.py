@@ -13,8 +13,8 @@ class GameException(Exception):
 class Player(Entity):
     """The declaration of a player entity"""
 
-    def __init__(self, position: tuple[int, int], sprite: Optional[str] = None):
-        super().__init__(position, sprite or ["@"])
+    def __init__(self, position: tuple[int, int], sprite: Optional[str] = None, color: str = ""):
+        super().__init__(position, sprite or ["@"], "")
 
 
 class Obstacle(Entity):
@@ -34,6 +34,7 @@ class Game:
         self.obstacles: set[tuple[int, int]] = set()
         self.entities: set[Optional[Entity]] = set()
         self.player = Player(tuple(self.game_data.get_player_position().values()))
+        self.player.color = self.game_data.data["game"]["colors"]["game"]["player"]
         self.map_size: tuple[int, int] = (0, 0)
         self.entities.add(self.player)
         self.load_map()
@@ -79,8 +80,8 @@ class Game:
                         self.entity_pos[char].update(self.get_neighbours(i, j))
                     else:
                         self.entity_pos[char] = self.get_neighbours(i, j)
-                self.entities.add(Obstacle((i, j), [char]))
-                self.obstacles.add((i, j))
+                self.entities.add(Obstacle((i, j), [char], "red"))
+                self.obstacles.add((i, j, "", "blue"))
 
     def move_player(self, mov: str) -> chr:
         """Move player."""

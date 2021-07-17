@@ -20,7 +20,8 @@
                 "layout": "darkslategray",
                 "door": "sienna",
                 "key": "gold",
-                "scene_wall": "lightskyblue4"
+                "scene_wall": "lightskyblue4",
+                "player": "snow"
             }
         }
     },
@@ -36,8 +37,8 @@
     "player": {
         "current_room": 1,
         "position": {
-            "y": 18,
-            "x": 2
+            "y": 10,
+            "x": 25
         },
         "inventory": {
             "keys": 0
