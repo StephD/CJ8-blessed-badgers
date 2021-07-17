@@ -109,9 +109,7 @@ class GameScreen:
                             "https://official-joke-api.appspot.com/jokes/programming/random", timeout=2
                         ).json()[0]
                     except requests.exceptions.ReadTimeout:
-                        self.render_messagebar_content(term, "Forget it")
-                        sleep(1)
-                        self.render_messagebar_content(term, "")
+                        pass
                     else:
                         setup, punchline = joke["setup"], joke["punchline"]
                         # Linux might display it wrong
