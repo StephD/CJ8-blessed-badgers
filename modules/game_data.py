@@ -153,10 +153,9 @@ class GameData:
         self.data["room"][str(room_id)]["is_door_unlocked"] = True
 
     @update_file_game_data_decorator
-    def inc_nb_of_clue(self) -> int:
+    def inc_nb_of_clue(self) -> None:
         """Increments the value of the clue founded in room 2"""
         self.data["room"]["2"]["nb_of_clue_found"] += 1
-        return self.data["room"]["2"]["nb_of_clue_found"]
 
     def get_nb_of_clue(self) -> int:
         """Return amount of clues founded in room 2"""

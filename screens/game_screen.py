@@ -80,7 +80,6 @@ class GameScreen:
             self.render_sidebar_content(term)
             self.render_messagebar_content(term, "")
 
-            room2_solved = self.game_data.data["room"]["2"]["nb_of_clue_found"]
             while 1:
                 player_will_move = False
                 key_input = term.inkey()
@@ -223,13 +222,13 @@ class GameScreen:
                                         sleep(1)
                                     else:
                                         print(" Correct!")
-                                        room2_solved = self.game_data.inc_nb_of_clue()
+                                        self.game_data.inc_nb_of_clue()
                                         message["solved"] = True
                                         message["template"] = message["answer"]
                                         sleep(1)
                                         self.render_sidebar_content(term)
                         elif entity_meeted == "D":
-                            if room2_solved < 6:
+                            if self.game_data.get_nb_of_clue() < 6:
                                 self.render_messagebar_content(term, "Solve all questions first!")
                                 continue
                             question_prompt = "\n".join(
