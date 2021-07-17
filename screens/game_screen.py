@@ -80,8 +80,8 @@ class GameScreen:
             self.render_initial_story(term)
             self.render_sidebar_content(term)
             self.render_messagebar_content(term, "")
-            # TODO to game_data
-            room2_solved = 0
+
+            room2_solved = self.game_data.data["room"]["2"]["nb_of_clue_found"]
             while 1:
                 player_will_move = False
                 key_input = term.inkey()
@@ -163,6 +163,7 @@ class GameScreen:
                                 self.game_data.save_game()
                                 self.game.load_map(2)
                                 self.render_scene(term)
+                                self.render_sidebar_content(term)
 
                         elif entity_meeted == "K":
                             if not self.game_data.data["room"][str(self.game_data.data["player"]["current_room"])][
@@ -188,24 +189,25 @@ class GameScreen:
                     if entity_meeted == "X":
                         for message in self.room2_messages:
                             if list(self.game.player.position) in message["coordinates"]:
-
                                 question_prompt = "\n".join(
                                     [
                                         f"{message['question']}",
                                         self._make_question_template(
                                             term, message["template"], message["special index"]
                                         ),
-                                        "Press A to attempt or any other key to cancel."
+                                        "Press [A] to attempt or any other key to cancel."
                                         if not message["solved"]
                                         else "",
                                     ]
                                 )
                                 self.render_messagebar_content(term, question_prompt, 0)
                                 if message["solved"]:
+                                    self.render_messagebar_content(term, "You already found this one.")
+                                    sleep(1)
                                     break
                                 if term.inkey().lower() != "a":
                                     break
-                                self.render_messagebar_content(term, "Enter guess:\n>")
+                                self.render_messagebar_content(term, "Enter guess:\n> ")
                                 guess = []
                                 while True:
                                     letter = term.inkey()
@@ -221,9 +223,11 @@ class GameScreen:
                                     print(" Incorrect!")
                                 else:
                                     print(" Correct!")
-                                    room2_solved += 1
+                                    room2_solved = self.game_data.inc_nb_of_clue()
                                     message["solved"] = True
                                     message["template"] = message["answer"]
+                                    sleep(1)
+                                    self.render_sidebar_content(term)
                     elif entity_meeted == "D":
                         if room2_solved != 6:
                             self.render_messagebar_content(term, "Solve all questions first!")
@@ -232,33 +236,34 @@ class GameScreen:
                             [
                                 "Code Word:",
                                 f"{term.red}______{getattr(term, self.term_color)}",
-                                "Press A to attempt or any other key to cancel.",
+                                "Press [A] to attempt or any other key to cancel.",
                             ]
                         )
                         self.render_messagebar_content(term, question_prompt)
-                        if term.inkey().lower() != "a":
-                            break
-                        self.render_messagebar_content(term, "Enter guess:\n>")
-                        guess = []
-                        while True:
-                            letter = term.inkey()
-                            if isinstance(letter, Keystroke) and letter.name == "KEY_ENTER":
-                                break
-                            if isinstance(letter, Keystroke) and letter.name == "KEY_BACKSPACE":
-                                print(term.move_left + " " + term.move_left, end="", flush=True)
-                                guess.pop()
-                                continue
-                            print(letter, end="", flush=True)
-                            guess.append(letter)
-                        if "".join(guess).lower() != "python":
-                            print(" Incorrect!")
-                        else:
-                            print(" Correct!")
-                            self.render_messagebar_content(term, "Congratulations on completing the game!")
-                            sleep(5)
-                            return
-                    else:
-                        self.render_messagebar_content(term, "")
+                        if term.inkey().lower() == "a":
+                            self.render_messagebar_content(term, "Enter guess:\n>")
+                            guess = []
+                            while True:
+                                letter = term.inkey()
+                                if isinstance(letter, Keystroke) and letter.name == "KEY_ENTER":
+                                    break
+                                if isinstance(letter, Keystroke) and letter.name == "KEY_BACKSPACE":
+                                    print(term.move_left + " " + term.move_left, end="", flush=True)
+                                    guess.pop()
+                                    continue
+                                print(letter, end="", flush=True)
+                                guess.append(letter)
+
+                            if "".join(guess).lower() != "python":
+                                print(" Incorrect!")
+                                sleep(2)
+                            else:
+                                print(" Correct!")
+                                self.render_messagebar_content(term, "Congratulations you can get out of the box!")
+                                sleep(2)
+                                return
+
+                    self.render_messagebar_content(term, "")
 
     def _make_question_template(self, term: blessed.Terminal, template: str, special_index: int) -> str:
         """Make a string from template with the character at special_index highlighted in red."""
@@ -334,6 +339,8 @@ class GameScreen:
                 )
             for key, value in data_obj.items():
                 translated_key = self.get_message("keys", key)
+                if isinstance(value, bool):
+                    value = self.get_message("keys", str(value).lower())
                 for line in chunk(f"{translated_key} : {value}", panel_width):
                     row += 1
                     print(term.move_xy(col, row) + line, end="", flush=True)
@@ -463,7 +470,7 @@ class GameScreen:
     ) -> None:
         """I will render the dict to the terminal"""
         for i, j, char, color in data:
-            colored = f"{color}_on_{color}" if char in "KSDO" else ""
+            colored = f"{color}_on_{color}" if char in "KSDOX" else ""
             print(
                 term.move_yx(i, j) + getattr(term, colored) + char + getattr(term, self.term_color),
                 end="",
