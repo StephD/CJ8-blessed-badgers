@@ -205,7 +205,7 @@ class GameScreen:
         # Clear the coordinates that have been removed since the last frame
         self._render_dict(
             term,
-            {(i, j, " ", "") for i, j, _ in self.currently_rendered - to_be_rendered},
+            {(i, j, " ", color) for i, j, _, color in self.currently_rendered - to_be_rendered},
         )
 
         self.currently_rendered = to_be_rendered

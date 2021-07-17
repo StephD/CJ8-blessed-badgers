@@ -17,6 +17,12 @@ class Player(Entity):
         super().__init__(position, sprite or ["@"], "")
 
 
+class Wall(Entity):
+    """The declaration of a wall"""
+
+    pass
+
+
 class Obstacle(Entity):
     """The declaration of an obstacle entity"""
 
@@ -73,14 +79,21 @@ class Game:
 
         for i, line in enumerate(map_data):
             for j, char in enumerate(line):
+                color = ""
                 if char == " ":
                     continue
                 if char in "XD":
+                    if char == "X":
+                        color = self.game_data.data["game"]["colors"]["game"]["key"]
+                    elif char == "D":
+                        color = self.game_data.data["game"]["colors"]["game"]["door"]
                     if char in self.entity_pos:
                         self.entity_pos[char].update(self.get_neighbours(i, j))
                     else:
                         self.entity_pos[char] = self.get_neighbours(i, j)
-                self.entities.add(Obstacle((i, j), [char], "red"))
+                else:  # a wall
+                    color = self.game_data.data["game"]["colors"]["game"]["scene_wall"]
+                self.entities.add(Obstacle((i, j), [char], color))
                 self.obstacles.add((i, j, "", "blue"))
 
     def move_player(self, mov: str) -> chr:
