@@ -8,7 +8,7 @@
         "question": "Another name for dicts: ",
         "template": "_______",
         "special index": 6,
-        "answer": "hashmap",
+        "answer": "HashMap",
         "solved": false
     },
     {
@@ -18,9 +18,9 @@
             [14, 7], [14, 8], [14, 9]
         ],
         "question": "The error that should be raised by a function if it receives a str when it was expecting an int: ",
-        "template": "________",
+        "template": "_________",
         "special index": 1,
-        "answer": "typerror",
+        "answer": "TypeError",
         "solved": false
     },
     {

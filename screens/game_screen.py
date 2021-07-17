@@ -3,6 +3,7 @@ from time import sleep
 
 import blessed
 import requests
+from blessed.keyboard import Keystroke
 
 from modules.game import Game
 from modules.game_data import GameData
@@ -54,6 +55,8 @@ class GameScreen:
         self.current_room = 1
         with open("assets/questions.json") as f:
             self.room2_messages = json.load(f)
+
+        self.solved_questions = set()
 
     def init_bound(self, term: blessed.Terminal) -> None:
         """Initialize the layout side and frame size+position"""
@@ -193,21 +196,38 @@ class GameScreen:
                     if entity_met == "X":
                         for message in self.room2_messages:
                             if list(self.game.player.position) in message["coordinates"]:
-                                self.render_messagebar_content(
-                                    term,
-                                    "\n".join(
-                                        [
-                                            f"{message['question']}",
-                                            self._make_question_template(
-                                                term, message["template"], message["special index"]
-                                            ),
-                                            "Press A to attempt or any other key to cancel.",
-                                        ]
-                                    ),
+
+                                question_prompt = "\n".join(
+                                    [
+                                        f"{message['question']}",
+                                        self._make_question_template(
+                                            term, message["template"], message["special index"]
+                                        ),
+                                        "Press A to attempt or any other key to cancel."
+                                        if not message["solved"]
+                                        else "",
+                                    ]
                                 )
-                                attempt = term.inkey(0.1)
-                                if attempt != "A":
+                                self.render_messagebar_content(term, question_prompt)
+                                if message["solved"]:
                                     break
+                                if term.inkey().lower() != "a":
+                                    break
+                                self.render_messagebar_content(term, "Enter guess:\n>")
+                                guess = []
+                                while True:
+                                    letter = term.inkey()
+                                    if isinstance(letter, Keystroke) and letter.name == "KEY_ENTER":
+                                        break
+                                    print(letter, end="", flush=True)
+                                    guess.append(letter)
+                                if "".join(guess).lower() != message["answer"].lower():
+                                    print(" Incorrect!")
+                                else:
+                                    print(" Correct!")
+                                    message["solved"] = True
+                                    message["template"] = message["answer"]
+
                     else:
                         self.render_messagebar_content(term, "")
 
