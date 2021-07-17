@@ -105,13 +105,20 @@ class GameScreen:
                         key_input = key_input.name
                         player_will_move = True
 
-                elif key_input == "e":
-                    joke = requests.get(
-                        "https://official-joke-api.appspot.com/jokes/programming/random", timeout=2
-                    ).json()[0]
-                    setup, punchline = joke["setup"], joke["punchline"]
+                elif key_input in ["j", "k", "h", "l"]:
+                    player_will_move = True
 
-                    self.render_messagebar_content(term, f"{setup}\n{punchline}")
+                elif key_input == "e":
+                    try:
+                        joke = requests.get(
+                            "https://official-joke-api.appspot.com/jokes/programming/random", timeout=2
+                        ).json()[0]
+                    except requests.exceptions.ReadTimeout:
+                        pass
+                    else:
+                        setup, punchline = joke["setup"], joke["punchline"]
+                        # Linux might display it wrong
+                        self.render_messagebar_content(term, f"{setup}\n\n{punchline}")
 
                 if self.current_room == 1:
                     if player_will_move:
@@ -248,14 +255,12 @@ class GameScreen:
             term, {(i, j, " ") for i in range(start_y + 1, end_y - 1) for j in range(start_x + 1, end_x - 1)}
         )
 
-        # Move the cursor to the top left of the sidebar
-        # print(term.move_yx(start_y + 2, start_x + 2), end="", flush=True)
-
         col, row = start_x + 2, start_y + 2
 
         for data_key, data_obj in sidebar_content.items():
             if data_key == "game_data":
                 text = self.get_message("keys", "game_data")
+                row = end_y - 6
                 print(
                     term.move_xy(col, row)
                     + getattr(term, self.colors["choice"])
@@ -266,8 +271,7 @@ class GameScreen:
                 )
             elif data_key == "player_data":
                 text = self.get_message("keys", "inventory")
-                # New line.
-                row += 1
+                row = start_y + 2
                 print(
                     term.move_xy(col, row)
                     + getattr(term, self.colors["choice"])

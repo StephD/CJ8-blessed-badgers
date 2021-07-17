@@ -65,6 +65,7 @@
     },
     "keys": {
         "game_data": "Donnée du jeu",
+        "version": "Version",
         "inventory": "Dans ton sac",
         "level": "Piece",
         "language": "Langue",

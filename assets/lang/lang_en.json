@@ -65,6 +65,7 @@
     },
     "keys": {
         "game_data": "Game data",
+        "version": "Version",
         "inventory": "In your bag",
         "level": "Room",
         "language": "Language",
