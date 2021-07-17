@@ -113,7 +113,6 @@ class GameScreen:
                     if entity_meeted == "D":
                         if not room_data["is_door_unlocked"]:
                             if self.game_data.get_inventory_item_by_key("keys") > 0:
-                                # Unlocking the door
                                 self.game_data.unlock_door(player_current_room)
                                 self.game_data.dec_inventory_item_by_key("keys")
                                 self.render_sidebar_content(term)
@@ -126,7 +125,10 @@ class GameScreen:
                                     )
                                 else:
                                     self.render_messagebar_content(term, self.get_message("entities", "door", "close"))
-                        elif room_data["is_door_unlocked"]:
+
+                        if room_data["is_door_unlocked"]:
+                            self.render_messagebar_content(term, self.get_message("entities", "door", "open"))
+                            sleep(0.8)
                             if player_current_room == 1:
                                 self.stories_id = 7
                                 while self.stories_id <= 8:
@@ -141,8 +143,6 @@ class GameScreen:
                                         if key_input.is_sequence and key_input.name == "KEY_ENTER":
                                             key_input = "enter"
                                     self.stories_id += 1
-                            else:
-                                self.render_messagebar_content(term, self.get_message("entities", "door", "open"))
 
                             self.render_messagebar_content(term, "bye ..")
                             sleep(0.8)
