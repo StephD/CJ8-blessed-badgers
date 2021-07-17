@@ -37,17 +37,21 @@
         "story": {
             "room_1": {
                 "1": "Hé... réveille-toi.",
-                "2": "Je pense que tu es tombée ici, d'en haut.",
-                "3": "Tu te demande ce que tu fais ici ?",
-                "4": "Regarde autour de toi ;-) .. C'est une boite  ahah.",
-                "5": "Peut-être tu peux observer autour de toi avec vos 'touches fléchées'.",
-                "6": "Comment sortir, tu dis? Tu as l'air coincé ici",
-                "7": "Hé, c'est quoi la bas? Une porte. Peut-être aller y jeter un oeil?",
-                "8": "Mais peut-être qu'il y a un moyen de l'ouvrir, refléchis ?",
-                "9": "Ou tu peux aussi utiliser ton inTUItion, qui sait",
-                "10": "On dirait un gros rocher là-bas.",
-                "11": "Bravo, Tu as pu sortir hors d'ici :-)",
-                "12": "On verra dans la boite suivante"
+                "2": "Bienvenue dans ce TUI-toriel.",
+                "3": "Voici la piece, ca ressemble à une boîte, non ?",
+                "4": "Sur ta droite, il y a une porte.",
+                "5": "Tu peux utiliser les 'touches flèchées' pour te déplacer.",
+                "6": "C'est fermé. Tu as besoin d'une clé. Peux-tu l'aperc   sevoir ?",
+                "7": "Merveilleux. Allez, sortons d'ici.",
+                "8": "On se reverra dans la boite suivante pour plus de difficulté."
+            },
+            "room_2": {
+                "1": "Hé... réveille-toi.",
+                "2": "Comment es-tu tombé ici ?!",
+                "3": "Tu veux savoir ou tu es ?",
+                "4": "Regarde autour de toi AHAH .. C'est une boîte",
+                "5": "Comment sortir d'ici, tu dis? Tu parais bloqué ici.",
+                "6": "Ou peux-être tu peux utiliser ton in-TUI-tion, qui sait."
             }
         }
     },

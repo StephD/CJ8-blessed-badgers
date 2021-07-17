@@ -122,7 +122,7 @@ class GameScreen:
                                     # TODO Render the key
                                     self.render_messagebar_content(
                                         term,
-                                        self.game_data.get_str_in_language("messages", "story", "room_1", "5"),
+                                        self.game_data.get_str_in_language("messages", "story", "room_1", "6"),
                                     )
                                 else:
                                     self.render_messagebar_content(
@@ -133,8 +133,8 @@ class GameScreen:
                             "is_door_unlocked"
                         ]:
                             if self.game_data.data["player"]["current_room"] == 1:
-                                self.stories_id = 6
-                                while self.stories_id <= 7:
+                                self.stories_id = 7
+                                while self.stories_id <= 8:
                                     self.render_messagebar_content(
                                         term,
                                         self.game_data.get_str_in_language(
@@ -178,7 +178,7 @@ class GameScreen:
         """It will display the first story to the user"""
         current_room = self.game_data.data["player"]["current_room"]
         if current_room == 1:
-            max_story_id = 4
+            max_story_id = 5
         elif current_room == 2:
             max_story_id = 6
         if not self.game_data.is_game_already_played():
