@@ -208,9 +208,6 @@ class GameScreen:
             term, {(i, j, " ") for i in range(start_y + 1, end_y - 1) for j in range(start_x + 1, end_x - 1)}
         )
 
-        # Move the cursor to the top left of the sidebar
-        # print(term.move_yx(start_y + 2, start_x + 2), end="", flush=True)
-
         col, row = start_x + 2, start_y + 2
 
         for data_key, data_obj in sidebar_content.items():
