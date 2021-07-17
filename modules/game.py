@@ -13,8 +13,14 @@ class GameException(Exception):
 class Player(Entity):
     """The declaration of a player entity"""
 
-    def __init__(self, position: tuple[int, int], sprite: Optional[str] = None):
-        super().__init__(position, sprite or ["@"])
+    def __init__(self, position: tuple[int, int], sprite: Optional[str] = None, color: str = ""):
+        super().__init__(position, sprite or ["O"], color)
+
+
+class Wall(Entity):
+    """The declaration of a wall"""
+
+    pass
 
 
 class Obstacle(Entity):
@@ -34,6 +40,7 @@ class Game:
         self.obstacles: set[tuple[int, int]] = set()
         self.entities: set[Optional[Entity]] = set()
         self.player = Player(tuple(self.game_data.get_player_position().values()))
+        self.player.color = self.game_data.data["game"]["colors"]["game"]["player"]
         self.map_size: tuple[int, int] = (0, 0)
         self.entities.add(self.player)
         self.load_map()
@@ -69,18 +76,31 @@ class Game:
         if len(map_data) == 0:
             raise GameException("map loading")
         self.obstacles = set()
-        self.entities = {self.player}
-        self.entity_pos = {}
+
+        # TODO
+        # self.entities = {self.player}
+        # self.entity_pos = {}
+
         for i, line in enumerate(map_data):
             for j, char in enumerate(line):
+                color = ""
                 if char == " ":
                     continue
-                if char in "XD":
+                if char in "KDS":
+                    if char == "K":
+                        color = self.game_data.data["game"]["colors"]["game"]["key"]
+                    elif char == "D":
+                        color = self.game_data.data["game"]["colors"]["game"]["door"]
+                    elif char == "S":
+                        color = self.game_data.data["game"]["colors"]["game"]["stone"]
+
                     if char in self.entity_pos:
                         self.entity_pos[char].update(self.get_neighbours(i, j))
                     else:
                         self.entity_pos[char] = self.get_neighbours(i, j)
-                self.entities.add(Obstacle((i, j), [char]))
+                else:  # a wall
+                    color = self.game_data.data["game"]["colors"]["game"]["scene_wall"]
+                self.entities.add(Obstacle((i, j), [char], color))
                 self.obstacles.add((i, j))
 
     def move_player(self, mov: str) -> chr:

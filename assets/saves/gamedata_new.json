@@ -1,7 +1,7 @@
 {
     "game": {
         "is_game_already_played": false,
-        "version": "v0.4",
+        "version": "v0.6",
         "language": "en",
         "dt_saved": "",
         "colors": {
@@ -20,7 +20,9 @@
                 "layout": "darkslategray",
                 "door": "sienna",
                 "key": "gold",
-                "scene_wall": "lightskyblue4"
+                "scene_wall": "lightskyblue4",
+                "player": "snow",
+                "stone": "seashell4"
             }
         }
     },
