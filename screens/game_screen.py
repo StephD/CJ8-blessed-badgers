@@ -213,6 +213,10 @@ class GameScreen:
                                     letter = term.inkey()
                                     if isinstance(letter, Keystroke) and letter.name == "KEY_ENTER":
                                         break
+                                    if isinstance(letter, Keystroke) and letter.name == "KEY_BACKSPACE":
+                                        print(term.move_left + " " + term.move_left, end="", flush=True)
+                                        guess.pop()
+                                        continue
                                     print(letter, end="", flush=True)
                                     guess.append(letter)
                                 if "".join(guess).lower() != message["answer"].lower():
@@ -243,6 +247,10 @@ class GameScreen:
                                 letter = term.inkey()
                                 if isinstance(letter, Keystroke) and letter.name == "KEY_ENTER":
                                     break
+                                if isinstance(letter, Keystroke) and letter.name == "KEY_BACKSPACE":
+                                    print(term.move_left + " " + term.move_left, end="", flush=True)
+                                    guess.pop()
+                                    continue
                                 print(letter, end="", flush=True)
                                 guess.append(letter)
 
@@ -282,8 +290,8 @@ class GameScreen:
         # Get the coordinates to be rendered in the scene panel.
         to_be_rendered = self._make_scene(self.scene_bounds, self.game.get_to_be_rendered())
 
-        # Render the coordinates that have been added since the last frame
-        self._render_dict(term, to_be_rendered - self.currently_rendered)
+        # Render the coordinates
+        self._render_dict(term, to_be_rendered)
 
         # Clear the coordinates that have been removed since the last frame
         self._render_dict(

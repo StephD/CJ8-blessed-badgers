@@ -33,12 +33,12 @@
         },
         "story": {
             "room_1": {
-                "1": "Hey ... Wake up.",
+                "1": "Hey... Wake up.",
                 "2": "Welcome to this TUI-torial.",
-                "3": "Here is the room, it's look like a box no ?",
+                "3": "Here is the room, it looks like a box, doesn't it?",
                 "4": "On your right, there is a door.",
                 "5": "Use your 'arrow-keys' to move.",
-                "6": "See, it's locked. You need a key. Can you see it ?",
+                "6": "See, it's locked. You need a key. Can you see it?",
                 "7": "Great. Let's get out of here.",
                 "8": "See you in the next box for the real challenge."
             },
@@ -55,7 +55,7 @@
     "entities": {
         "door": {
             "open": "The door is open.",
-            "close": "The door seem locked."
+            "close": "The door seems locked."
         },
         "key": {
             "find": "You need to find the key.",
@@ -72,7 +72,7 @@
         "menu": "Menu",
         "keys": "Keys",
         "saving": "Saving in progress",
-        "saving_done": "Saving is done",
+        "saving_done": "Done Saving."
         "is_door_unlocked": "Door unlocked",
         "nb_of_clue_found": "Clues found",
         "false": "No",

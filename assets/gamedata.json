@@ -47,7 +47,7 @@
         }
     },
     "player": {
-        "current_room": 1,
+        "current_room": 2,
         "position": {
             "y": 10,
             "x": 15
