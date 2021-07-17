@@ -102,6 +102,8 @@ class Game:
         if (pos_y, pos_x) not in self.obstacles:
             self.player.position = pos_y, pos_x
 
+        self.game_data
+
         # Check the orientation what is x and y ?
         # How is this working ?
         char = self.entity_detect(pos_y, pos_x)

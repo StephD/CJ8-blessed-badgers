@@ -115,7 +115,7 @@ class GameData:
         return self.data["player"]["inventory"][key]
 
     @update_file_game_data_decorator
-    def set_inventory_item_by_key(self, key: str, value: int) -> None:
+    def set_inventory_item_by_key(self, key: str, value: Union[int, str]) -> None:
         """Set the inventory item by key."""
         self.data["player"]["inventory"][key] = value
 
