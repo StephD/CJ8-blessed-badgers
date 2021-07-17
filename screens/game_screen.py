@@ -160,7 +160,9 @@ class GameScreen:
                                 # self.game_data.save_game()
                                 self.game.load_map(2)
                                 self.render_sidebar_content(term)
-                                # self.render_scene(term)
+                                # 2 times is normal
+                                self.render_scene(term)
+                                self.render_scene(term)
                                 self.render_initial_story(term, True)
 
                         elif entity_meeted == "K":
