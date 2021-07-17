@@ -26,8 +26,8 @@
     },
     "room": {
         "1": {
-            "is_door_unlocked": false,
-            "is_key_found": false,
+            "is_door_unlocked": true,
+            "is_key_found": true,
             "interacted": {
                 "stone": false
             }
@@ -36,8 +36,8 @@
     "player": {
         "current_room": 1,
         "position": {
-            "y": 18,
-            "x": 2
+            "y": 19,
+            "x": 50
         },
         "inventory": {
             "keys": 0
