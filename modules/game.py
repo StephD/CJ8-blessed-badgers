@@ -149,7 +149,13 @@ class Game:
         data["game_data"] = game_data
 
         data.update({"player_data": {}})
-        player_data = self.game_data.data["player"]["inventory"].copy()
-        data["player_data"] = player_data
+        if self.game_data.get_game_level() == 1:
+            room_data = self.game_data.data["room"]["1"].copy()
+            room_data.pop("is_key_found")
+            room_data.update(self.game_data.data["player"]["inventory"].copy())
+        elif self.game_data.get_game_level() == 2:
+            room_data = self.game_data.data["room"]["2"].copy()
+            room_data.pop("clue_found")
+        data["player_data"] = room_data
 
         return data

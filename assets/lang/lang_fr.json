@@ -72,6 +72,10 @@
         "menu": "Menu",
         "keys": "Clées",
         "saving": "Sauvegarde en cours",
-        "saving_done": "Sauvegarde terminée"
+        "saving_done": "Sauvegarde terminée",
+        "is_door_unlocked": "Porte débloquée",
+        "nb_of_clue_found": "Indice trouvé",
+        "false": "Non",
+        "true": "Oui"
     }
 }

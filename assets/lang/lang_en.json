@@ -72,6 +72,10 @@
         "menu": "Menu",
         "keys": "Keys",
         "saving": "Saving in progress",
-        "saving_done": "Saving is done"
+        "saving_done": "Saving is done",
+        "is_door_unlocked": "Door unlocked",
+        "nb_of_clue_found": "Clues found",
+        "false": "No",
+        "true": "Yes"
     }
 }

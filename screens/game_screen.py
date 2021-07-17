@@ -80,8 +80,8 @@ class GameScreen:
             self.render_initial_story(term)
             self.render_sidebar_content(term)
             self.render_messagebar_content(term, "")
-            # TODO to game_data
-            room2_solved = 0
+
+            room2_solved = self.game_data.data["room"]["2"]["nb_of_clue_found"]
             while 1:
                 player_will_move = False
                 key_input = term.inkey()
@@ -163,6 +163,7 @@ class GameScreen:
                                 self.game_data.save_game()
                                 self.game.load_map(2)
                                 self.render_scene(term)
+                                self.render_sidebar_content(term)
 
                         elif entity_meeted == "K":
                             if not self.game_data.data["room"][str(self.game_data.data["player"]["current_room"])][
@@ -188,24 +189,25 @@ class GameScreen:
                     if entity_meeted == "X":
                         for message in self.room2_messages:
                             if list(self.game.player.position) in message["coordinates"]:
-
                                 question_prompt = "\n".join(
                                     [
                                         f"{message['question']}",
                                         self._make_question_template(
                                             term, message["template"], message["special index"]
                                         ),
-                                        "Press A to attempt or any other key to cancel."
+                                        "Press [A] to attempt or any other key to cancel."
                                         if not message["solved"]
                                         else "",
                                     ]
                                 )
                                 self.render_messagebar_content(term, question_prompt, 0)
                                 if message["solved"]:
+                                    self.render_messagebar_content(term, "You already found this one.")
+                                    sleep(1)
                                     break
                                 if term.inkey().lower() != "a":
                                     break
-                                self.render_messagebar_content(term, "Enter guess:\n>")
+                                self.render_messagebar_content(term, "Enter guess:\n> ")
                                 guess = []
                                 while True:
                                     letter = term.inkey()
@@ -217,9 +219,11 @@ class GameScreen:
                                     print(" Incorrect!")
                                 else:
                                     print(" Correct!")
-                                    room2_solved += 1
+                                    room2_solved = self.game_data.inc_nb_of_clue()
                                     message["solved"] = True
                                     message["template"] = message["answer"]
+                                    sleep(1)
+                                    self.render_sidebar_content(term)
                     elif entity_meeted == "D":
                         if room2_solved != 6:
                             self.render_messagebar_content(term, "Solve all questions first!")
@@ -326,6 +330,8 @@ class GameScreen:
                 )
             for key, value in data_obj.items():
                 translated_key = self.get_message("keys", key)
+                if isinstance(value, bool):
+                    value = self.get_message("keys", str(value).lower())
                 for line in chunk(f"{translated_key} : {value}", panel_width):
                     row += 1
                     print(term.move_xy(col, row) + line, end="", flush=True)

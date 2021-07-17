@@ -35,6 +35,7 @@
         },
         "2": {
             "is_door_unlocked": false,
+            "nb_of_clue_found": 0,
             "clue_found": {
                 "1": false,
                 "2": false,
