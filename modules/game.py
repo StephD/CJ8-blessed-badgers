@@ -33,7 +33,7 @@ class Game:
         self.entity_pos: dict[chr, set[tuple[int, int]]] = {}
         self.obstacles: set[tuple[int, int]] = set()
         self.entities: set[Optional[Entity]] = set()
-        self.player = Player((10, 11))
+        self.player = Player(tuple(self.game_data.get_player_position().values()))
         self.map_size: tuple[int, int] = (0, 0)
         self.entities.add(self.player)
         self.load_map()
@@ -100,7 +100,7 @@ class Game:
         # move the player
         if (pos_y, pos_x) not in self.obstacles:
             self.player.position = pos_y, pos_x
-            self.game_data.set_player_position({"x": pos_x, "y": pos_y})
+            self.game_data.set_player_position({"y": pos_y, "x": pos_x})
 
         char = self.entity_detect(pos_y, pos_x)
         return char
