@@ -82,11 +82,14 @@ class Game:
                 color = ""
                 if char == " ":
                     continue
-                if char in "XD":
-                    if char == "X":
+                if char in "KD":
+                    if char == "K":
                         color = self.game_data.data["game"]["colors"]["game"]["key"]
                     elif char == "D":
                         color = self.game_data.data["game"]["colors"]["game"]["door"]
+                    elif char == "S":
+                        color = self.game_data["game"]["colors"]["game"]["stone"]
+
                     if char in self.entity_pos:
                         self.entity_pos[char].update(self.get_neighbours(i, j))
                     else:

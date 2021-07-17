@@ -77,9 +77,9 @@ class GameScreen:
         with term.cbreak(), term.hidden_cursor():
             self.render_layout(term)
 
-            # self.render_initial_story(term)
-            self.game.entities
-            self.render_scene(term)
+            self.render_initial_story(term)
+            # self.game.entities
+            # self.render_scene(term)
             self.render_sidebar_content(term)
             self.render_messagebar_content(term, "")
 
@@ -170,7 +170,7 @@ class GameScreen:
                             self.game_data.save_game()
                             return
 
-                    elif entity_meeted == "X":
+                    elif entity_meeted == "K":
                         if not self.game_data.data["room"][str(self.game_data.data["player"]["current_room"])][
                             "is_key_found"
                         ]:
@@ -376,7 +376,7 @@ class GameScreen:
         """I will render the dict to the terminal"""
         for i, j, char, color in data:
             print(
-                getattr(term, f"{color}_on_{color}") + term.move_yx(i, j) + char + getattr(term, term_color),
+                getattr(term, f"{color}") + term.move_yx(i, j) + char + getattr(term, term_color),
                 end="",
                 flush=True,
             )
