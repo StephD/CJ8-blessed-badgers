@@ -374,17 +374,16 @@ class GameScreen:
 
         return clipped_map
 
-    @staticmethod
     def _render_dict(
+        self,
         term: blessed.Terminal,
         data: set[RenderableCoordinate],
-        # color: str = "",
-        term_color: str = "lightskyblue_on_gray20",
     ) -> None:
         """I will render the dict to the terminal"""
         for i, j, char, color in data:
+            colored = f"{color}_on_{color}" if char in "KSDO" else ""
             print(
-                getattr(term, f"{color}") + term.move_yx(i, j) + char + getattr(term, term_color),
+                term.move_yx(i, j) + getattr(term, colored) + char + getattr(term, self.term_color),
                 end="",
                 flush=True,
             )
