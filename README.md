@@ -29,9 +29,13 @@ python start.py
 
 # What do you have to be careful about
 
-Even if I can handle most of terminal size. I will not appreciate running on a very small size. Run me in full size and I will be fine.
+Even if I can handle most of terminal size. I will not appreciate running on a very small size.
+Run me in full size and I will be fine.
 
 Also note that I usually get sick if you try to resize your terminal windows during the execution.
+
+Talking about terminal. I used to run well on Windows Shell or PowerShell.
+About linux or macOs, I should be able to run but I haven't done enought try to confirm that.
 
 
 # Base line
