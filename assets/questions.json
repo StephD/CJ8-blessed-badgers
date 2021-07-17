@@ -8,7 +8,8 @@
         "question": "Another name for dicts: ",
         "template": "_______",
         "special index": 6,
-        "answer": "hashmap"
+        "answer": "hashmap",
+        "solved": false
     },
     {
         "coordinates": [
@@ -19,7 +20,8 @@
         "question": "The error that should be raised by a function if it receives a str when it was expecting an int: ",
         "template": "________",
         "special index": 1,
-        "answer": "typerror"
+        "answer": "typerror",
+        "solved": false
     },
     {
         "coordinates": [
@@ -29,7 +31,9 @@
         ],
         "question": "An object that can be looped over: ",
         "template": "________",
-        "special index": 1
+        "special index": 1,
+        "answer": "iterable",
+        "solved": false
     },
     {
         "coordinates": [
@@ -37,9 +41,11 @@
             [16, 22],           [16, 24],
             [17, 22], [17, 23], [17, 24]
         ],
-        "question": "",
-        "template": "",
-        "special index": 0
+        "question": "A function in a class: ",
+        "template": "______",
+        "special index": 3,
+        "answer": "method",
+        "solved": false
     },
     {
         "coordinates": [
@@ -47,9 +53,11 @@
             [18, 4],          [18, 6],
             [19, 4], [19, 5], [19, 6]
         ],
-        "question": "",
-        "template": "",
-        "special index": 0
+        "question": "The internal representation of a Python program in the CPython interpreter: ",
+        "template": "________",
+        "special index": 5,
+        "answer": "bytecode",
+        "solved": false
     },
     {
         "coordinates": [
@@ -59,6 +67,8 @@
         ],
         "question": "Also known as magic methods, these functions add special behaviour to objects: ",
         "template": "_______",
-        "special index": 2
+        "special index": 2,
+        "answer": "dunders",
+        "solved": false
     }
 ]
