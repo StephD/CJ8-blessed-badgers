@@ -362,7 +362,7 @@ class GameScreen:
 
             # filter the coordinates which lie outside the scene panel bounds
             if _lies_within_bounds(bounds, (new_i, new_j)):
-                clipped_map.add((new_i, new_j, char))
+                clipped_map.add((new_i, new_j, char, color))
 
         return clipped_map
 
