@@ -97,7 +97,7 @@ class Game:
                 else:  # a wall
                     color = self.game_data.data["game"]["colors"]["game"]["scene_wall"]
                 self.entities.add(Obstacle((i, j), [char], color))
-                self.obstacles.add((i, j, "", ""))
+                self.obstacles.add((i, j))
 
     def move_player(self, mov: str) -> chr:
         """Move player."""
