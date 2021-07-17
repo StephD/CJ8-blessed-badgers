@@ -7,10 +7,10 @@
         "colors": {
             "menu": {
                 "bg": "gray20",
-                "text": "lightskyblue",
+                "text": "lightskyblue2",
                 "title": "turquoise3",
                 "choice": "green3",
-                "square": "lightskyblue",
+                "square": "paleturquoise4",
                 "term_color": "lightskyblue_on_gray20"
             },
             "game": {
