@@ -183,6 +183,9 @@ class GameScreen:
                         else:
                             self.render_messagebar_content(term, self.get_message("entities", "key", "already"))
 
+                    elif entity_meeted == "S":
+                        continue
+
     def get_message(self, *args) -> str:
         """Get the message translation from the file. It help to make the code shorter"""
         return self.game_data.get_str_in_language(*args)
