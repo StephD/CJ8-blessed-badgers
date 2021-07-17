@@ -15,7 +15,6 @@ def main() -> None:
     menu_screen = MenuScreen(game_data=game_data)
     about_screen = AboutScreen(game_data=game_data)
     language_screen = LanguageScreen(game_data=game_data)
-    # game_screen = GameScreen(game_data=game_data)
 
     keypressed = None
     with term.fullscreen(), term.cbreak():
