@@ -136,6 +136,7 @@ class GameScreen:
                                 self.game_data.dec_inventory_item_by_key("keys")
                                 self.render_sidebar_content(term)
                             else:
+
                                 if player_current_room == 1:
                                     self.render_messagebar_content(
                                         term,
@@ -211,13 +212,14 @@ class GameScreen:
                 #     else:
                 #         self.render_messagebar_content(term, "")
 
-    # def _make_question_template(self, term: blessed.Terminal, template: str, special_index: int) -> str:
-    #     return (
-    #         f"{template[:special_index]}"
-    #         f"{term.red(template[special_index])}"
-    #         f"{getattr(term, self.term_color)}"
-    #         f"{template[special_index+1:]}"
-    #     )
+    def _make_question_template(self, term: blessed.Terminal, template: str, special_index: int) -> str:
+        """Make a string from template with the character at special_index highlighted in red."""
+        return (
+            f"{template[:special_index]}"
+            f"{term.red(template[special_index])}"
+            f"{getattr(term, self.term_color)}"
+            f"{template[special_index+1:]}"
+        )
 
     def get_message(self, *args) -> str:
         """Get the message translation from the file. It help to make the code shorter"""
