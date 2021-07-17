@@ -122,7 +122,8 @@ class GameScreen:
                                     # TODO Render the key
                                     self.render_messagebar_content(
                                         term,
-                                        self.game_data.get_str_in_language("messages", "story", "room_1", "6"),
+                                        self.game_data.get_str_in_language("messages", "story", "room_1", "6")
+                                        + "  [ENTER]",
                                     )
                                 else:
                                     self.render_messagebar_content(
@@ -280,16 +281,34 @@ class GameScreen:
         start_y, end_y, start_x, end_x = self.message_bar_bounds
         panel_height = end_y - start_y
         panel_width = end_x - start_x
+        col, row = start_x + 4, (start_y + round(panel_height / 2)) - 1
 
         # Clear the box before rendering any new message.
-        print(term.move_xy(start_x + 4, start_y + round(panel_height / 2)), end="")
-        print(" " * (panel_width - 4), end="", flush=True)
-        print(term.move_left(panel_width - 4), end="")
+        print(term.move_xy(col, row), end="")
 
-        # Check if it can fit in first line using "chunk"?
-        for letter in message:
-            print(letter, end="", flush=True)
-            sleep(writing_speed)
+        nb_of_line_to_clean = panel_height - 1
+        row_tmp = start_y + 1
+        for _ in range(nb_of_line_to_clean):
+            print(term.move_xy(col - 2, row_tmp), end="")
+            print(" " * (panel_width - 2), end="", flush=True)
+            row_tmp += 1
+
+        print_enter = False
+        if "ENTER" in message:
+            print_enter = True
+            message = message.replace("[ENTER]", "")
+
+        for line in chunk(f"{message}", panel_width - 4):
+            print(term.move_xy(col, row), end="", flush=True)
+            for letter in line:
+                print(letter, end="", flush=True)
+                sleep(writing_speed)
+            row += 1
+
+        if print_enter:
+            row += 1
+            print(term.move_xy(col, row), end="", flush=True)
+            print("press [ENTER] to continue", end="", flush=True)
 
     @staticmethod
     def _make_border(bounds: Bounds, charset: tuple[str, str, str, str, str, str]) -> set[RenderableCoordinate]:
