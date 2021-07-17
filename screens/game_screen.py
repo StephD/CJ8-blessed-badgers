@@ -284,7 +284,7 @@ class GameScreen:
             print_enter = True
             message = message.replace("[ENTER]", "")
 
-        make_it_faster = True if writing_speed == 0.01 else False
+        make_it_faster = bool(writing_speed == 0.01)
         i = 0
         for line in chunk(f"{message}", panel_width - 4):
             print(term.move_xy(col, row), end="", flush=True)
