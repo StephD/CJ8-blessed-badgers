@@ -34,7 +34,6 @@ class Game:
 
     def __init__(self, game_data: GameData) -> None:
         self.game_data = game_data
-        self.story = self.game_data.get_str_in_language("messages", "story", "room_1")
 
         self.entity_pos: dict[chr, set[tuple[int, int]]] = {}
         self.obstacles: set[tuple[int, int]] = set()
@@ -72,6 +71,7 @@ class Game:
         """
         with open(f"assets/maps/{room}.txt", encoding="utf-8") as map_fd:
             map_data = map_fd.read().splitlines()
+        self.story = self.game_data.get_str_in_language("messages", "story", f"room_{room}")
 
         if len(map_data) == 0:
             raise GameException("map loading")
