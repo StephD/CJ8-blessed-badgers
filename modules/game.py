@@ -34,7 +34,6 @@ class Game:
 
     def __init__(self, game_data: GameData) -> None:
         self.game_data = game_data
-        self.story = self.game_data.get_str_in_language("messages", "story", "room_1")
 
         self.entity_pos: dict[chr, set[tuple[int, int]]] = {}
         self.obstacles: set[tuple[int, int]] = set()
@@ -72,23 +71,29 @@ class Game:
         """
         with open(f"assets/maps/{room}.txt", encoding="utf-8") as map_fd:
             map_data = map_fd.read().splitlines()
+        self.story = self.game_data.get_str_in_language("messages", "story", f"room_{room}")
 
         if len(map_data) == 0:
             raise GameException("map loading")
         self.obstacles = set()
+
+        self.entities = {self.player}
+        self.entity_pos = {}
 
         for i, line in enumerate(map_data):
             for j, char in enumerate(line):
                 color = ""
                 if char == " ":
                     continue
-                if char in "KDS":
-                    if char == "K":
+                if char in "KDSX":
+                    if char in "K":
                         color = self.game_data.data["game"]["colors"]["game"]["key"]
                     elif char == "D":
                         color = self.game_data.data["game"]["colors"]["game"]["door"]
                     elif char == "S":
                         color = self.game_data.data["game"]["colors"]["game"]["stone"]
+                    elif char == "X":
+                        color = self.game_data.data["game"]["colors"]["game"]["clue"]
 
                     if char in self.entity_pos:
                         self.entity_pos[char].update(self.get_neighbours(i, j))
@@ -144,7 +149,13 @@ class Game:
         data["game_data"] = game_data
 
         data.update({"player_data": {}})
-        player_data = self.game_data.data["player"]["inventory"].copy()
-        data["player_data"] = player_data
+        if self.game_data.get_game_level() == 1:
+            room_data = self.game_data.data["room"]["1"].copy()
+            room_data.pop("is_key_found")
+            room_data.update(self.game_data.data["player"]["inventory"].copy())
+        elif self.game_data.get_game_level() == 2:
+            room_data = self.game_data.data["room"]["2"].copy()
+            room_data.pop("clue_found")
+        data["player_data"] = room_data
 
         return data
