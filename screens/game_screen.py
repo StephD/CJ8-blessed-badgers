@@ -232,27 +232,28 @@ class GameScreen:
                             [
                                 "Code Word:",
                                 f"{term.red}______{getattr(term, self.term_color)}",
-                                "Press A to attempt or any other key to cancel.",
+                                "Press [A] to attempt or any other key to cancel.",
                             ]
                         )
                         self.render_messagebar_content(term, question_prompt)
-                        if term.inkey().lower() != "a":
-                            break
-                        self.render_messagebar_content(term, "Enter guess:\n>")
-                        guess = []
-                        while True:
-                            letter = term.inkey()
-                            if isinstance(letter, Keystroke) and letter.name == "KEY_ENTER":
-                                break
-                            print(letter, end="", flush=True)
-                            guess.append(letter)
-                        if "".join(guess).lower() != "python":
-                            print(" Incorrect!")
-                        else:
-                            print(" Correct!")
-                            self.render_messagebar_content(term, "Congratulations on completing the game!")
-                            sleep(5)
-                            return
+                        if term.inkey().lower() == "a":
+                            self.render_messagebar_content(term, "Enter guess:\n>")
+                            guess = []
+                            while True:
+                                letter = term.inkey()
+                                if isinstance(letter, Keystroke) and letter.name == "KEY_ENTER":
+                                    break
+                                print(letter, end="", flush=True)
+                                guess.append(letter)
+
+                            if "".join(guess).lower() != "python":
+                                print(" Incorrect!")
+                                sleep(2)
+                            else:
+                                print(" Correct!")
+                                self.render_messagebar_content(term, "Congratulations you can get out of the box!")
+                                sleep(2)
+                                return
 
                     self.render_messagebar_content(term, "")
 
