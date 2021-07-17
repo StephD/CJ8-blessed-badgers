@@ -1,6 +1,6 @@
 {
     "game": {
-        "is_game_already_played": false,
+        "is_game_already_played": true,
         "version": "v0.6",
         "language": "en",
         "dt_saved": "12/07/2021 23:14:48",
@@ -35,7 +35,14 @@
         },
         "2": {
             "is_door_unlocked": true,
-            "clue_found": 0
+            "clue_found": {
+                "1": false,
+                "2": false,
+                "3": false,
+                "4": false,
+                "5": false,
+                "6": false
+            }
         }
     },
     "player": {

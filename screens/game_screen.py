@@ -249,8 +249,8 @@ class GameScreen:
                             self.render_messagebar_content(term, "Congratulations on completing the game!")
                             sleep(5)
                             return
-                    else:
-                        self.render_messagebar_content(term, "")
+
+                    self.render_messagebar_content(term, "")
 
     def _make_question_template(self, term: blessed.Terminal, template: str, special_index: int) -> str:
         """Make a string from template with the character at special_index highlighted in red."""
