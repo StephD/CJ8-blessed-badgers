@@ -16,7 +16,7 @@
             [14, 8],          [14, 10],
             [15, 8], [15, 9], [15, 10]
         ],
-        "question": "Another name for dicts: ",
+        "question": "The error that should be raised by a function if it receives a str when it was expecting an int: ",
         "template": "________",
         "special index": 1,
         "answer": "typerror"
@@ -37,9 +37,9 @@
             [17, 23],           [17, 25],
             [18, 23], [18, 24], [18, 25]
         ],
-        "question": "Another name for dicts: ",
-        "template": "_______",
-        "special index": 6
+        "question": "",
+        "template": "",
+        "special index": 0
     },
     {
         "coordinates": [
@@ -47,9 +47,9 @@
             [19, 5],          [19, 7],
             [20, 5], [20, 6], [20, 7]
         ],
-        "question": "Another name for dicts: ",
-        "template": "_______",
-        "special index": 6
+        "question": "",
+        "template": "",
+        "special index": 0
     },
     {
         "coordinates": [
