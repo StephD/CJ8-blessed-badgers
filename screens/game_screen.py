@@ -211,7 +211,7 @@ class GameScreen:
                     else:
                         self.render_messagebar_content(term, "")
 
-    def _make_question_template(self, term: blessed.Terminal, template: str, special_index: int) -> None:
+    def _make_question_template(self, term: blessed.Terminal, template: str, special_index: int) -> str:
         return (
             f"{template[:special_index]}"
             f"{term.red(template[special_index])}"
