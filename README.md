@@ -76,6 +76,7 @@ The hero move into the box and interact with element. You will see game messages
 ## Here is the menu, where you will land at first
 
 ![](https://github.com/StephD/CJ8-blessed-badgers/blob/develop/assets/screenshots/menu.png)
+![](https://github.com/StephD/CJ8-blessed-badgers/blob/develop/assets/screenshots/menu_about.png)
 ![](https://github.com/StephD/CJ8-blessed-badgers/blob/develop/assets/screenshots/menu_language.png)
 
 ## Here is the game, where you might need to think
