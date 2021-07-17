@@ -21,14 +21,15 @@
                 "door": "sienna",
                 "key": "gold",
                 "scene_wall": "lightskyblue4",
-                "player": "snow"
+                "player": "snow",
+                "stone": "seashell4"
             }
         }
     },
     "room": {
         "1": {
             "is_door_unlocked": false,
-            "is_key_found": false,
+            "is_key_found": true,
             "interacted": {
                 "stone": false
             }
@@ -37,11 +38,11 @@
     "player": {
         "current_room": 1,
         "position": {
-            "y": 10,
-            "x": 25
+            "y": 16,
+            "x": 7
         },
         "inventory": {
-            "keys": 0
+            "keys": 1
         }
     }
 }

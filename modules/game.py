@@ -82,13 +82,13 @@ class Game:
                 color = ""
                 if char == " ":
                     continue
-                if char in "KD":
+                if char in "KDS":
                     if char == "K":
                         color = self.game_data.data["game"]["colors"]["game"]["key"]
                     elif char == "D":
                         color = self.game_data.data["game"]["colors"]["game"]["door"]
                     elif char == "S":
-                        color = self.game_data["game"]["colors"]["game"]["stone"]
+                        color = self.game_data.data["game"]["colors"]["game"]["stone"]
 
                     if char in self.entity_pos:
                         self.entity_pos[char].update(self.get_neighbours(i, j))
@@ -97,7 +97,7 @@ class Game:
                 else:  # a wall
                     color = self.game_data.data["game"]["colors"]["game"]["scene_wall"]
                 self.entities.add(Obstacle((i, j), [char], color))
-                self.obstacles.add((i, j, "", "blue"))
+                self.obstacles.add((i, j, "", ""))
 
     def move_player(self, mov: str) -> chr:
         """Move player."""

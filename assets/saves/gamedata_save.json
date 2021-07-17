@@ -21,7 +21,8 @@
                 "door": "sienna",
                 "key": "gold",
                 "scene_wall": "lightskyblue4",
-                "player": "snow"
+                "player": "snow",
+                "stone": "seashell4"
             }
         }
     },
