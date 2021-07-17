@@ -1,0 +1,74 @@
+[
+    {
+        "coordinates": [
+            [2, 29], [2, 30], [2, 31],
+            [3, 29],          [3, 31],
+            [4, 29], [4, 20], [4, 31]
+        ],
+        "question": "Another name for dicts: ",
+        "template": "_______",
+        "special index": 6,
+        "answer": "HashMap",
+        "solved": false
+    },
+    {
+        "coordinates": [
+            [12, 7], [12, 8], [12, 9],
+            [13, 7],          [13, 9],
+            [14, 7], [14, 8], [14, 9]
+        ],
+        "question": "The error that should be raised by a function if it receives a str when it was expecting an int: ",
+        "template": "_________",
+        "special index": 1,
+        "answer": "TypeError",
+        "solved": false
+    },
+    {
+        "coordinates": [
+            [5, 18], [5, 19], [5, 20],
+            [6, 18],          [6, 20],
+            [7, 18], [7, 19], [7, 20]
+        ],
+        "question": "An object that can be looped over: ",
+        "template": "________",
+        "special index": 1,
+        "answer": "iterable",
+        "solved": false
+    },
+    {
+        "coordinates": [
+            [15, 22], [15, 23], [15, 24],
+            [16, 22],           [16, 24],
+            [17, 22], [17, 23], [17, 24]
+        ],
+        "question": "A function in a class: ",
+        "template": "______",
+        "special index": 3,
+        "answer": "method",
+        "solved": false
+    },
+    {
+        "coordinates": [
+            [17, 4], [17, 5], [17, 6],
+            [18, 4],          [18, 6],
+            [19, 4], [19, 5], [19, 6]
+        ],
+        "question": "The internal representation of a Python program in the CPython interpreter: ",
+        "template": "________",
+        "special index": 5,
+        "answer": "bytecode",
+        "solved": false
+    },
+    {
+        "coordinates": [
+          [16, 45], [16, 46], [16, 47],
+          [17, 45],           [17, 47],
+          [18, 45], [18, 46], [18, 47]
+        ],
+        "question": "Also known as magic methods, these functions add special behaviour to objects: ",
+        "template": "_______",
+        "special index": 2,
+        "answer": "dunders",
+        "solved": false
+    }
+]

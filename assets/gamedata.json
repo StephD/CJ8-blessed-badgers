@@ -1,7 +1,7 @@
 {
     "game": {
         "is_game_already_played": false,
-        "version": "v0.6",
+        "version": "v0.7",
         "language": "en",
         "dt_saved": "12/07/2021 23:14:48",
         "colors": {
@@ -18,20 +18,31 @@
                 "text": "lightskyblue",
                 "choice": "green3",
                 "layout": "darkslategray",
-                "door": "sienna",
+                "door": "darkgoldenrod",
                 "key": "gold",
                 "scene_wall": "lightskyblue4",
                 "player": "snow",
-                "stone": "seashell4"
+                "stone": "seashell4",
+                "clue": "lightcoral",
+                "clue_found": "darkolivegreen2"
             }
         }
     },
     "room": {
         "1": {
             "is_door_unlocked": false,
-            "is_key_found": false,
-            "interacted": {
-                "stone": false
+            "is_key_found": false
+        },
+        "2": {
+            "is_door_unlocked": false,
+            "nb_of_clue_found": 0,
+            "clue_found": {
+                "1": false,
+                "2": false,
+                "3": false,
+                "4": false,
+                "5": false,
+                "6": false
             }
         }
     },

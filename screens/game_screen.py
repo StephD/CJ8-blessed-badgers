@@ -1,12 +1,12 @@
-# import json
+import json
 from time import sleep
 
 import blessed
 import requests
+from blessed.keyboard import Keystroke
 
 from modules.game import Game
 from modules.game_data import GameData
-from modules.logger import log
 
 Bounds = tuple[int, int, int, int]
 RenderableCoordinate = tuple[int, int, str]
@@ -51,6 +51,9 @@ class GameScreen:
         self.scene_bounds: Bounds = ...
         self.message_bar_bounds: Bounds = ...
 
+        with open("assets/questions.json") as file:
+            self.room2_messages = json.load(file)
+
     def init_bound(self, term: blessed.Terminal) -> None:
         """Initialize the layout side and frame size+position"""
         width, height = term.width, term.height
@@ -72,7 +75,6 @@ class GameScreen:
 
         with term.cbreak(), term.hidden_cursor():
             self.render_layout(term)
-
             self.render_initial_story(term)
             self.render_sidebar_content(term)
             self.render_messagebar_content(term, "")
@@ -82,10 +84,7 @@ class GameScreen:
                 key_input = term.inkey()
                 if key_input.is_sequence:
                     if key_input.name in ["KEY_ESCAPE"]:
-                        self.render_messagebar_content(
-                            term,
-                            self.get_message("messages", "game", "actions", "esc"),
-                        )
+                        self.render_messagebar_content(term, self.get_message("messages", "game", "actions", "esc"))
                         while key_input.lower() not in ["q", "s", "c", "esc"]:
                             key_input = term.inkey()
                             if key_input == "s":
@@ -120,33 +119,26 @@ class GameScreen:
                         self.render_messagebar_content(term, f"{setup}\n\n{punchline}")
 
                 if player_will_move:
-                    entity_meeted = self.game.move_player(key_input)
-                    self.render_scene(term)
-                    self.render_messagebar_content(term)
+                    if player_current_room == 1:
+                        entity_meeted = self.game.move_player(key_input)
+                        self.render_scene(term)
+                        self.render_messagebar_content(term)
 
-                    if entity_meeted:
-                        log(entity_meeted, "entity_meeted")
-
-                    if entity_meeted == "D":
-                        if not room_data["is_door_unlocked"]:
-                            if self.game_data.get_inventory_item_by_key("keys") > 0:
-                                self.game_data.unlock_door(player_current_room)
-                                self.game_data.dec_inventory_item_by_key("keys")
-                                self.render_sidebar_content(term)
-                            else:
-
-                                if player_current_room == 1:
+                        if entity_meeted == "D":
+                            if not room_data["is_door_unlocked"]:
+                                if self.game_data.get_inventory_item_by_key("keys") > 0:
+                                    self.game_data.unlock_door(player_current_room)
+                                    self.game_data.dec_inventory_item_by_key("keys")
+                                    self.render_sidebar_content(term)
+                                else:
                                     self.render_messagebar_content(
                                         term,
                                         self.get_message("messages", "story", "room_1", "6"),
                                     )
-                                else:
-                                    self.render_messagebar_content(term, self.get_message("entities", "door", "close"))
 
-                        if room_data["is_door_unlocked"]:
-                            self.render_messagebar_content(term, self.get_message("entities", "door", "open"))
-                            sleep(0.8)
-                            if player_current_room == 1:
+                            if room_data["is_door_unlocked"]:
+                                self.render_messagebar_content(term, self.get_message("entities", "door", "open"))
+                                sleep(0.8)
                                 self.stories_id = 7
                                 while self.stories_id <= 8:
                                     self.render_messagebar_content(
@@ -161,26 +153,122 @@ class GameScreen:
                                             key_input = "enter"
                                     self.stories_id += 1
 
-                            self.render_messagebar_content(term, "bye ..")
-                            sleep(0.8)
-                            self.game_data.save_game()
-                            return
+                                sleep(0.8)
+                                self.render_messagebar_content(term, "")
+                                player_current_room = 2
+                                self.game_data.data["player"]["current_room"] = 2
+                                # self.game_data.save_game()
+                                self.game.load_map(2)
+                                self.render_sidebar_content(term)
+                                # 2 times is normal
+                                self.render_scene(term)
+                                self.render_scene(term)
+                                self.render_initial_story(term, True)
 
-                    elif entity_meeted == "K":
-                        if not self.game_data.data["room"][str(self.game_data.data["player"]["current_room"])][
-                            "is_key_found"
-                        ]:
-                            self.game_data.inc_inventory_item_by_key("keys")
-                            self.game_data.data["room"][str(self.game_data.data["player"]["current_room"])][
+                        elif entity_meeted == "K":
+                            if not self.game_data.data["room"][str(self.game_data.data["player"]["current_room"])][
                                 "is_key_found"
-                            ] = True
-                            self.render_sidebar_content(term)
-                            self.render_messagebar_content(term, self.get_message("entities", "key", "is_found"))
-                        else:
-                            self.render_messagebar_content(term, self.get_message("entities", "key", "already"))
+                            ]:
+                                self.game_data.inc_inventory_item_by_key("keys")
+                                self.game_data.data["room"][str(self.game_data.data["player"]["current_room"])][
+                                    "is_key_found"
+                                ] = True
+                                self.render_sidebar_content(term)
+                                self.render_messagebar_content(term, self.get_message("entities", "key", "is_found"))
+                            else:
+                                self.render_messagebar_content(term, self.get_message("entities", "key", "already"))
 
-                    elif entity_meeted == "S":
-                        continue
+                    elif player_current_room == 2:
+                        entity_meeted = self.game.move_player(key_input)
+                        self.render_scene(term)
+
+                        if entity_meeted == "X":
+                            for message in self.room2_messages:
+                                if list(self.game.player.position) in message["coordinates"]:
+                                    question_prompt = "\n".join(
+                                        [
+                                            f"{message['question']}",
+                                            self._make_question_template(
+                                                term, message["template"], message["special index"]
+                                            ),
+                                            "Press [A] to attempt or any other key to cancel."
+                                            if not message["solved"]
+                                            else "You already found this one.",
+                                        ]
+                                    )
+                                    self.render_messagebar_content(term, question_prompt, 0)
+                                    if message["solved"]:
+                                        sleep(2)
+                                        break
+                                    if term.inkey().lower() != "a":
+                                        break
+                                    self.render_messagebar_content(term, "Enter guess:\n> ")
+                                    guess = []
+                                    while True:
+                                        letter = term.inkey()
+                                        if isinstance(letter, Keystroke) and letter.name == "KEY_ENTER":
+                                            break
+                                        if isinstance(letter, Keystroke) and letter.name == "KEY_BACKSPACE":
+                                            print(term.move_left + " " + term.move_left, end="", flush=True)
+                                            guess.pop()
+                                            continue
+                                        print(letter, end="", flush=True)
+                                        guess.append(letter)
+                                    if "".join(guess).lower() != message["answer"].lower():
+                                        print(" Incorrect!")
+                                        sleep(1)
+                                    else:
+                                        print(" Correct!")
+                                        self.game_data.inc_nb_of_clue()
+                                        message["solved"] = True
+                                        message["template"] = message["answer"]
+                                        sleep(1)
+                                        self.render_sidebar_content(term)
+                        elif entity_meeted == "D":
+                            if self.game_data.get_nb_of_clue() < 6:
+                                self.render_messagebar_content(term, "Solve all questions first!")
+                                continue
+                            question_prompt = "\n".join(
+                                [
+                                    "Code Word:",
+                                    f"{term.red}______{getattr(term, self.term_color)}",
+                                    "Press [A] to attempt or any other key to cancel.",
+                                ]
+                            )
+                            self.render_messagebar_content(term, question_prompt)
+                            if term.inkey().lower() == "a":
+                                self.render_messagebar_content(term, "Enter guess:\n>")
+                                guess = []
+                                while True:
+                                    letter = term.inkey()
+                                    if isinstance(letter, Keystroke) and letter.name == "KEY_ENTER":
+                                        break
+                                    if isinstance(letter, Keystroke) and letter.name == "KEY_BACKSPACE":
+                                        print(term.move_left + " " + term.move_left, end="", flush=True)
+                                        guess.pop()
+                                        continue
+                                    print(letter, end="", flush=True)
+                                    guess.append(letter)
+
+                                if "".join(guess).lower() != "python":
+                                    print(" Incorrect!")
+                                    sleep(2)
+                                else:
+                                    print(" Correct!")
+                                    self.render_messagebar_content(term, "Congratulations you can get out of the box!")
+                                    sleep(2)
+                                    return
+
+                        self.render_messagebar_content(term, "")
+
+    def _make_question_template(self, term: blessed.Terminal, template: str, special_index: int) -> str:
+        """Make a string from template with the character at special_index highlighted in red."""
+        return (
+            f"{template[:special_index]}"
+            f"{term.red(template[special_index])}"
+            f"{getattr(term, self.term_color)}"
+            f"{template[special_index+1:]}"
+        )
 
     def get_message(self, *args) -> str:
         """Get the message translation from the file. It help to make the code shorter"""
@@ -188,9 +276,9 @@ class GameScreen:
 
     def render_layout(self, term: blessed.Terminal) -> None:
         """Render the 3 frames"""
-        self._render_dict(term, self._make_border(self.scene_bounds, tuple("┌┐└┘│─")))
-        self._render_dict(term, self._make_border(self.sidebar_bounds, tuple("┌┐└┘│─")))
-        self._render_dict(term, self._make_border(self.message_bar_bounds, tuple("┌┐└┘│─")))
+        self._render_dict(term, self._make_border(self.scene_bounds, tuple("╭╮╰╯│─")))
+        self._render_dict(term, self._make_border(self.sidebar_bounds, tuple("╭╮╰╯│─")))
+        self._render_dict(term, self._make_border(self.message_bar_bounds, tuple("╭╮╰╯│─")))
 
     # Render scene need to be pickup from a file
     def render_scene(self, term: blessed.Terminal) -> None:
@@ -198,8 +286,8 @@ class GameScreen:
         # Get the coordinates to be rendered in the scene panel.
         to_be_rendered = self._make_scene(self.scene_bounds, self.game.get_to_be_rendered())
 
-        # Render the coordinates that have been added since the last frame
-        self._render_dict(term, to_be_rendered - self.currently_rendered)
+        # Render the coordinates
+        self._render_dict(term, to_be_rendered)
 
         # Clear the coordinates that have been removed since the last frame
         self._render_dict(
@@ -247,6 +335,8 @@ class GameScreen:
                 )
             for key, value in data_obj.items():
                 translated_key = self.get_message("keys", key)
+                if isinstance(value, bool):
+                    value = self.get_message("keys", str(value).lower())
                 for line in chunk(f"{translated_key} : {value}", panel_width):
                     row += 1
                     print(term.move_xy(col, row) + line, end="", flush=True)
@@ -295,15 +385,19 @@ class GameScreen:
             print(term.move_xy(col, row), end="", flush=True)
             print("press [ENTER] to continue", end="", flush=True)
 
-    def render_initial_story(self, term: blessed.Terminal) -> None:
+    def render_initial_story(self, term: blessed.Terminal, force_story: bool = False) -> None:
         """It will display the first story to the user"""
         current_room = self.game_data.data["player"]["current_room"]
         if current_room == 1:
             max_story_id = 5
         elif current_room == 2:
+            self.stories_id = 1
             max_story_id = 6
-        if not self.game_data.is_game_already_played():
-            self.game.load_map(1)
+
+        # Will display the story every run
+        if not self.game_data.is_game_already_played() or force_story:
+            self.game.load_map(current_room)
+            self.render_scene(term)
             while self.game.story[str(self.stories_id)] != "":
                 self.render_messagebar_content(term, self.game.story[str(self.stories_id)] + "  [ENTER]", 0.03)
 
@@ -316,6 +410,7 @@ class GameScreen:
                 if self.stories_id == 2:
                     self.render_scene(term)
                 elif self.stories_id == max_story_id:
+                    self.render_messagebar_content(term)
                     break
 
                 self.stories_id += 1
@@ -376,7 +471,7 @@ class GameScreen:
     ) -> None:
         """I will render the dict to the terminal"""
         for i, j, char, color in data:
-            colored = f"{color}_on_{color}" if char in "KSDO" else ""
+            colored = f"{color}_on_{color}" if char in "KSDOX" else ""
             print(
                 term.move_yx(i, j) + getattr(term, colored) + char + getattr(term, self.term_color),
                 end="",

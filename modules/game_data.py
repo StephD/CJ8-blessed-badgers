@@ -94,7 +94,7 @@ class GameData:
     # Game_level
     def get_game_level(self) -> str:
         """Return the game level"""
-        return self.data["game"]["level"]
+        return self.data["player"]["current_room"]
 
     @update_file_game_data_decorator
     def set_game_level(self, game_level: int) -> None:
@@ -151,3 +151,12 @@ class GameData:
     def unlock_door(self, room_id: int) -> None:
         """Sets the 'is_door_unlocked' parameter to True."""
         self.data["room"][str(room_id)]["is_door_unlocked"] = True
+
+    @update_file_game_data_decorator
+    def inc_nb_of_clue(self) -> None:
+        """Increments the value of the clue founded in room 2"""
+        self.data["room"]["2"]["nb_of_clue_found"] += 1
+
+    def get_nb_of_clue(self) -> int:
+        """Return amount of clues founded in room 2"""
+        return self.data["room"]["2"]["nb_of_clue_found"]
