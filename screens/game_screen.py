@@ -118,8 +118,8 @@ class GameScreen:
                         # Linux might display it wrong
                         self.render_messagebar_content(term, f"{setup}\n\n{punchline}")
 
-                if player_current_room == 1:
-                    if player_will_move:
+                if player_will_move:
+                    if player_current_room == 1:
                         entity_meeted = self.game.move_player(key_input)
                         self.render_scene(term)
                         self.render_messagebar_content(term)
@@ -178,8 +178,7 @@ class GameScreen:
                             else:
                                 self.render_messagebar_content(term, self.get_message("entities", "key", "already"))
 
-                elif player_current_room == 2:
-                    if player_will_move:
+                    elif player_current_room == 2:
                         entity_meeted = self.game.move_player(key_input)
                         self.render_scene(term)
 
@@ -411,6 +410,7 @@ class GameScreen:
                 if self.stories_id == 2:
                     self.render_scene(term)
                 elif self.stories_id == max_story_id:
+                    self.render_messagebar_content(term)
                     break
 
                 self.stories_id += 1
