@@ -33,7 +33,7 @@ class Game:
         self.entity_pos: dict[chr, set[tuple[int, int]]] = {}
         self.obstacles: set[tuple[int, int]] = set()
         self.entities: set[Optional[Entity]] = set()
-        self.player = Player((10, 11))
+        self.player = Player(tuple(self.game_data.get_player_position().values()))
         self.map_size: tuple[int, int] = (0, 0)
         self.entities.add(self.player)
         self.load_map()
@@ -68,14 +68,13 @@ class Game:
 
         if len(map_data) == 0:
             raise GameException("map loading")
-
         self.obstacles = set()
+
         for i, line in enumerate(map_data):
             for j, char in enumerate(line):
                 if char == " ":
                     continue
                 if char in "XD":
-                    # Improvise this.
                     if char in self.entity_pos:
                         self.entity_pos[char].update(self.get_neighbours(i, j))
                     else:
@@ -101,9 +100,8 @@ class Game:
         # move the player
         if (pos_y, pos_x) not in self.obstacles:
             self.player.position = pos_y, pos_x
+            self.game_data.set_player_position({"y": pos_y, "x": pos_x})
 
-        # Check the orientation what is x and y ?
-        # How is this working ?
         char = self.entity_detect(pos_y, pos_x)
         return char
 

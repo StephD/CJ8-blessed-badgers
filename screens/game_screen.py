@@ -1,6 +1,8 @@
+# import json
 from time import sleep
 
 import blessed
+import requests
 
 from modules.game import Game
 from modules.game_data import GameData
@@ -48,6 +50,10 @@ class GameScreen:
         self.sidebar_bounds: Bounds = ...
         self.scene_bounds: Bounds = ...
         self.message_bar_bounds: Bounds = ...
+
+        # Future
+        # with open("assets/questions.json") as f:
+        #     self.room2_messages = json.load(f)
 
     def init_bound(self, term: blessed.Terminal) -> None:
         """Initialize the layout side and frame size+position"""
@@ -98,8 +104,21 @@ class GameScreen:
                     elif key_input.name in ["KEY_DOWN", "KEY_UP", "KEY_LEFT", "KEY_RIGHT"]:
                         key_input = key_input.name
                         player_will_move = True
+
                 elif key_input in ["j", "k", "h", "l"]:
                     player_will_move = True
+
+                elif key_input == "e":
+                    try:
+                        joke = requests.get(
+                            "https://official-joke-api.appspot.com/jokes/programming/random", timeout=2
+                        ).json()[0]
+                    except requests.exceptions.ReadTimeout:
+                        pass
+                    else:
+                        setup, punchline = joke["setup"], joke["punchline"]
+                        # Linux might display it wrong
+                        self.render_messagebar_content(term, f"{setup}\n\n{punchline}")
 
                 if player_will_move:
                     entity_meeted = self.game.move_player(key_input)
@@ -116,6 +135,7 @@ class GameScreen:
                                 self.game_data.dec_inventory_item_by_key("keys")
                                 self.render_sidebar_content(term)
                             else:
+
                                 if player_current_room == 1:
                                     self.render_messagebar_content(
                                         term,
@@ -146,6 +166,7 @@ class GameScreen:
                             sleep(0.8)
                             self.game_data.save_game()
                             return
+
                     elif entity_meeted == "X":
                         if not self.game_data.data["room"][str(self.game_data.data["player"]["current_room"])][
                             "is_key_found"
@@ -194,14 +215,12 @@ class GameScreen:
             term, {(i, j, " ") for i in range(start_y + 1, end_y - 1) for j in range(start_x + 1, end_x - 1)}
         )
 
-        # Move the cursor to the top left of the sidebar
-        # print(term.move_yx(start_y + 2, start_x + 2), end="", flush=True)
-
         col, row = start_x + 2, start_y + 2
 
         for data_key, data_obj in sidebar_content.items():
             if data_key == "game_data":
                 text = self.get_message("keys", "game_data")
+                row = end_y - 6
                 print(
                     term.move_xy(col, row)
                     + getattr(term, self.colors["choice"])
@@ -212,8 +231,7 @@ class GameScreen:
                 )
             elif data_key == "player_data":
                 text = self.get_message("keys", "inventory")
-                # New line.
-                row += 1
+                row = start_y + 2
                 print(
                     term.move_xy(col, row)
                     + getattr(term, self.colors["choice"])

@@ -9,14 +9,11 @@
         },
         "about": {
             "who": "DepSteph - Sachin-23 - Hshyp - Pako2020 - Famethyst - Zn",
-            "about": "Made by young developers: Blessed badgers"
+            "about": "Made by young developers of the team: Blessed badgers"
         },
         "languages": {
             "en": "English",
-            "fr": "Français",
-            "es": "Español",
-            "ru": "русский",
-            "de": "Deutsch"
+            "fr": "Français"
         },
         "actions": {
             "cancel": "Cancel [C]",
@@ -68,6 +65,7 @@
     },
     "keys": {
         "game_data": "Game data",
+        "version": "Version",
         "inventory": "In your bag",
         "level": "Room",
         "language": "Language",

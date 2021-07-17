@@ -1,7 +1,7 @@
 {
     "game": {
         "is_game_already_played": false,
-        "version": "v0.4",
+        "version": "v0.5",
         "language": "en",
         "dt_saved": "",
         "colors": {
@@ -35,10 +35,10 @@
     },
     "player": {
         "current_room": 1,
-        "position": [
-            0,
-            0
-        ],
+        "position": {
+            "y": 10,
+            "x": 25
+        },
         "inventory": {
             "keys": 0
         }
