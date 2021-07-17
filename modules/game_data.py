@@ -157,3 +157,7 @@ class GameData:
         """Increments the value of the clue founded in room 2"""
         self.data["room"]["2"]["nb_of_clue_found"] += 1
         return self.data["room"]["2"]["nb_of_clue_found"]
+
+    def get_nb_of_clue(self) -> int:
+        """Return amount of clues founded in room 2"""
+        return self.data["room"]["2"]["nb_of_clue_found"]

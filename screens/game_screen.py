@@ -229,7 +229,7 @@ class GameScreen:
                                         sleep(1)
                                         self.render_sidebar_content(term)
                         elif entity_meeted == "D":
-                            if room2_solved != 6:
+                            if room2_solved < 6:
                                 self.render_messagebar_content(term, "Solve all questions first!")
                                 continue
                             question_prompt = "\n".join(
