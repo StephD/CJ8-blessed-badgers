@@ -99,16 +99,23 @@ class GameScreen:
                     elif key_input.name in ["KEY_DOWN", "KEY_UP", "KEY_LEFT", "KEY_RIGHT"]:
                         key_input = key_input.name
                         player_will_move = True
+
                 elif key_input in ["j", "k", "h", "l"]:
                     player_will_move = True
 
                 elif key_input == "e":
-                    joke = requests.get(
-                        "https://official-joke-api.appspot.com/jokes/programming/random", timeout=2
-                    ).json()[0]
-                    setup, punchline = joke["setup"], joke["punchline"]
-
-                    self.render_messagebar_content(term, f"{setup}\n{punchline}")
+                    try:
+                        joke = requests.get(
+                            "https://official-joke-api.appspot.com/jokes/programming/random", timeout=2
+                        ).json()[0]
+                    except requests.exceptions.ReadTimeout:
+                        self.render_messagebar_content(term, "Forget it")
+                        sleep(1)
+                        self.render_messagebar_content(term, "")
+                    else:
+                        setup, punchline = joke["setup"], joke["punchline"]
+                        # Linux might display it wrong
+                        self.render_messagebar_content(term, f"{setup}\n\n{punchline}")
 
                 if player_will_move:
                     entity_meeted = self.game.move_player(key_input)
