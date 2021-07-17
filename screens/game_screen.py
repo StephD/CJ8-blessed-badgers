@@ -216,6 +216,7 @@ class GameScreen:
         for data_key, data_obj in sidebar_content.items():
             if data_key == "game_data":
                 text = self.get_message("keys", "game_data")
+                row = end_y - 6
                 print(
                     term.move_xy(col, row)
                     + getattr(term, self.colors["choice"])
@@ -226,8 +227,7 @@ class GameScreen:
                 )
             elif data_key == "player_data":
                 text = self.get_message("keys", "inventory")
-                # New line.
-                row += 1
+                row = start_y + 2
                 print(
                     term.move_xy(col, row)
                     + getattr(term, self.colors["choice"])
