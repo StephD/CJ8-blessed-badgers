@@ -23,6 +23,7 @@ Can you think, inside the box?
 I will need python 3.9+ to run and after installed, you can use these commands to install and launch me.
 
 ```
+git clone https://github.com/StephD/CJ8-blessed-badgers
 pip install -r dev-requirements.txt
 python start.py
 ```
@@ -84,3 +85,13 @@ The hero move into the box and interact with element. You will see game messages
 ![](https://github.com/StephD/CJ8-blessed-badgers/blob/develop/assets/screenshots/game_new.png)
 ![](https://github.com/StephD/CJ8-blessed-badgers/blob/develop/assets/screenshots/game_interaction.png)
 ![](https://github.com/StephD/CJ8-blessed-badgers/blob/develop/assets/screenshots/game_run.png)
+
+
+## Contributors
+
+* [DepSteph](https://github.com/StephD)
+* [Hshyp](https://github.com/ShakyaMajumdar)
+* [Sachin-23](https://github.com/Sachin-23)
+* [Pako2020](https://github.com/Anindya-Prithvi)
+* [Zn](https://github.com/recreationx)
+* [FamethystForLife](https://github.com/ShinigamiTheAssassin)
