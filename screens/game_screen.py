@@ -78,8 +78,6 @@ class GameScreen:
             self.render_layout(term)
 
             self.render_initial_story(term)
-            # self.game.entities
-            # self.render_scene(term)
             self.render_sidebar_content(term)
             self.render_messagebar_content(term, "")
 
