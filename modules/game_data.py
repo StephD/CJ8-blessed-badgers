@@ -109,7 +109,7 @@ class GameData:
         """Set the game language to a specified language."""
         self.data["game"]["language"] = language
 
-    def get_inventory_item_by_key(self, key: str) -> dict:
+    def get_inventory_item_by_key(self, key: str) -> int:
         """Get the inventory item by key."""
         return self.data["player"]["inventory"][key]
 
