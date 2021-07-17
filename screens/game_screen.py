@@ -68,7 +68,6 @@ class GameScreen:
         player_current_room = self.game_data.data["player"]["current_room"]
         room_data = self.game_data.data["room"][str(player_current_room)]
 
-        key_input = ""
         with term.cbreak(), term.hidden_cursor():
             self.render_layout(term)
             self.render_initial_story(term)

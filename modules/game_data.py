@@ -1,4 +1,5 @@
 import json
+from typing import Union
 
 # from datetime import datetime
 
@@ -21,7 +22,7 @@ class GameData:
 
     def update_file_game_data_decorator(function) -> None:
         """Decorator used to save the game_data into a file when it's updated"""
-        # I CHANGED GameData to GAMEDATA_PATH for further development.
+
         def inner(self: GAMEDATA_PATH, *args) -> None:
             """That's what the decorator will do"""
             function(self, *args)
@@ -109,7 +110,7 @@ class GameData:
         """Set the game language to a specified language."""
         self.data["game"]["language"] = language
 
-    def get_inventory_item_by_key(self, key: str) -> dict:
+    def get_inventory_item_by_key(self, key: str) -> Union[int, str]:
         """Get the inventory item by key."""
         return self.data["player"]["inventory"][key]
 
