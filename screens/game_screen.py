@@ -56,8 +56,6 @@ class GameScreen:
         with open("assets/questions.json") as f:
             self.room2_messages = json.load(f)
 
-        self.solved_questions = set()
-
     def init_bound(self, term: blessed.Terminal) -> None:
         """Initialize the layout side and frame size+position"""
         width, height = term.width, term.height
@@ -82,7 +80,7 @@ class GameScreen:
             self.render_initial_story(term)
             self.render_sidebar_content(term)
             self.render_messagebar_content(term, "")
-
+            solved = 0
             while 1:
                 player_will_move = False
                 key_input = term.inkey()
@@ -193,6 +191,7 @@ class GameScreen:
                     self.render_scene(term)
 
                     # self.render_sidebar_content(term)
+
                     if entity_met == "X":
                         for message in self.room2_messages:
                             if list(self.game.player.position) in message["coordinates"]:
@@ -208,7 +207,7 @@ class GameScreen:
                                         else "",
                                     ]
                                 )
-                                self.render_messagebar_content(term, question_prompt)
+                                self.render_messagebar_content(term, question_prompt, 0)
                                 if message["solved"]:
                                     break
                                 if term.inkey().lower() != "a":
@@ -225,9 +224,38 @@ class GameScreen:
                                     print(" Incorrect!")
                                 else:
                                     print(" Correct!")
+                                    solved += 1
                                     message["solved"] = True
                                     message["template"] = message["answer"]
-
+                    elif entity_met == "D":
+                        if solved != 6:
+                            self.render_messagebar_content(term, "Solve all questions first!")
+                            continue
+                        question_prompt = "\n".join(
+                            [
+                                "Code Word:",
+                                f"{term.red}______{getattr(term, self.term_color)}",
+                                "Press A to attempt or any other key to cancel.",
+                            ]
+                        )
+                        self.render_messagebar_content(term, question_prompt)
+                        if term.inkey().lower() != "a":
+                            break
+                        self.render_messagebar_content(term, "Enter guess:\n>")
+                        guess = []
+                        while True:
+                            letter = term.inkey()
+                            if isinstance(letter, Keystroke) and letter.name == "KEY_ENTER":
+                                break
+                            print(letter, end="", flush=True)
+                            guess.append(letter)
+                        if "".join(guess).lower() != "python":
+                            print(" Incorrect!")
+                        else:
+                            print(" Correct!")
+                            self.render_messagebar_content(term, "Congratulations on completing the game!")
+                            sleep(5)
+                            return
                     else:
                         self.render_messagebar_content(term, "")
 
