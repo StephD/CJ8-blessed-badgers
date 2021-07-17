@@ -1,3 +1,4 @@
+# import json
 from time import sleep
 
 import blessed
@@ -49,6 +50,10 @@ class GameScreen:
         self.sidebar_bounds: Bounds = ...
         self.scene_bounds: Bounds = ...
         self.message_bar_bounds: Bounds = ...
+
+        # Future
+        # with open("assets/questions.json") as f:
+        #     self.room2_messages = json.load(f)
 
     def init_bound(self, term: blessed.Terminal) -> None:
         """Initialize the layout side and frame size+position"""
@@ -133,6 +138,7 @@ class GameScreen:
                                 self.game_data.dec_inventory_item_by_key("keys")
                                 self.render_sidebar_content(term)
                             else:
+
                                 if player_current_room == 1:
                                     self.render_messagebar_content(
                                         term,
@@ -163,6 +169,7 @@ class GameScreen:
                             sleep(0.8)
                             self.game_data.save_game()
                             return
+
                     elif entity_meeted == "X":
                         if not self.game_data.data["room"][str(self.game_data.data["player"]["current_room"])][
                             "is_key_found"

@@ -69,8 +69,8 @@ class Game:
 
         if len(map_data) == 0:
             raise GameException("map loading")
-
         self.obstacles = set()
+
         for i, line in enumerate(map_data):
             for j, char in enumerate(line):
                 if char == " ":
