@@ -220,6 +220,7 @@ class GameScreen:
                                     guess.append(letter)
                                 if "".join(guess).lower() != message["answer"].lower():
                                     print(" Incorrect!")
+                                    sleep(1)
                                 else:
                                     print(" Correct!")
                                     room2_solved = self.game_data.inc_nb_of_clue()

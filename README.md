@@ -82,5 +82,5 @@ The hero move into the box and interact with element. You will see game messages
 ## Here is the game, where you might need to think
 
 ![](https://github.com/StephD/CJ8-blessed-badgers/blob/develop/assets/screenshots/game_new.png)
-![](https://github.com/StephD/CJ8-blessed-badgers/blob/develop/assets/screenshots/game_run.png)
 ![](https://github.com/StephD/CJ8-blessed-badgers/blob/develop/assets/screenshots/game_interaction.png)
+![](https://github.com/StephD/CJ8-blessed-badgers/blob/develop/assets/screenshots/game_run.png)
