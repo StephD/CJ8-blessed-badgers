@@ -1,6 +1,6 @@
 {
     "game": {
-        "is_game_already_played": false,
+        "is_game_already_played": true,
         "version": "v0.6",
         "language": "en",
         "dt_saved": "12/07/2021 23:14:48",
@@ -22,17 +22,20 @@
                 "key": "gold",
                 "scene_wall": "lightskyblue4",
                 "player": "snow",
-                "stone": "seashell4"
+                "stone": "seashell4",
+                "clue": "indianred2",
+                "clue_found": "darkolivegreen2"
             }
         }
     },
     "room": {
         "1": {
-            "is_door_unlocked": false,
-            "is_key_found": false,
-            "interacted": {
-                "stone": false
-            }
+            "is_door_unlocked": true,
+            "is_key_found": true
+        },
+        "2": {
+            "is_door_unlocked": true,
+            "clue_found": 0
         }
     },
     "player": {
