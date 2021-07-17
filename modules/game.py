@@ -69,9 +69,6 @@ class Game:
         if len(map_data) == 0:
             raise GameException("map loading")
         self.obstacles = set()
-        ## TODO future
-        # self.entities = {self.player}
-        # self.entity_pos = {}
 
         for i, line in enumerate(map_data):
             for j, char in enumerate(line):

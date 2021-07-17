@@ -120,7 +120,6 @@ class GameScreen:
                         # Linux might display it wrong
                         self.render_messagebar_content(term, f"{setup}\n\n{punchline}")
 
-                # if self.current_room == 1:
                 if player_will_move:
                     entity_meeted = self.game.move_player(key_input)
                     self.render_scene(term)
@@ -167,10 +166,6 @@ class GameScreen:
                             sleep(0.8)
                             self.game_data.save_game()
                             return
-                            # TODO future
-                            # self.render_messagebar_content(term, "")
-                            # self.current_room = 2
-                            # self.game.load_map(2)
 
                     elif entity_meeted == "X":
                         if not self.game_data.data["room"][str(self.game_data.data["player"]["current_room"])][
@@ -184,42 +179,6 @@ class GameScreen:
                             self.render_messagebar_content(term, self.get_message("entities", "key", "is_found"))
                         else:
                             self.render_messagebar_content(term, self.get_message("entities", "key", "already"))
-
-                # TODO future
-                # elif self.current_room == 2:
-                #     entity_met = self.game.move_player(key_input)
-                #     self.render_scene(term)
-
-                #     # self.render_sidebar_content(term)
-                #     if entity_met == "X":
-                #         for message in self.room2_messages:
-                #             if list(self.game.player.position) in message["coordinates"]:
-                #                 self.render_messagebar_content(
-                #                     term,
-                #                     "\n".join(
-                #                         [
-                #                             f"{message['question']}",
-                #                             self._make_question_template(
-                #                                 term, message["template"], message["special index"]
-                #                             ),
-                #                             "Press A to attempt or any other key to cancel.",
-                #                         ]
-                #                     ),
-                #                 )
-                #                 attempt = term.inkey(0.1)
-                #                 if attempt != "A":
-                #                     break
-                #     else:
-                #         self.render_messagebar_content(term, "")
-
-    # def _make_question_template(self, term: blessed.Terminal, template: str, special_index: int) -> str:
-    #     """Make a string from template with the character at special_index highlighted in red."""
-    #     return (
-    #         f"{template[:special_index]}"
-    #         f"{term.red(template[special_index])}"
-    #         f"{getattr(term, self.term_color)}"
-    #         f"{template[special_index+1:]}"
-    #     )
 
     def get_message(self, *args) -> str:
         """Get the message translation from the file. It help to make the code shorter"""
