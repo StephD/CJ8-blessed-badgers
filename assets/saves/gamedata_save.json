@@ -36,7 +36,7 @@
     },
     "player": {
         "current_room": 1,
-        "last_position": [
+        "position": [
             0,
             0
         ],

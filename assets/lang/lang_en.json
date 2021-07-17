@@ -69,9 +69,11 @@
     "keys": {
         "game_data": "Game data",
         "inventory": "In your bag",
-        "level": "Level",
+        "level": "Room",
         "language": "Language",
         "menu": "Menu",
-        "keys": "Keys"
+        "keys": "Keys",
+        "saving": "Saving in progress",
+        "saving_done": "Saving is done"
     }
 }

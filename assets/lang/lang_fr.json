@@ -41,7 +41,7 @@
                 "3": "Voici la piece, ca ressemble à une boîte, non ?",
                 "4": "Sur ta droite, il y a une porte.",
                 "5": "Tu peux utiliser les 'touches flèchées' pour te déplacer.",
-                "6": "C'est fermé. Tu as besoin d'une clé. Peux-tu l'aperc   sevoir ?",
+                "6": "C'est fermé. Tu as besoin d'une clé. Peux-tu l'apercevoir ?",
                 "7": "Merveilleux. Allez, sortons d'ici.",
                 "8": "On se reverra dans la boite suivante pour plus de difficulté."
             },
@@ -69,9 +69,11 @@
     "keys": {
         "game_data": "Donnée du jeu",
         "inventory": "Dans ton sac",
-        "level": "Niveau",
+        "level": "Piece",
         "language": "Langue",
         "menu": "Menu",
-        "keys": "Clées"
+        "keys": "Clées",
+        "saving": "Sauvegarde en cours",
+        "saving_done": "Sauvegarde terminée"
     }
 }
