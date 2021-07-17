@@ -1,4 +1,5 @@
 import json
+from typing import Union
 
 # from datetime import datetime
 
@@ -109,7 +110,7 @@ class GameData:
         """Set the game language to a specified language."""
         self.data["game"]["language"] = language
 
-    def get_inventory_item_by_key(self, key: str) -> int:
+    def get_inventory_item_by_key(self, key: str) -> Union[int, str]:
         """Get the inventory item by key."""
         return self.data["player"]["inventory"][key]
 
