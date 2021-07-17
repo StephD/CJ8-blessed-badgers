@@ -86,7 +86,10 @@ class GameScreen:
                 if key_input.is_sequence:
                     # Esc menu
                     if key_input.name in ["KEY_ESCAPE"]:
-                        self.render_messagebar_content(term, self.get_message("messages", "game", "actions", "esc"), 0)
+                        self.render_messagebar_content(
+                            term,
+                            self.get_message("messages", "game", "actions", "esc"),
+                        )
                         while key_input.lower() not in ["q", "s", "c", "esc"]:
                             key_input = term.inkey()
                             if key_input == "s":
@@ -274,11 +277,15 @@ class GameScreen:
             print_enter = True
             message = message.replace("[ENTER]", "")
 
+        make_it_faster = True if writing_speed == 0.01 else False
+        i = 0
         for line in chunk(f"{message}", panel_width - 4):
             print(term.move_xy(col, row), end="", flush=True)
             for letter in line:
                 print(letter, end="", flush=True)
-                sleep(writing_speed)
+                if make_it_faster and i % 2 or writing_speed > 0.01:
+                    sleep(writing_speed)
+                i += 1
             row += 1
 
         if print_enter:
