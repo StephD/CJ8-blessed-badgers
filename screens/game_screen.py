@@ -211,6 +211,10 @@ class GameScreen:
                                     letter = term.inkey()
                                     if isinstance(letter, Keystroke) and letter.name == "KEY_ENTER":
                                         break
+                                    if isinstance(letter, Keystroke) and letter.name == "KEY_BACKSPACE":
+                                        print(term.move_left + " " + term.move_left, end="", flush=True)
+                                        guess.pop()
+                                        continue
                                     print(letter, end="", flush=True)
                                     guess.append(letter)
                                 if "".join(guess).lower() != message["answer"].lower():
@@ -240,6 +244,10 @@ class GameScreen:
                             letter = term.inkey()
                             if isinstance(letter, Keystroke) and letter.name == "KEY_ENTER":
                                 break
+                            if isinstance(letter, Keystroke) and letter.name == "KEY_BACKSPACE":
+                                print(term.move_left + " " + term.move_left, end="", flush=True)
+                                guess.pop()
+                                continue
                             print(letter, end="", flush=True)
                             guess.append(letter)
                         if "".join(guess).lower() != "python":
