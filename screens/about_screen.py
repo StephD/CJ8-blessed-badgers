@@ -36,15 +36,17 @@ class AboutScreen(MenuScreen):
         """Draws the menu in the terminal, returning the coordinates where it printed."""
         sections = []
         sections.append(self.get_language("menu", "about", "about"))
+        sections.append("")
         sections.append(self.get_language("menu", "about", "who"))
-        sections.append(self.game_data.data["game"]["version"])
+        sections.append("")
+        # sections.append(self.game_data.data["game"]["version"])
 
         sections.append("")
         sections.append(self.get_language("menu", "actions", "return"))
 
         coordinates = set()
         for i, section in enumerate(sections):
-            menu_width = len(section + " " * 2)
+            menu_width = len(section)
             menu_start_col = (cols - menu_width) // 2
             menu_row = rows - (2 + len(sections)) + i
 

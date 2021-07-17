@@ -98,7 +98,7 @@ class GameData:
     @update_file_game_data_decorator
     def set_game_level(self, game_level: int) -> None:
         """Set the game level to a specified value."""
-        self.data["game"]["level"] = game_level
+        self.data["player"]["current_room"] = game_level
 
     def get_language(self) -> str:
         """Get the game language."""

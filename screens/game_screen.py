@@ -65,6 +65,8 @@ class GameScreen:
     def render(self, term: blessed.Terminal) -> None:
         """Renders the start screen in the terminal."""
         self.init_bound(term)
+        player_current_room = self.game_data.data["player"]["current_room"]
+        room_data = self.game_data.data["room"][str(player_current_room)]
 
         key_input = ""
         with term.cbreak(), term.hidden_cursor():
@@ -79,9 +81,7 @@ class GameScreen:
                 if key_input.is_sequence:
                     # Esc menu
                     if key_input.name in ["KEY_ESCAPE"]:
-                        self.render_messagebar_content(
-                            term, self.game_data.get_str_in_language("messages", "game", "actions", "esc"), 0
-                        )
+                        self.render_messagebar_content(term, self.get_message("messages", "game", "actions", "esc"), 0)
                         while key_input.lower() not in ["q", "s", "c", "esc"]:
                             key_input = term.inkey()
                             if key_input == "s":
@@ -106,40 +106,34 @@ class GameScreen:
                     entity_meeted = self.game.move_player(key_input)
                     self.render_scene(term)
                     self.render_messagebar_content(term)
+
                     if entity_meeted:
                         log(entity_meeted, "entity_meeted")
+
                     if entity_meeted == "D":
-                        if not self.game_data.data["room"][str(self.game_data.data["player"]["current_room"])][
-                            "is_door_unlocked"
-                        ]:
+                        if not room_data["is_door_unlocked"]:
                             if self.game_data.get_inventory_item_by_key("keys") > 0:
-                                # Unlocking the door
-                                self.game_data.unlock_door(self.game_data.data["player"]["current_room"])
+                                self.game_data.unlock_door(player_current_room)
                                 self.game_data.dec_inventory_item_by_key("keys")
                                 self.render_sidebar_content(term)
                             else:
-                                if self.game_data.data["player"]["current_room"] == 1:
-                                    # TODO Render the key
+                                if player_current_room == 1:
                                     self.render_messagebar_content(
                                         term,
-                                        self.game_data.get_str_in_language("messages", "story", "room_1", "5"),
+                                        self.get_message("messages", "story", "room_1", "6"),
                                     )
                                 else:
-                                    self.render_messagebar_content(
-                                        term, self.game_data.get_str_in_language("entities", "door", "close")
-                                    )
+                                    self.render_messagebar_content(term, self.get_message("entities", "door", "close"))
 
-                        if self.game_data.data["room"][str(self.game_data.data["player"]["current_room"])][
-                            "is_door_unlocked"
-                        ]:
-                            if self.game_data.data["player"]["current_room"] == 1:
-                                self.stories_id = 6
-                                while self.stories_id <= 7:
+                        if room_data["is_door_unlocked"]:
+                            self.render_messagebar_content(term, self.get_message("entities", "door", "open"))
+                            sleep(0.8)
+                            if player_current_room == 1:
+                                self.stories_id = 7
+                                while self.stories_id <= 8:
                                     self.render_messagebar_content(
                                         term,
-                                        self.game_data.get_str_in_language(
-                                            "messages", "story", "room_1", str(self.stories_id)
-                                        )
+                                        self.get_message("messages", "story", "room_1", str(self.stories_id))
                                         + "  [ENTER]",
                                     )
                                     key_input = ""
@@ -148,10 +142,6 @@ class GameScreen:
                                         if key_input.is_sequence and key_input.name == "KEY_ENTER":
                                             key_input = "enter"
                                     self.stories_id += 1
-                            else:
-                                self.render_messagebar_content(
-                                    term, self.game_data.get_str_in_language("entities", "door", "open")
-                                )
 
                             self.render_messagebar_content(term, "bye ..")
                             sleep(0.8)
@@ -166,43 +156,13 @@ class GameScreen:
                                 "is_key_found"
                             ] = True
                             self.render_sidebar_content(term)
-                            self.render_messagebar_content(
-                                term, self.game_data.get_str_in_language("entities", "key", "is_found")
-                            )
+                            self.render_messagebar_content(term, self.get_message("entities", "key", "is_found"))
                         else:
-                            self.render_messagebar_content(
-                                term, self.game_data.get_str_in_language("entities", "key", "already")
-                            )
+                            self.render_messagebar_content(term, self.get_message("entities", "key", "already"))
 
-    def render_initial_story(self, term: blessed.Terminal) -> None:
-        """It will display the first story to the user"""
-        current_room = self.game_data.data["player"]["current_room"]
-        if current_room == 1:
-            max_story_id = 4
-        elif current_room == 2:
-            max_story_id = 6
-        if not self.game_data.is_game_already_played():
-            self.game.load_map(1)
-            while self.game.story[str(self.stories_id)] != "":
-                self.render_messagebar_content(term, self.game.story[str(self.stories_id)] + "  [ENTER]", 0.03)
-
-                key_input = ""
-                while key_input != "enter":
-                    key_input = term.inkey()
-                    if key_input.is_sequence and key_input.name == "KEY_ENTER":
-                        key_input = "enter"
-
-                if self.stories_id == 2:
-                    self.render_scene(term)
-                elif self.stories_id == max_story_id:
-                    break
-
-                self.stories_id += 1
-                self.game_data.set_game_already_played(True)
-        else:
-            # Make all the render
-            self.game.load_map(self.game_data.data["player"]["current_room"])
-            self.render_scene(term)
+    def get_message(self, *args) -> str:
+        """Get the message translation from the file. It help to make the code shorter"""
+        return self.game_data.get_str_in_language(*args)
 
     def render_layout(self, term: blessed.Terminal) -> None:
         """Render the 3 frames"""
@@ -242,7 +202,7 @@ class GameScreen:
 
         for data_key, data_obj in sidebar_content.items():
             if data_key == "game_data":
-                text = self.game_data.get_str_in_language("keys", "game_data")
+                text = self.get_message("keys", "game_data")
                 print(
                     term.move_xy(col, row)
                     + getattr(term, self.colors["choice"])
@@ -252,7 +212,7 @@ class GameScreen:
                     end="",
                 )
             elif data_key == "player_data":
-                text = self.game_data.get_str_in_language("keys", "inventory")
+                text = self.get_message("keys", "inventory")
                 # New line.
                 row += 1
                 print(
@@ -264,7 +224,7 @@ class GameScreen:
                     end="",
                 )
             for key, value in data_obj.items():
-                translated_key = self.game_data.get_str_in_language("keys", key)
+                translated_key = self.get_message("keys", key)
                 for line in chunk(f"{translated_key} : {value}", panel_width):
                     row += 1
                     print(term.move_xy(col, row) + line, end="", flush=True)
@@ -280,16 +240,64 @@ class GameScreen:
         start_y, end_y, start_x, end_x = self.message_bar_bounds
         panel_height = end_y - start_y
         panel_width = end_x - start_x
+        col, row = start_x + 4, (start_y + round(panel_height / 2)) - 1
 
         # Clear the box before rendering any new message.
-        print(term.move_xy(start_x + 4, start_y + round(panel_height / 2)), end="")
-        print(" " * (panel_width - 4), end="", flush=True)
-        print(term.move_left(panel_width - 4), end="")
+        print(term.move_xy(col, row), end="")
 
-        # Check if it can fit in first line using "chunk"?
-        for letter in message:
-            print(letter, end="", flush=True)
-            sleep(writing_speed)
+        nb_of_line_to_clean = panel_height - 1
+        row_tmp = start_y + 1
+        for _ in range(nb_of_line_to_clean):
+            print(term.move_xy(col - 2, row_tmp), end="")
+            print(" " * (panel_width - 2), end="", flush=True)
+            row_tmp += 1
+
+        print_enter = False
+        if "ENTER" in message:
+            print_enter = True
+            message = message.replace("[ENTER]", "")
+
+        for line in chunk(f"{message}", panel_width - 4):
+            print(term.move_xy(col, row), end="", flush=True)
+            for letter in line:
+                print(letter, end="", flush=True)
+                sleep(writing_speed)
+            row += 1
+
+        if print_enter:
+            row += 1
+            print(term.move_xy(col, row), end="", flush=True)
+            print("press [ENTER] to continue", end="", flush=True)
+
+    def render_initial_story(self, term: blessed.Terminal) -> None:
+        """It will display the first story to the user"""
+        current_room = self.game_data.data["player"]["current_room"]
+        if current_room == 1:
+            max_story_id = 5
+        elif current_room == 2:
+            max_story_id = 6
+        if not self.game_data.is_game_already_played():
+            self.game.load_map(1)
+            while self.game.story[str(self.stories_id)] != "":
+                self.render_messagebar_content(term, self.game.story[str(self.stories_id)] + "  [ENTER]", 0.03)
+
+                key_input = ""
+                while key_input != "enter":
+                    key_input = term.inkey()
+                    if key_input.is_sequence and key_input.name == "KEY_ENTER":
+                        key_input = "enter"
+
+                if self.stories_id == 2:
+                    self.render_scene(term)
+                elif self.stories_id == max_story_id:
+                    break
+
+                self.stories_id += 1
+                self.game_data.set_game_already_played(True)
+        else:
+            # Make all the render
+            self.game.load_map(self.game_data.data["player"]["current_room"])
+            self.render_scene(term)
 
     @staticmethod
     def _make_border(bounds: Bounds, charset: tuple[str, str, str, str, str, str]) -> set[RenderableCoordinate]:

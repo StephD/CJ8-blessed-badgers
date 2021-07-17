@@ -8,8 +8,8 @@
             "quit": "Quit [Q]"
         },
         "about": {
-            "who": "Made by young developers: Blessed badgers",
-            "about": ""
+            "who": "DepSteph - Sachin-23 - Hshyp - Pako2020 - Famethyst - Zn",
+            "about": "Made by young developers: Blessed badgers"
         },
         "languages": {
             "en": "English",
@@ -38,19 +38,20 @@
             "room_1": {
                 "1": "Hey ... Wake up.",
                 "2": "Welcome to this TUI-torial.",
-                "3": "Here is the room, around you, look like a box no?",
-                "4": "On your right, there is a door. Use your 'arrow-keys' to move.",
-                "5": "See, it's locked. You need a key. Can you see it?",
-                "6": "Great. Let's get out of here.",
-                "7": "See you in the next box for the real challenge"
+                "3": "Here is the room, it's look like a box no ?",
+                "4": "On your right, there is a door.",
+                "5": "Use your 'arrow-keys' to move.",
+                "6": "See, it's locked. You need a key. Can you see it ?",
+                "7": "Great. Let's get out of here.",
+                "8": "See you in the next box for the real challenge."
             },
             "room_2": {
-                "1": "Hey ... Wake up",
+                "1": "Hey ... Wake up.",
                 "2": "How did you felt down here ?!",
                 "3": "You want to know where you are ?",
                 "4": "Look around you AHAH .. It's a box !",
-                "5": "How to get out, you said? You seem stuck here",
-                "6": "Or may be you can also use your inTUItion, who knows"
+                "5": "How to get out, you said? You seem stuck here.",
+                "6": "Or may be you can also use your inTUItion, who knows."
             }
         }
     },
@@ -68,9 +69,11 @@
     "keys": {
         "game_data": "Game data",
         "inventory": "In your bag",
-        "level": "Level",
+        "level": "Room",
         "language": "Language",
         "menu": "Menu",
-        "keys": "Keys"
+        "keys": "Keys",
+        "saving": "Saving in progress",
+        "saving_done": "Saving is done"
     }
 }
