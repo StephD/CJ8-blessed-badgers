@@ -1,6 +1,6 @@
 {
     "game": {
-        "is_game_already_played": true,
+        "is_game_already_played": false,
         "version": "v0.5",
         "language": "en",
         "dt_saved": "12/07/2021 23:14:48",
@@ -20,14 +20,16 @@
                 "layout": "darkslategray",
                 "door": "sienna",
                 "key": "gold",
-                "scene_wall": "lightskyblue4"
+                "scene_wall": "lightskyblue4",
+                "player": "snow",
+                "stone": "seashell4"
             }
         }
     },
     "room": {
         "1": {
-            "is_door_unlocked": true,
-            "is_key_found": true,
+            "is_door_unlocked": false,
+            "is_key_found": false,
             "interacted": {
                 "stone": false
             }
@@ -37,7 +39,7 @@
         "current_room": 1,
         "position": {
             "y": 10,
-            "x": 50
+            "x": 25
         },
         "inventory": {
             "keys": 0

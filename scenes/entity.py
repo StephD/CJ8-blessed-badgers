@@ -6,11 +6,12 @@ class Entity:
     Every thing the the player can interact with.
     """
 
-    def __init__(self, position: tuple[int, int], sprite: list[str]):
+    def __init__(self, position: tuple[int, int], sprite: list[str], color: str = ""):
         self.position = position
         self.sprite = sprite
+        self.color = color
 
-    def get_to_be_rendered(self) -> set[tuple[int, int, str]]:
+    def get_to_be_rendered(self) -> set[tuple[int, int, str, str]]:
         """
         Get the coordinates where this entity is to be rendered, and the characters at those coordinates.
 
@@ -19,5 +20,5 @@ class Entity:
         to_be_rendered = set()
         for i, line in enumerate(self.sprite):
             for j, char in enumerate(line):
-                to_be_rendered.add((i + self.position[0], j + self.position[1], char))
+                to_be_rendered.add((i + self.position[0], j + self.position[1], char, self.color))
         return to_be_rendered

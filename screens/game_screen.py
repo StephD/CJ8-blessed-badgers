@@ -76,6 +76,7 @@ class GameScreen:
 
         with term.cbreak(), term.hidden_cursor():
             self.render_layout(term)
+
             self.render_initial_story(term)
             self.render_sidebar_content(term)
             self.render_messagebar_content(term, "")
@@ -170,7 +171,7 @@ class GameScreen:
                             self.game_data.save_game()
                             return
 
-                    elif entity_meeted == "X":
+                    elif entity_meeted == "K":
                         if not self.game_data.data["room"][str(self.game_data.data["player"]["current_room"])][
                             "is_key_found"
                         ]:
@@ -182,6 +183,9 @@ class GameScreen:
                             self.render_messagebar_content(term, self.get_message("entities", "key", "is_found"))
                         else:
                             self.render_messagebar_content(term, self.get_message("entities", "key", "already"))
+
+                    elif entity_meeted == "S":
+                        continue
 
     def get_message(self, *args) -> str:
         """Get the message translation from the file. It help to make the code shorter"""
@@ -203,7 +207,10 @@ class GameScreen:
         self._render_dict(term, to_be_rendered - self.currently_rendered)
 
         # Clear the coordinates that have been removed since the last frame
-        self._render_dict(term, {(i, j, " ") for i, j, _ in self.currently_rendered - to_be_rendered})
+        self._render_dict(
+            term,
+            {(i, j, " ", color) for i, j, _, color in self.currently_rendered - to_be_rendered},
+        )
 
         self.currently_rendered = to_be_rendered
 
@@ -215,7 +222,7 @@ class GameScreen:
 
         # Clear the previous content in the side bar
         self._render_dict(
-            term, {(i, j, " ") for i in range(start_y + 1, end_y - 1) for j in range(start_x + 1, end_x - 1)}
+            term, {(i, j, " ", "") for i in range(start_y + 1, end_y - 1) for j in range(start_x + 1, end_x - 1)}
         )
 
         col, row = start_x + 2, start_y + 2
@@ -331,15 +338,15 @@ class GameScreen:
         return (
             # the corners:
             {
-                (start_i, start_j, top_left),
-                (start_i, end_j, top_right),
-                (end_i, start_j, bottom_left),
-                (end_i, end_j, bottom_right),
+                (start_i, start_j, top_left, ""),
+                (start_i, end_j, top_right, ""),
+                (end_i, start_j, bottom_left, ""),
+                (end_i, end_j, bottom_right, ""),
             }
             # the left and right vertical bars:
-            | {(i, j, vertical) for i in range(start_i + 1, end_i) for j in (start_j, end_j)}
+            | {(i, j, vertical, "") for i in range(start_i + 1, end_i) for j in (start_j, end_j)}
             # the top and bottom horizontal bars:
-            | {(i, j, horizontal) for i in (start_i, end_i) for j in range(start_j + 1, end_j)}
+            | {(i, j, horizontal, "") for i in (start_i, end_i) for j in range(start_j + 1, end_j)}
         )
 
     @staticmethod
@@ -356,19 +363,28 @@ class GameScreen:
         scene_height = max(i_coordinates) - min(i_coordinates)
         scene_width = max(j_coordinates) - min(j_coordinates)
 
-        for i, j, char in game_map:
+        for i, j, char, color in game_map:
             # translate from in-game coordinates to main screen coordinates
             new_i = i - scene_height // 2 + scene_panel_height // 2
             new_j = j - scene_width // 2 + scene_panel_width // 2
 
             # filter the coordinates which lie outside the scene panel bounds
             if _lies_within_bounds(bounds, (new_i, new_j)):
-                clipped_map.add((new_i, new_j, char))
+                clipped_map.add((new_i, new_j, char, color))
 
         return clipped_map
 
     @staticmethod
-    def _render_dict(term: blessed.Terminal, data: set[RenderableCoordinate]) -> None:
+    def _render_dict(
+        term: blessed.Terminal,
+        data: set[RenderableCoordinate],
+        # color: str = "",
+        term_color: str = "lightskyblue_on_gray20",
+    ) -> None:
         """I will render the dict to the terminal"""
-        for i, j, char in data:
-            print(term.move_yx(i, j) + char, end="", flush=True)
+        for i, j, char, color in data:
+            print(
+                getattr(term, f"{color}") + term.move_yx(i, j) + char + getattr(term, term_color),
+                end="",
+                flush=True,
+            )
