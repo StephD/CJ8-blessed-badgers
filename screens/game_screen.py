@@ -7,7 +7,6 @@ from blessed.keyboard import Keystroke
 
 from modules.game import Game
 from modules.game_data import GameData
-from modules.logger import log
 
 Bounds = tuple[int, int, int, int]
 RenderableCoordinate = tuple[int, int, str]
@@ -181,9 +180,6 @@ class GameScreen:
                     if player_will_move:
                         entity_meeted = self.game.move_player(key_input)
                         self.render_scene(term)
-
-                        if entity_meeted:
-                            log(entity_meeted, "entity_meeted")
 
                         if entity_meeted == "X":
                             for message in self.room2_messages:

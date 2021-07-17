@@ -3,13 +3,11 @@ import sys
 import blessed
 
 from modules.game_data import GameData
-from modules.logger import log
 from screens import AboutScreen, GameScreen, LanguageScreen, MenuScreen
 
 
 def main() -> None:
     """Main function"""
-    log("The game start", "Title")
     term = blessed.Terminal()
     game_data = GameData()
     menu_screen = MenuScreen(game_data=game_data)
