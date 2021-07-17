@@ -35,10 +35,10 @@
     },
     "player": {
         "current_room": 1,
-        "position": [
-            0,
-            0
-        ],
+        "position": {
+            "x": 25,
+            "y": 10
+        },
         "inventory": {
             "keys": 0
         }

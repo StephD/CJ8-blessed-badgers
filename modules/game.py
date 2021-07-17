@@ -75,7 +75,6 @@ class Game:
                 if char == " ":
                     continue
                 if char in "XD":
-                    # Improvise this.
                     if char in self.entity_pos:
                         self.entity_pos[char].update(self.get_neighbours(i, j))
                     else:
@@ -101,11 +100,8 @@ class Game:
         # move the player
         if (pos_y, pos_x) not in self.obstacles:
             self.player.position = pos_y, pos_x
+            self.game_data.set_player_position({"x": pos_x, "y": pos_y})
 
-        self.game_data
-
-        # Check the orientation what is x and y ?
-        # How is this working ?
         char = self.entity_detect(pos_y, pos_x)
         return char
 

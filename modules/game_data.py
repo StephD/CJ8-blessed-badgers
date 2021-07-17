@@ -110,6 +110,15 @@ class GameData:
         """Set the game language to a specified language."""
         self.data["game"]["language"] = language
 
+    def get_player_position(self) -> dict:
+        """Return the position of the player"""
+        return self.data["player"]["position"]
+
+    @update_file_game_data_decorator
+    def set_player_position(self, pos: dict) -> None:
+        """Save the position of the player"""
+        self.data["player"]["position"] = pos
+
     def get_inventory_item_by_key(self, key: str) -> Union[int, str]:
         """Get the inventory item by key."""
         return self.data["player"]["inventory"][key]
