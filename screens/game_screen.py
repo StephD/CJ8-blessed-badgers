@@ -118,7 +118,6 @@ class GameScreen:
                                 self.render_sidebar_content(term)
                             else:
                                 if player_current_room == 1:
-                                    # TODO Render the key
                                     self.render_messagebar_content(
                                         term,
                                         self.get_message("messages", "story", "room_1", "6"),
