@@ -36,8 +36,8 @@
     "player": {
         "current_room": 1,
         "position": {
-            "y": 10,
-            "x": 19
+            "y": 16,
+            "x": 24
         },
         "inventory": {
             "keys": 0
